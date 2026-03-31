@@ -2,6 +2,7 @@
 
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { getSiteConfig } from "@/lib/config/get-site-config";
 import { isSupportedLanguage } from "@/lib/config/i18n";
@@ -130,7 +131,9 @@ export default async function ContactPage({ params }: PageProps) {
             </div>
           </div>
 
-          <LeadForm siteConfig={siteConfig} lang={lang} />
+          <Suspense fallback={<div className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm" />}>
+            <LeadForm siteConfig={siteConfig} lang={lang} />
+          </Suspense>
         </section>
 
         <SiteFooter siteConfig={siteConfig} lang={lang} />
