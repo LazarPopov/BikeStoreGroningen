@@ -1,7 +1,6 @@
 "use server";
 
-import { promises as fs } from "fs";
-import path from "path";
+import { createClient } from "@supabase/supabase-js";
 
 export type LeadFormFieldErrors = Partial<
   Record<
@@ -37,6 +36,26 @@ function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl) {
+    throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL");
+  }
+
+  if (!supabaseServiceRoleKey) {
+    throw new Error("Missing SUPABASE_SERVICE_ROLE_KEY");
+  }
+
+  return createClient(supabaseUrl, supabaseServiceRoleKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
+}
+
 export async function submitBikeLead(
   prevState: LeadFormState,
   formData: FormData
@@ -44,28 +63,28 @@ export async function submitBikeLead(
   const submissionId = new Date().toISOString();
 
   const submission = {
-    submissionId,
+    submission_id: submissionId,
     name: getStringValue(formData, "name"),
     email: getStringValue(formData, "email"),
     phone: getStringValue(formData, "phone"),
     city: getStringValue(formData, "city"),
     budget: getStringValue(formData, "budget"),
-    bikeSpecification: getStringValue(formData, "bikeSpecification"),
-    preferredCondition: getStringValue(formData, "preferredCondition"),
-    preferredBrand: getStringValue(formData, "preferredBrand"),
+    bike_specification: getStringValue(formData, "bikeSpecification"),
+    preferred_condition: getStringValue(formData, "preferredCondition"),
+    preferred_brand: getStringValue(formData, "preferredBrand"),
     size: getStringValue(formData, "size"),
-    useCase: getStringValue(formData, "useCase"),
+    use_case: getStringValue(formData, "useCase"),
     notes: getStringValue(formData, "notes"),
-    siteKey: getStringValue(formData, "siteKey"),
-    sourcePage: getStringValue(formData, "sourcePage"),
-    pagePath: getStringValue(formData, "pagePath"),
+    site_key: getStringValue(formData, "siteKey"),
+    source_page: getStringValue(formData, "sourcePage"),
+    page_path: getStringValue(formData, "pagePath"),
     language: getStringValue(formData, "language"),
-    utmSource: getStringValue(formData, "utmSource"),
-    utmMedium: getStringValue(formData, "utmMedium"),
-    utmCampaign: getStringValue(formData, "utmCampaign"),
-    utmTerm: getStringValue(formData, "utmTerm"),
-    utmContent: getStringValue(formData, "utmContent"),
-    submittedAt: submissionId,
+    utm_source: getStringValue(formData, "utmSource"),
+    utm_medium: getStringValue(formData, "utmMedium"),
+    utm_campaign: getStringValue(formData, "utmCampaign"),
+    utm_term: getStringValue(formData, "utmTerm"),
+    utm_content: getStringValue(formData, "utmContent"),
+    submitted_at: submissionId,
   };
 
   const fieldErrors: LeadFormFieldErrors = {};
@@ -88,15 +107,15 @@ export async function submitBikeLead(
     fieldErrors.city = "City is required.";
   }
 
-  if (!submission.bikeSpecification) {
+  if (!submission.bike_specification) {
     fieldErrors.bikeSpecification = "Bike type or specification is required.";
   }
 
-  if (!submission.preferredCondition) {
+  if (!submission.preferred_condition) {
     fieldErrors.preferredCondition = "Preferred condition is required.";
   }
 
-  if (!submission.useCase) {
+  if (!submission.use_case) {
     fieldErrors.useCase = "Use case is required.";
   }
 
@@ -108,12 +127,31 @@ export async function submitBikeLead(
     };
   }
 
-  const filePath = path.join(process.cwd(), "lead-submissions.jsonl");
-  await fs.appendFile(filePath, `${JSON.stringify(submission)}\n`, "utf8");
+  try {
+    const supabase = getSupabaseClient();
 
-  return {
-    status: "success",
-    message: "Lead submitted successfully.",
-    submissionId,
-  };
+    const { error } = await supabase.from("bike_leads").insert(submission);
+
+    if (error) {
+      console.error("Supabase insert error:", error);
+
+      return {
+        status: "error",
+        message: "Could not submit lead. Please try again.",
+      };
+    }
+
+    return {
+      status: "success",
+      message: "Lead submitted successfully.",
+      submissionId,
+    };
+  } catch (error) {
+    console.error("submitBikeLead failed:", error);
+
+    return {
+      status: "error",
+      message: "Could not submit lead. Please try again.",
+    };
+  }
 }
