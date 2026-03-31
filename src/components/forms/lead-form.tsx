@@ -75,7 +75,186 @@ export function LeadForm({ siteConfig, lang }: LeadFormProps) {
         <input type="hidden" name="utmTerm" value={utmTerm} />
         <input type="hidden" name="utmContent" value={utmContent} />
 
-        {/* keep the rest of your fields exactly as they are */}
+        <div>
+          <label
+            htmlFor="name"
+            className="mb-2 block text-sm font-medium text-zinc-900"
+          >
+            {lang === "nl" ? "Naam" : "Name"}
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-zinc-500"
+          />
+          {state.fieldErrors?.name ? (
+            <p className="mt-1 text-sm text-red-600">{state.fieldErrors.name}</p>
+          ) : null}
+        </div>
+
+        <div>
+          <label
+            htmlFor="email"
+            className="mb-2 block text-sm font-medium text-zinc-900"
+          >
+            {lang === "nl" ? "E-mail" : "Email"}
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-zinc-500"
+          />
+          {state.fieldErrors?.email ? (
+            <p className="mt-1 text-sm text-red-600">{state.fieldErrors.email}</p>
+          ) : null}
+        </div>
+
+        <div>
+          <label
+            htmlFor="phone"
+            className="mb-2 block text-sm font-medium text-zinc-900"
+          >
+            {lang === "nl" ? "Telefoon" : "Phone"}
+          </label>
+          <input
+            id="phone"
+            name="phone"
+            type="text"
+            className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-zinc-500"
+          />
+          {state.fieldErrors?.phone ? (
+            <p className="mt-1 text-sm text-red-600">{state.fieldErrors.phone}</p>
+          ) : null}
+        </div>
+
+        <div>
+          <label
+            htmlFor="budget"
+            className="mb-2 block text-sm font-medium text-zinc-900"
+          >
+            {lang === "nl" ? "Budget" : "Budget"}
+          </label>
+          <input
+            id="budget"
+            name="budget"
+            type="text"
+            className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-zinc-500"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="bikeSpecification"
+            className="mb-2 block text-sm font-medium text-zinc-900"
+          >
+            {lang === "nl" ? "Type fiets" : "Bike type"}
+          </label>
+          <input
+            id="bikeSpecification"
+            name="bikeSpecification"
+            type="text"
+            className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-zinc-500"
+          />
+          {state.fieldErrors?.bikeSpecification ? (
+            <p className="mt-1 text-sm text-red-600">
+              {state.fieldErrors.bikeSpecification}
+            </p>
+          ) : null}
+        </div>
+
+        <div>
+          <label
+            htmlFor="preferredCondition"
+            className="mb-2 block text-sm font-medium text-zinc-900"
+          >
+            {lang === "nl" ? "Gewenste staat" : "Preferred condition"}
+          </label>
+          <select
+            id="preferredCondition"
+            name="preferredCondition"
+            defaultValue=""
+            className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-zinc-500"
+          >
+            <option value="" disabled>
+              {lang === "nl" ? "Kies een optie" : "Choose an option"}
+            </option>
+            <option value="New">{lang === "nl" ? "Nieuw" : "New"}</option>
+            <option value="Used">{lang === "nl" ? "Tweedehands" : "Used"}</option>
+            <option value="Either">
+              {lang === "nl" ? "Maakt niet uit" : "Either"}
+            </option>
+          </select>
+          {state.fieldErrors?.preferredCondition ? (
+            <p className="mt-1 text-sm text-red-600">
+              {state.fieldErrors.preferredCondition}
+            </p>
+          ) : null}
+        </div>
+
+        <div>
+          <label
+            htmlFor="preferredBrand"
+            className="mb-2 block text-sm font-medium text-zinc-900"
+          >
+            {lang === "nl" ? "Voorkeursmerk" : "Preferred brand"}
+          </label>
+          <input
+            id="preferredBrand"
+            name="preferredBrand"
+            type="text"
+            className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-zinc-500"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="size"
+            className="mb-2 block text-sm font-medium text-zinc-900"
+          >
+            {lang === "nl" ? "Maat" : "Size"}
+          </label>
+          <input
+            id="size"
+            name="size"
+            type="text"
+            className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-zinc-500"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="useCase"
+            className="mb-2 block text-sm font-medium text-zinc-900"
+          >
+            {lang === "nl" ? "Gebruik" : "Use case"}
+          </label>
+          <input
+            id="useCase"
+            name="useCase"
+            type="text"
+            className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-zinc-500"
+          />
+          {state.fieldErrors?.useCase ? (
+            <p className="mt-1 text-sm text-red-600">{state.fieldErrors.useCase}</p>
+          ) : null}
+        </div>
+
+        <div>
+          <label
+            htmlFor="notes"
+            className="mb-2 block text-sm font-medium text-zinc-900"
+          >
+            {lang === "nl" ? "Notities" : "Notes"}
+          </label>
+          <textarea
+            id="notes"
+            name="notes"
+            rows={5}
+            className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-zinc-500"
+          />
+        </div>
 
         <button
           type="submit"
