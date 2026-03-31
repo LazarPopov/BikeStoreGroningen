@@ -1,26 +1,96 @@
 @import "tailwindcss";
 
 :root {
+  /* High-Contrast Palette for Trust & Readability */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1a202c; /* Deep slate, much easier to read than light gray */
+  --primary: #000000;    /* Keeping your bold black for buttons */
+  --accent: #2563eb;     /* A "Trust Blue" for links and icons */
+  --muted: #64748b;      /* For secondary text like descriptions */
+  --card-bg: #f8fafc;    /* Subtle off-white for section blocks */
+  
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* 1. Visibility Fixes (The Most Important Part) */
+h1, h2, h3, h4 {
+  color: var(--foreground) !important; /* Forces visibility on those faded headers */
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* 2. Layout & Polish */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 3. "Our Pages" & "Reviews" Cards (Engagement Boost) */
+/* This adds subtle depth to the flat cards in your screenshot */
+.card-grid-item {
+  background: var(--card-bg);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-grid-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+/* 4. Button Polish */
+/* Fixes the "Send Email" button which is currently washed out */
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid #e2e8f0;
+  color: var(--foreground);
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+/* 5. Footer Tuning */
+footer {
+  border-top: 1px solid #e2e8f0;
+  background: #fdfdfd;
+}
+
+/* Global Reset */
+* {
+  box-sizing: border-box;
 }

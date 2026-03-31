@@ -1,0 +1,101 @@
+import type { SiteConfig } from "@/types/site";
+
+export const bikesGroningenConfig: SiteConfig = {
+  siteKey: "bikes-groningen",
+  siteName: "BikeStoreGroningen.nl",
+  domain: "bikesgroningen.nl",
+  city: "Groningen",
+  country: "Netherlands",
+
+  phoneNumber: "+31 50 880 0406",
+  email: "detweewielen@hotmail.com",
+  address: "Paterswoldseweg 30",
+  postalCode: "9726 BD",
+
+  openingHours: [
+    { day: "Monday", open: "13:00", close: "18:00" },
+    { day: "Tuesday", open: "09:00", close: "18:00" },
+    { day: "Wednesday", open: "09:00", close: "18:00" },
+    { day: "Thursday", open: "09:00", close: "18:00" },
+    { day: "Friday", open: "09:00", close: "18:00" },
+    { day: "Saturday", open: "10:00", close: "17:00" },
+    { day: "Sunday", open: "Closed", close: "Closed" },
+  ],  
+
+  googleBusinessUrl: "https://www.google.com/maps/place/The+two+wheels/@53.2122962,6.5532358,17z/data=!3m1!4b1!4m6!3m5!1s0x47c9cd4cee974487:0x2c076c431da266a8!8m2!3d53.212293!4d6.5558161!16s%2Fg%2F1th7xltm?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D",
+  googleBusinessProfileName: "De Twee Wielen",
+  googleReviewRating: 4.2,
+  googleReviewCount: 102,
+  mapEmbedUrl: "https://www.google.com/maps?q=Paterswoldseweg+30,+9726+BD+Groningen&output=embed",
+
+  latitude: 53.208,
+  longitude: 6.551,
+
+  heroTitle: {
+    en: "Bikes in Groningen from De Twee wielen",
+    nl: "Fietsen in Groningen van De Twee wielen",
+  },
+
+  heroSubtitle: {
+    en: "Find bikes, repairs, and local bike help in Groningen through our current bike partner De Twee wielen.",
+    nl: "Vind fietsen, reparaties en lokale fietshulp in Groningen via onze huidige fietspartner De Twee wielen.",
+  },
+
+  callToActionText: {
+    en: "Call De Twee Wielen",
+    nl: "Bel De Twee Wielen",
+  },
+
+  contactPersonName: "De Twee Wielen",
+
+  neighborhoods: ["Vinkhuizen", "Helpman", "Korrewegwijk"],
+
+  whatsappNumber: "+31644910369",
+  whatsappPrefilledMessage: {
+    en: "Hi, I am interested in bike options in Groningen.",
+    nl: "Hoi, ik ben geïnteresseerd in fietsopties in Groningen.",
+  },
+
+  seoDefaults: {
+    en: {
+      metaTitle: "Bikes Groningen | De Twee Wielen",
+      metaDescription:
+        "Find bikes, repairs, and local bike services in Groningen through De Twee Wielen.",
+      ogTitle: "Bikes Groningen | De Twee Wielen",
+      ogDescription:
+        "Local bike lead generation site for Groningen currently routed to De Twee Wielen.",
+    },
+    nl: {
+      metaTitle: "Fietsen Groningen | De Twee Wielen",
+      metaDescription:
+        "Vind fietsen, reparaties en lokale fietsservice in Groningen via De Twee Wielen.",
+      ogTitle: "Fietsen Groningen | De Twee Wielen",
+      ogDescription:
+        "Lokale fiets website voor Groningen die momenteel leads doorstuurt naar De Twee Wielen.",
+    },
+  },
+
+  reviews: [
+ {
+    reviewerName: "J S",
+    rating: 5,
+    reviewText:
+      "Today went to de twee wielen for a second hand bike. Very good service and a good price. Even got a student discount. Thank you a lot for the help and service.",
+    source: "Google",
+  },
+  {
+    reviewerName: "Jochem Van Gestel",
+    rating: 5,
+    reviewText:
+      "Proper service and repairs for a good price. Owner is friendly and works extremely quick. If your bike needs fixing I definitely recommend this shop.",
+    source: "Google",
+  },
+  {
+    reviewerName: "MrChawdry",
+    rating: 5,
+    reviewText:
+      "I went here when I had just started studying in Groningen because it is near the station. They have lots of diverse second hand bikes. They even told me they can buy the bike back when I am done with my studies. Highly recommend The Twee Wielen.",
+    source: "Google",
+  },
+  ],
+};
