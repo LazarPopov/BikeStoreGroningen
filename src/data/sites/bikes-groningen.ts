@@ -56,24 +56,24 @@ export const bikesGroningenConfig: SiteConfig = {
     nl: "Hoi, ik ben geïnteresseerd in fietsopties in Groningen.",
   },
 
-  seoDefaults: {
-    en: {
-      metaTitle: "Bikes Groningen | De Twee Wielen",
-      metaDescription:
-        "Find bikes, repairs, and local bike services in Groningen through De Twee Wielen.",
-      ogTitle: "Bikes Groningen | De Twee Wielen",
-      ogDescription:
-        "Local bike lead generation site for Groningen currently routed to De Twee Wielen.",
-    },
-    nl: {
-      metaTitle: "Fietsen Groningen | De Twee Wielen",
-      metaDescription:
-        "Vind fietsen, reparaties en lokale fietsservice in Groningen via De Twee Wielen.",
-      ogTitle: "Fietsen Groningen | De Twee Wielen",
-      ogDescription:
-        "Lokale fiets website voor Groningen die momenteel leads doorstuurt naar De Twee Wielen.",
-    },
+seoDefaults: {
+  en: {
+    metaTitle: "Bikes Groningen | Professional Repair & Quality Sales | De Twee Wielen",
+    metaDescription:
+      "Your trusted local partner for fast bike repairs, affordable second-hand bikes, and premium accessories in Groningen. Visit De Twee Wielen today.",
+    ogTitle: "Bikes & Repair Groningen | De Twee Wielen",
+    ogDescription:
+      "Expert bike services in the heart of Groningen. From flat tires to new e-bikes, De Twee Wielen keeps you cycling safely.",
   },
+  nl: {
+    metaTitle: "Fietsen Groningen | Snelle Reparatie & Kwaliteitsfietsen | De Twee Wielen",
+    metaDescription:
+      "Uw betrouwbare lokale partner voor snelle fietsreparaties, betaalbare tweedehands fietsen en premium accessoires in Groningen. Bezoek De Twee Wielen.",
+    ogTitle: "Fietsen & Reparatie Groningen | De Twee Wielen",
+    ogDescription:
+      "Vakkundige fietsservice in het hart van Groningen. Van een lekke band tot nieuwe e-bikes, De Twee Wielen helpt u veilig op weg.",
+  },
+},
 
   reviews: [
  {
