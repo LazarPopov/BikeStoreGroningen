@@ -1,3 +1,5 @@
+// src/app/actions/submit-bike-lead.ts
+
 "use server";
 
 import { createClient } from "@supabase/supabase-js";
@@ -61,6 +63,7 @@ export async function submitBikeLead(
   formData: FormData
 ): Promise<LeadFormState> {
   const submissionId = new Date().toISOString();
+  const language = getStringValue(formData, "language");
 
   const submission = {
     submission_id: submissionId,
@@ -78,7 +81,7 @@ export async function submitBikeLead(
     site_key: getStringValue(formData, "siteKey"),
     source_page: getStringValue(formData, "sourcePage"),
     page_path: getStringValue(formData, "pagePath"),
-    language: getStringValue(formData, "language"),
+    language,
     utm_source: getStringValue(formData, "utmSource"),
     utm_medium: getStringValue(formData, "utmMedium"),
     utm_campaign: getStringValue(formData, "utmCampaign"),
@@ -122,7 +125,10 @@ export async function submitBikeLead(
   if (Object.keys(fieldErrors).length > 0) {
     return {
       status: "error",
-      message: "Please correct the highlighted fields.",
+      message:
+        language === "nl"
+          ? "Controleer de gemarkeerde velden."
+          : "Please check the highlighted fields.",
       fieldErrors,
     };
   }
@@ -130,24 +136,26 @@ export async function submitBikeLead(
   try {
     const supabase = getSupabaseClient();
 
-    const { data, error } = await supabase
-      .from("bike_leads")
-      .insert([submission])
-      .select("id, submission_id");
+    const { error } = await supabase.from("bike_leads").insert([submission]);
 
     if (error) {
       console.error("SUPABASE INSERT ERROR:", error);
+
       return {
         status: "error",
-        message: `Supabase error: ${error.message}`,
+        message:
+          language === "nl"
+            ? "Er ging iets mis. Probeer het opnieuw."
+            : "Something went wrong. Please try again.",
       };
     }
 
-    console.log("SUPABASE INSERT OK:", data);
-
     return {
       status: "success",
-      message: `Lead submitted successfully. ${submissionId}`,
+      message:
+        language === "nl"
+          ? "Aanvraag succesvol verzonden."
+          : "Request submitted successfully.",
       submissionId,
     };
   } catch (error) {
@@ -156,7 +164,9 @@ export async function submitBikeLead(
     return {
       status: "error",
       message:
-        error instanceof Error ? error.message : "Unknown server error",
+        language === "nl"
+          ? "Er ging iets mis. Probeer het opnieuw."
+          : "Something went wrong. Please try again.",
     };
   }
 }
