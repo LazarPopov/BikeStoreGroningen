@@ -84,7 +84,7 @@ export async function submitBikeLead(
     utm_campaign: getStringValue(formData, "utmCampaign"),
     utm_term: getStringValue(formData, "utmTerm"),
     utm_content: getStringValue(formData, "utmContent"),
-    submitted_at: submissionId,
+    submitted_at: new Date().toISOString(),
   };
 
   const fieldErrors: LeadFormFieldErrors = {};
@@ -130,20 +130,24 @@ export async function submitBikeLead(
   try {
     const supabase = getSupabaseClient();
 
-    const { error } = await supabase.from("bike_leads").insert(submission);
+    const { data, error } = await supabase
+      .from("bike_leads")
+      .insert([submission])
+      .select("id, submission_id");
 
     if (error) {
-      console.error("Supabase insert error:", error);
-
+      console.error("SUPABASE INSERT ERROR:", error);
       return {
         status: "error",
-        message: "Could not submit lead. Please try again.",
+        message: `Supabase error: ${error.message}`,
       };
     }
 
+    console.log("SUPABASE INSERT OK:", data);
+
     return {
       status: "success",
-      message: "Lead submitted successfully.",
+      message: `Lead submitted successfully. ${submissionId}`,
       submissionId,
     };
   } catch (error) {
@@ -151,7 +155,8 @@ export async function submitBikeLead(
 
     return {
       status: "error",
-      message: "Could not submit lead. Please try again.",
+      message:
+        error instanceof Error ? error.message : "Unknown server error",
     };
   }
 }
