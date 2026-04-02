@@ -171,6 +171,89 @@ export const servicePages: ServicePage[] = [
       ],
     },
   },
+  {
+    slug: "student-bikes",
+    city: "Groningen",
+    imageUrl: "/images/student-bikes-groningen.jpg",
+    title: {
+      en: "Sturdy Student Bikes",
+      nl: "Stevige Studentenfietsen",
+    },
+    shortTitle: {
+      en: "Student Bikes",
+      nl: "Studentenfietsen",
+    },
+    excerpt: {
+      en: "Groningen-proof bikes perfect for your daily rides to Zernike or the city center.",
+      nl: "Groningen-proof fietsen, perfect voor je dagelijkse ritten naar Zernike of het centrum.",
+    },
+    metaTitle: {
+      en: "Student Bikes Groningen | Reliable & Affordable",
+      nl: "Studentenfiets Kopen Groningen | Betrouwbaar & Betaalbaar",
+    },
+    metaDescription: {
+      en: "Need a student bike in Groningen? We offer sturdy omafietsen and city bikes from €120, fully checked and ready for the daily commute to RUG or Hanze.",
+      nl: "Studentenfiets nodig in Groningen? Wij bieden stevige omafietsen en stadsfietsen vanaf €120, volledig nagekeken en klaar voor de rit naar RUG of Hanze.",
+    },
+    intro: {
+      en: "Welcome to the ultimate cycling city. As a student in Groningen, a working bike isn't an option—it's a lifeline. We provide no-nonsense, reliable bikes that survive the student lifestyle.",
+      nl: "Welkom in de ultieme fietsstad. Als student in Groningen is een werkende fiets geen luxe, maar een levenslijn. Wij leveren no-nonsense, betrouwbare fietsen die het studentenleven overleven.",
+    },
+    paragraphs: {
+      en: [
+        "Whether you are heading to an early lecture at the Zernike campus or cycling back from the Poelestraat at night, you need a bike that just works. Our student bikes are stripped of unnecessary fragile parts and focus on what matters: strong frames, good brakes, and working lights.",
+        "A true 'Groningen student bike' is often a classic Dutch omafiets. They are incredibly durable, require very little maintenance, and are comfortable to ride. We fully service every bike before it leaves the shop, so you won't have to worry about immediate repairs.",
+        "We know the student budget is tight. That's why we keep our prices fair and transparent. Combine your bike with one of our heavy-duty ART-approved locks, and you are fully set for your time in the city.",
+      ],
+      nl: [
+        "Of je nu naar een vroeg college op de Zernike campus fietst of 's nachts terugkomt uit de Poelestraat, je hebt een fiets nodig die het gewoon doet. Onze studentenfietsen zijn ontdaan van kwetsbare extra's en focussen op de kern: een sterk frame, goede remmen en werkende verlichting.",
+        "De ultieme 'Groningse studentenfiets' is vaak een klassieke omafiets. Ze zijn onverwoestbaar, vergen weinig onderhoud en fietsen heerlijk. We kijken elke fiets volledig na voor verkoop, zodat je je geen zorgen hoeft te maken over snelle reparaties.",
+        "We weten dat een studentenbudget beperkt is. Daarom houden we onze prijzen eerlijk en transparant. Combineer je fiets met een van onze zware ART-goedgekeurde kettingsloten en je bent helemaal klaar voor je studententijd.",
+      ],
+    },
+  },
+
+  {
+    slug: "cheap-bikes",
+    city: "Groningen",
+    imageUrl: "/images/cheap-bikes.jpg",
+    title: {
+      en: "Cheap & Budget Bikes",
+      nl: "Goedkope Fietsen & Budget",
+    },
+    shortTitle: {
+      en: "Cheap Bikes",
+      nl: "Goedkope Fietsen",
+    },
+    excerpt: {
+      en: "Budget-friendly options without compromising on basic safety.",
+      nl: "Budgetvriendelijke opties zonder in te leveren op basisveiligheid.",
+    },
+    metaTitle: {
+      en: "Cheap Bikes Groningen | Best Budget Options",
+      nl: "Goedkope Fiets Kopen Groningen | Beste Budget Opties",
+    },
+    metaDescription: {
+      en: "Looking for the cheapest working bikes in Groningen? Check out our budget options. Safe, functional, and strictly priced for tight budgets.",
+      nl: "Op zoek naar de goedkoopste werkende fietsen in Groningen? Bekijk onze budget opties. Veilig, functioneel en scherp geprijsd voor een krap budget.",
+    },
+    intro: {
+      en: "Sometimes you just need to get from point A to B as cheaply as possible. Our budget category offers the most affordable working bikes in Groningen.",
+      nl: "Soms wil je gewoon zo goedkoop mogelijk van A naar B komen. Onze budgetcategorie biedt de meest betaalbare werkende fietsen in Groningen.",
+    },
+    paragraphs: {
+      en: [
+        "If you are looking for a 'cheap bike,' you usually want something functional without the premium price tag. Our budget bikes might have a few scratches, some superficial rust, or lack multiple gears, but they are mechanically safe.",
+        "We firmly believe that cheap should not mean dangerous. Even our lowest-priced models go through a strict safety check. We ensure the frame is solid, the brakes are highly responsive, and the tires have plenty of tread left.",
+        "Inventory for these highly affordable bikes moves extremely fast. If you need a cheap, reliable ride immediately, drop by our shop to see what we currently have on the floor—the best deals rarely stay unsold for more than a day.",
+      ],
+      nl: [
+        "Als je zoekt naar een 'goedkope fiets', wil je meestal iets functioneels zonder de hoofdprijs te betalen. Onze budgetfietsen hebben misschien wat krasjes, oppervlakkige roest of geen versnellingen, maar ze zijn mechanisch volkomen veilig.",
+        "Wij geloven stellig dat goedkoop niet onveilig mag betekenen. Zelfs onze laagst geprijsde modellen ondergaan een strikte veiligheidscheck. We zorgen dat het frame recht is, de remmen strak staan en de banden voldoende profiel hebben.",
+        "De voorraad van deze zeer betaalbare fietsen wisselt enorm snel. Als je direct een goedkope, betrouwbare fiets nodig hebt, kom dan langs in de winkel om te zien wat er staat—de beste deals zijn vaak binnen een dag weg.",
+      ],
+    },
+  },
 ];
 
 export function getServicePageBySlug(
