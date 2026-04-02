@@ -1,6 +1,7 @@
 import type { AppLanguage } from "@/lib/config/i18n";
 import type { SiteConfig } from "@/types/site";
 import { TrackedLink } from "@/components/analytics/tracked-link";
+import { getServicePagesByCity } from "@/data/service-pages";
 
 type SiteFooterProps = {
   siteConfig: SiteConfig;
@@ -8,121 +9,134 @@ type SiteFooterProps = {
 };
 
 export function SiteFooter({ siteConfig, lang }: SiteFooterProps) {
+  const services = getServicePagesByCity(siteConfig.city);
+  const isDutch = lang === "nl";
+
   return (
-    <footer className="mt-12 rounded-2xl border border-zinc-200 bg-zinc-50 px-6 py-8">
-      <div className="grid gap-6 md:grid-cols-3">
+    <footer className="mt-12 rounded-2xl border border-zinc-200 bg-zinc-50 px-6 py-10">
+      <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
+        {/* Column 1: Brand & Contact */}
         <div>
-          <h2 className="mb-3 text-xl font-semibold">{siteConfig.siteName}</h2>
-          <p>{siteConfig.address}</p>
-          <p>
-            {siteConfig.postalCode}, {siteConfig.city}
-          </p>
-          <p>{siteConfig.phoneNumber}</p>
-          <p>{siteConfig.email}</p>
+          <h2 className="mb-4 text-xl font-bold text-zinc-900">{siteConfig.siteName}</h2>
+          <div className="space-y-1 text-sm text-zinc-600">
+            <p>{siteConfig.address}</p>
+            <p>
+              {siteConfig.postalCode}, {siteConfig.city}
+            </p>
+            <p className="pt-2 font-medium text-zinc-900">{siteConfig.phoneNumber}</p>
+            <p>{siteConfig.email}</p>
+          </div>
         </div>
 
+        {/* Column 2: Opening Hours */}
         <div>
-          <h3 className="mb-3 text-lg font-semibold">
-            {lang === "nl" ? "Openingstijden" : "Opening Hours"}
+          <h3 className="mb-4 text-lg font-semibold text-zinc-900">
+            {isDutch ? "Openingstijden" : "Opening Hours"}
           </h3>
-
-          <div className="space-y-1 text-sm text-zinc-700">
+          <div className="space-y-1 text-sm text-zinc-600">
             {siteConfig.openingHours.map((item) => (
-              <p key={item.day}>
-                {item.day}: {item.open}{" "}
-                {item.close !== "Closed" ? `- ${item.close}` : ""}
+              <p key={item.day} className="flex justify-between md:block lg:flex">
+                <span className="font-medium">{item.day}:</span>
+                <span>
+                  {item.open} {item.close !== "Closed" ? `- ${item.close}` : ""}
+                </span>
               </p>
             ))}
           </div>
         </div>
 
+        {/* Column 3: Services (SEO Powerhouse) */}
         <div>
-          <h3 className="mb-3 text-lg font-semibold">
-            {lang === "nl" ? "Belangrijke pagina's" : "Important Pages"}
+          <h3 className="mb-4 text-lg font-semibold text-zinc-900">
+            {isDutch ? "Onze Diensten" : "Our Services"}
           </h3>
-
-          <div className="space-y-2 text-sm text-zinc-700">
-            <p>
+          <div className="flex flex-col space-y-2 text-sm">
+            {services.map((service) => (
               <TrackedLink
-                href={`/${lang}/about`}
-                className="underline"
+                key={service.slug}
+                href={`/${lang}/services/${service.slug}`}
+                className="text-zinc-600 underline-offset-4 hover:text-black hover:underline"
                 eventName="click_footer_link"
                 eventParams={{
-                  footer_target: "about",
-                  footer_group: "important_pages",
+                  footer_target: service.slug,
+                  footer_group: "services",
                   city: siteConfig.city,
                   language: lang,
                 }}
               >
-                {lang === "nl" ? "Over" : "About"}
+                {service.shortTitle[lang]}
               </TrackedLink>
-            </p>
-
-            <p>
-              <TrackedLink
-                href={`/${lang}/contact`}
-                className="underline"
-                eventName="click_footer_link"
-                eventParams={{
-                  footer_target: "contact",
-                  footer_group: "important_pages",
-                  city: siteConfig.city,
-                  language: lang,
-                }}
-              >
-                {lang === "nl" ? "Contact" : "Contact"}
-              </TrackedLink>
-            </p>
-
-            {/* <p>
-              <TrackedLink
-                href={`/${lang}/blog`}
-                className="underline"
-                eventName="click_footer_link"
-                eventParams={{
-                  footer_target: "blog",
-                  footer_group: "important_pages",
-                  city: siteConfig.city,
-                  language: lang,
-                }}
-              >
-                Blog
-              </TrackedLink>
-            </p> */}
-
-            <p>
-              <TrackedLink
-                href={`/${lang}/privacy-policy`}
-                className="underline"
-                eventName="click_footer_link"
-                eventParams={{
-                  footer_target: "privacy_policy",
-                  footer_group: "legal",
-                  city: siteConfig.city,
-                  language: lang,
-                }}
-              >
-                {lang === "nl" ? "Privacybeleid" : "Privacy Policy"}
-              </TrackedLink>
-            </p>
-
-            <p>
-              <TrackedLink
-                href={`/${lang}/terms`}
-                className="underline"
-                eventName="click_footer_link"
-                eventParams={{
-                  footer_target: "terms",
-                  footer_group: "legal",
-                  city: siteConfig.city,
-                  language: lang,
-                }}
-              >
-                {lang === "nl" ? "Algemene Voorwaarden" : "Terms and Conditions"}
-              </TrackedLink>
-            </p>
+            ))}
           </div>
         </div>
+
+        {/* Column 4: Important Pages */}
+        <div>
+          <h3 className="mb-4 text-lg font-semibold text-zinc-900">
+            {isDutch ? "Informatie" : "Information"}
+          </h3>
+          <div className="flex flex-col space-y-2 text-sm text-zinc-600">
+            <TrackedLink
+              href={`/${lang}/about`}
+              className="underline-offset-4 hover:text-black hover:underline"
+              eventName="click_footer_link"
+              eventParams={{
+                footer_target: "about",
+                footer_group: "important_pages",
+                city: siteConfig.city,
+                language: lang,
+              }}
+            >
+              {isDutch ? "Over ons" : "About us"}
+            </TrackedLink>
+
+            <TrackedLink
+              href={`/${lang}/contact`}
+              className="underline-offset-4 hover:text-black hover:underline"
+              eventName="click_footer_link"
+              eventParams={{
+                footer_target: "contact",
+                footer_group: "important_pages",
+                city: siteConfig.city,
+                language: lang,
+              }}
+            >
+              Contact
+            </TrackedLink>
+
+            <TrackedLink
+              href={`/${lang}/privacy-policy`}
+              className="mt-4 text-xs text-zinc-400 hover:text-zinc-600"
+              eventName="click_footer_link"
+              eventParams={{
+                footer_target: "privacy_policy",
+                footer_group: "legal",
+                city: siteConfig.city,
+                language: lang,
+              }}
+            >
+              {isDutch ? "Privacybeleid" : "Privacy Policy"}
+            </TrackedLink>
+
+            <TrackedLink
+              href={`/${lang}/terms`}
+              className="text-xs text-zinc-400 hover:text-zinc-600"
+              eventName="click_footer_link"
+              eventParams={{
+                footer_target: "terms",
+                footer_group: "legal",
+                city: siteConfig.city,
+                language: lang,
+              }}
+            >
+              {isDutch ? "Voorwaarden" : "Terms"}
+            </TrackedLink>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-10 border-t border-zinc-200 pt-6 text-center text-xs text-zinc-400">
+        <p>© {new Date().getFullYear()} {siteConfig.siteName} {siteConfig.city}. All rights reserved.</p>
       </div>
     </footer>
   );
