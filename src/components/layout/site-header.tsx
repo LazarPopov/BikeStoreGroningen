@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { MapPin, Phone, Globe, ChevronDown } from "lucide-react";
 import type { AppLanguage } from "@/lib/config/i18n";
 import type { SiteConfig } from "@/types/site";
-import { cn } from "@/lib/utils"; // Assuming you have a tailwind-merge utility
+import { cn } from "@/lib/utils"; 
 
 type SiteHeaderProps = {
   siteConfig: SiteConfig;
