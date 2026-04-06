@@ -2,11 +2,12 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import { SiteGoogleAnalytics } from "@/components/analytics/site-google-analytics";
 
+// Components
+import { SiteGoogleAnalytics } from "@/components/analytics/site-google-analytics";
 import { Analytics } from "@vercel/analytics/next";
 
-// Import your site configuration
+// Site Configuration
 import { bikesGroningenConfig } from "@/data/sites/bikes-groningen";
 
 const geistSans = Geist({
@@ -19,7 +20,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Dynamic Metadata powered by your config file
+/**
+ * SEO Metadata
+ * Dynamically generated from the bikesGroningenConfig
+ */
 export const metadata: Metadata = {
   title: {
     default: bikesGroningenConfig.seoDefaults.nl.metaTitle,
@@ -54,12 +58,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   
-  // Create the JSON-LD for Local Business SEO
+  // JSON-LD Structured Data for Local SEO
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BikeStore",
     "name": bikesGroningenConfig.googleBusinessProfileName,
-    "image": `https://${bikesGroningenConfig.domain}/og-image.jpg`, // Ensure you have this file
+    "image": `https://${bikesGroningenConfig.domain}/og-image.jpg`,
     "@id": `https://${bikesGroningenConfig.domain}`,
     "url": `https://${bikesGroningenConfig.domain}`,
     "telephone": bikesGroningenConfig.phoneNumber,
@@ -94,7 +98,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        {/* Google Tag Manager - Script */}
+        {/* Google Tag Manager - Header Script */}
         <Script
           id="gtm-script"
           strategy="afterInteractive"
@@ -104,7 +108,7 @@ export default function RootLayout({
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-5LT2R5JP');
+              })(window,document,'script','dataLayer','${bikesGroningenConfig.gtmId}');
             `,
           }}
         />
@@ -115,10 +119,10 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        {/* Google Tag Manager (noscript) */}
+        {/* Google Tag Manager (noscript) - Required for fallback */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-5LT2R5JP"
+            src={`https://www.googletagmanager.com/ns.html?id=${bikesGroningenConfig.gtmId}`}
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
@@ -127,13 +131,18 @@ export default function RootLayout({
 
         {children}
 
+        {/* Analytics Components 
+            SiteGoogleAnalytics handles GA4 + Cookie Consent Banner
+        */}
         <SiteGoogleAnalytics gaId={bikesGroningenConfig.gaId} />
+        
+        {/* Vercel Speed Insights/Analytics */}
         <Analytics />
         
-        {/* Ahrefs Analytics */}
+        {/* Ahrefs Site Audit Analytics */}
         <Script
           src="https://analytics.ahrefs.com/analytics.js"
-          data-key="qhUiB1JoYJ0hmmWO2wxjoQ"
+          data-key={bikesGroningenConfig.ahrefsKey}
           strategy="afterInteractive"
         />
       </body>
