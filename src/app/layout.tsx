@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { SiteGoogleAnalytics } from "@/components/analytics/site-google-analytics";
+
 import { Analytics } from "@vercel/analytics/next";
 
 // Import your site configuration
@@ -126,7 +127,7 @@ export default function RootLayout({
 
         {children}
 
-        <SiteGoogleAnalytics />
+        <SiteGoogleAnalytics gaId={bikesGroningenConfig.gaId} />
         <Analytics />
         
         {/* Ahrefs Analytics */}

@@ -45,6 +45,16 @@ export type SiteConfig = {
   neighborhoods: string[];
   whatsappNumber: string;
   whatsappPrefilledMessage: Record<Language, string>;
+  
+  // --- ADDED TRACKING IDS ---
+  /** Google Analytics Measurement ID (starts with G-) */
+  gaId?: string; 
+  /** Google Tag Manager Container ID (starts with GTM-) */
+  gtmId?: string;
+  /** Optional: Ahrefs analytics key */
+  ahrefsKey?: string;
+  // --------------------------
+
   seoDefaults: {
     en: SeoDefaults;
     nl: SeoDefaults;
