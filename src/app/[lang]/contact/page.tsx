@@ -26,7 +26,8 @@ export async function generateMetadata({
   const siteConfig = getSiteConfig("bikes-groningen");
 
   return {
-    title: `Contact | ${siteConfig.siteName}`,
+    // FIXED: Removed manual siteName to prevent double branding!
+    title: "Contact",
     description:
       lang === "nl"
         ? `Neem contact op met ${siteConfig.siteName} in ${siteConfig.city}.`
@@ -39,7 +40,8 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title: `Contact | ${siteConfig.siteName}`,
+      // FIXED: Removed manual siteName here as well
+      title: "Contact",
       description:
         lang === "nl"
           ? `Neem contact op met ${siteConfig.siteName} in ${siteConfig.city}.`

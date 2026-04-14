@@ -27,10 +27,11 @@ export async function generateMetadata({
   const siteConfig = getSiteConfig("bikes-groningen");
 
   return {
+    // FIXED: Removed the manual siteName to prevent double branding!
     title:
       lang === "nl"
-        ? `Over ${siteConfig.googleBusinessProfileName} | ${siteConfig.siteName}`
-        : `About ${siteConfig.googleBusinessProfileName} | ${siteConfig.siteName}`,
+        ? `Over ${siteConfig.googleBusinessProfileName}`
+        : `About ${siteConfig.googleBusinessProfileName}`,
     description:
       lang === "nl"
         ? `${siteConfig.googleBusinessProfileName} in ${siteConfig.city}. Lees meer over tweedehands fietsen, reparatie, nieuwe fietsen, accessoires, studentenfietsen en goedkope fietsen in ${siteConfig.city}.`
@@ -89,7 +90,7 @@ export default async function AboutPage({ params }: PageProps) {
 
   const serviceLinks = [
     {
-      href: `/${lang}/services/second-hand`,
+      href: `/${lang}/services/second-hand-bikes`,
       title: isDutch
         ? `Tweedehands fietsen in ${siteConfig.city}`
         : `Second hand bikes in ${siteConfig.city}`,
@@ -98,7 +99,7 @@ export default async function AboutPage({ params }: PageProps) {
         : "Fully refurbished, student friendly bikes starting from €120.",
     },
     {
-      href: `/${lang}/services/repair`,
+      href: `/${lang}/services/bike-repair`,
       title: isDutch
         ? `Fietsreparatie in ${siteConfig.city}`
         : `Bike repair in ${siteConfig.city}`,
@@ -116,7 +117,7 @@ export default async function AboutPage({ params }: PageProps) {
         : "Quality city bikes starting from €450.",
     },
     {
-      href: `/${lang}/services/accessories`,
+      href: `/${lang}/services/bike-accessories`,
       title: isDutch
         ? `Fietsaccessoires in ${siteConfig.city}`
         : `Bike accessories in ${siteConfig.city}`,
@@ -184,14 +185,14 @@ export default async function AboutPage({ params }: PageProps) {
                   fietspartner {siteConfig.googleBusinessProfileName} helpen we
                   studenten, expats en dagelijkse fietsers met{" "}
                   <Link
-                    href={`/${lang}/services/second-hand`}
+                    href={`/${lang}/services/second-hand-bikes`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
                   >
                     tweedehands fietsen in {siteConfig.city}
                   </Link>
                   ,{" "}
                   <Link
-                    href={`/${lang}/services/repair`}
+                    href={`/${lang}/services/bike-repair`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
                   >
                     fietsreparatie in {siteConfig.city}
@@ -212,14 +213,14 @@ export default async function AboutPage({ params }: PageProps) {
                   partner {siteConfig.googleBusinessProfileName}, we help
                   students, expats, and daily riders with{" "}
                   <Link
-                    href={`/${lang}/services/second-hand`}
+                    href={`/${lang}/services/second-hand-bikes`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
                   >
                     second hand bikes in {siteConfig.city}
                   </Link>
                   ,{" "}
                   <Link
-                    href={`/${lang}/services/repair`}
+                    href={`/${lang}/services/bike-repair`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
                   >
                     bike repair in {siteConfig.city}
@@ -302,7 +303,7 @@ export default async function AboutPage({ params }: PageProps) {
                     Bezoekers die hun fiets direct willen verbeteren of
                     beveiligen kunnen ook terecht op onze pagina voor{" "}
                     <Link
-                      href={`/${lang}/services/accessories`}
+                      href={`/${lang}/services/bike-accessories`}
                       className="font-medium text-zinc-900 underline underline-offset-4"
                     >
                       fietsaccessoires in {siteConfig.city}
@@ -315,7 +316,7 @@ export default async function AboutPage({ params }: PageProps) {
                     Visitors who want to upgrade or secure their bike can also
                     explore our{" "}
                     <Link
-                      href={`/${lang}/services/accessories`}
+                      href={`/${lang}/services/bike-accessories`}
                       className="font-medium text-zinc-900 underline underline-offset-4"
                     >
                       bike accessories in {siteConfig.city}
@@ -544,14 +545,14 @@ export default async function AboutPage({ params }: PageProps) {
                   duidelijk te maken wat bezoekers kunnen verwachten. Lees ook
                   meer over{" "}
                   <Link
-                    href={`/${lang}/services/second-hand`}
+                    href={`/${lang}/services/second-hand-bikes`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
                   >
                     tweedehands fietsen
                   </Link>
                   ,{" "}
                   <Link
-                    href={`/${lang}/services/repair`}
+                    href={`/${lang}/services/bike-repair`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
                   >
                     reparatie
@@ -579,7 +580,7 @@ export default async function AboutPage({ params }: PageProps) {
                   </Link>{" "}
                   en{" "}
                   <Link
-                    href={`/${lang}/services/accessories`}
+                    href={`/${lang}/services/bike-accessories`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
                   >
                     accessoires
@@ -593,14 +594,14 @@ export default async function AboutPage({ params }: PageProps) {
                   immediately clear what visitors can expect. You can also read
                   more about{" "}
                   <Link
-                    href={`/${lang}/services/second-hand`}
+                    href={`/${lang}/services/second-hand-bikes`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
                   >
                     second hand bikes
                   </Link>
                   ,{" "}
                   <Link
-                    href={`/${lang}/services/repair`}
+                    href={`/${lang}/services/bike-repair`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
                   >
                     repair
@@ -628,7 +629,7 @@ export default async function AboutPage({ params }: PageProps) {
                   </Link>
                   , and{" "}
                   <Link
-                    href={`/${lang}/services/accessories`}
+                    href={`/${lang}/services/bike-accessories`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
                   >
                     accessories

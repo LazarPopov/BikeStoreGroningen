@@ -23,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
-  // 2. Maps all individual service pages (e.g., /services/repair)
+  // 2. Maps all individual service pages (e.g., /services/bike-repair)
   const serviceEntries: MetadataRoute.Sitemap = SUPPORTED_LANGUAGES.flatMap((lang) =>
     getServicePagesByCity(siteConfig.city).map((page) => ({
       url: `${baseUrl}/${lang}/services/${page.slug}`,

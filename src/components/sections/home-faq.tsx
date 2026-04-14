@@ -29,7 +29,7 @@ export function HomeFaq({ lang }: HomeFaqProps) {
           <div className="relative w-full max-w-md overflow-hidden rounded-2xl">
             {/* Note: Ensure faq.jpeg is placed in your /public directory if using Next.js */}
             <img 
-              src="/images/faq.jpeg" 
+              src="/images/faq.jpg" 
               alt={lang === "nl" ? "Veelgestelde vragen illustratie" : "FAQ illustration"} 
               className="h-auto w-full object-cover"
               loading="lazy"
