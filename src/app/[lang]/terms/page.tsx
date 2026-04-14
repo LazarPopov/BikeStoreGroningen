@@ -20,15 +20,15 @@ export async function generateMetadata({
 
   const siteConfig = getSiteConfig("bikes-groningen");
 
-  return {
+return {
     title:
       lang === "nl"
-        ? `Algemene Voorwaarden | ${siteConfig.siteName}`
-        : `Terms and Conditions | ${siteConfig.siteName}`,
+        ? `Algemene Voorwaarden`
+        : `Terms and Conditions`,
     description:
       lang === "nl"
-        ? `Algemene voorwaarden van ${siteConfig.siteName}.`
-        : `Terms and conditions of ${siteConfig.siteName}.`,
+        ? `Bekijk de algemene voorwaarden van ${siteConfig.siteName}. Duidelijke afspraken over de aankoop van fietsen, reparatiegarantie en onze lokale services.`
+        : `View the terms and conditions of ${siteConfig.siteName}. Clear agreements on bike purchases, repair warranties, and our local bicycle services.`,
     alternates: {
       canonical: `https://${siteConfig.domain}/${lang}/terms`,
       languages: {

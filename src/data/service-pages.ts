@@ -21,12 +21,12 @@ export const servicePages: ServicePage[] = [
       nl: "Volledig gereviseerde, studentvriendelijke fietsen vanaf €120.",
     },
     metaTitle: {
-      en: "Second Hand Bikes Groningen | Fixed & Student-Ready",
-      nl: "Tweedehands Fietsen Groningen | Rijklaar & Goedkoop",
+      en: "Second Hand Bikes from €120",
+      nl: "Tweedehands Fietsen v.a. €120",
     },
     metaDescription: {
-      en: "Looking for a cheap bike in Groningen? Our second-hand bikes are fully fixed and safety-checked. Typical prices: €70-€200.",
-      nl: "Op zoek naar een goedkope fiets in Groningen? Onze tweedehands fietsen zijn nagekeken en veilig. Prijzen doorgaans tussen €70-€200.",
+      en: "Looking for a cheap bike in Groningen? Our second-hand bikes are fully refurbished, safety-checked, and ready to ride. Quality cycles for every budget.",
+      nl: "Zoek je een goedkope fiets in Groningen? Onze tweedehands fietsen zijn volledig nagekeken, veilig en rijklaar. Kwaliteit voor elk budget.",
     },
     intro: {
       en: "In a cycling city like Groningen, you need a bike that is reliable but affordable. Our second-hand collection focuses on 'fixed' bikes—refurbished classics typically priced between €70 and €200.",
@@ -63,12 +63,12 @@ export const servicePages: ServicePage[] = [
       nl: "Snelle reparaties doorgaans binnen 24 uur klaar. Kleine fix vanaf €15.",
     },
     metaTitle: {
-      en: "Professional Bike Repair Groningen | All Models",
-      nl: "Professionele Fietsreparatie Groningen | Alle Modellen",
+      en: "Fast Bike Repair (24h Service)",
+      nl: "Snelle Fietsreparatie (24u klaar)",
     },
     metaDescription: {
-      en: "Reliable bike repair in Groningen. Small repairs from €15. Aiming for same-day service, 3-5 days in busy periods.",
-      nl: "Betrouwbare fietsreparatie in Groningen. Kleine reparaties vanaf €15. Streven naar dezelfde dag klaar, 3-5 dagen bij drukte.",
+      en: "Reliable bike repair in Groningen. Most repairs ready within 24 hours. From flat tires to gear adjustments, we get you back on the road fast.",
+      nl: "Betrouwbare fietsreparatie in Groningen. Meestal binnen 24 uur klaar. Van lekke banden tot versnellingen, wij helpen je snel weer op weg.",
     },
     intro: {
       en: "Don't let a broken chain or a flat tire ruin your day. Small repairs typically start around €15-€25, and we aim to have your bike back on the road within 1 business day.",
@@ -105,12 +105,12 @@ export const servicePages: ServicePage[] = [
       nl: "Kwaliteitsstadsfietsen vanaf €450. Rijklaar in 1-2 dagen.",
     },
     metaTitle: {
-      en: "New Bikes Groningen | Quality & Warranty",
-      nl: "Nieuwe Fietsen Groningen | Kwaliteit & Garantie",
+      en: "New City Bikes from €450",
+      nl: "Nieuwe Stadsfietsen v.a. €450",
     },
     metaDescription: {
-      en: "Latest city bike models in Groningen starting from €450. Professional assembly usually takes 1-2 business days.",
-      nl: "Nieuwste stadsfietsen in Groningen vanaf €450. Professionele montage duurt doorgaans 1-2 werkdagen.",
+      en: "Looking for a brand new bike in Groningen? Explore our range of quality city bikes with full warranty. Professional assembly and personal adjustments included.",
+      nl: "Op zoek naar een nieuwe fiets in Groningen? Ontdek ons aanbod kwaliteitsfietsen met volledige garantie. Inclusief professionele montage en afstelling.",
     },
     intro: {
       en: "Our new bike range starts from approximately €450 for reliable city models. To ensure your safety, we typically require 1-2 days to perform a professional zero-service check and height adjustment.",
@@ -147,12 +147,12 @@ export const servicePages: ServicePage[] = [
       nl: "ART-gekeurde sloten en LED-verlichting vanaf €15. Direct leverbaar.",
     },
     metaTitle: {
-      en: "Bike Accessories Groningen | Locks, Lights & Seats",
-      nl: "Fietsaccessoires Groningen | Sloten, Licht & Zadels",
+      en: "Bicycle Locks & Accessories",
+      nl: "Fietsaccessoires & ART Sloten",
     },
     metaDescription: {
-      en: "Upgrade your bike in Groningen. High-quality locks and lights typically €15-€80. Available for immediate pickup.",
-      nl: "Upgrade je fiets in Groningen. Sloten en lichten doorgaans €15-€80. Direct af te halen in de winkel.",
+      en: "Protect your bike in Groningen with ART-approved locks and stay visible with LED lights. Quality accessories for students and daily commuters.",
+      nl: "Bescherm je fiets in Groningen met ART-gekeurde sloten en blijf zichtbaar met LED-verlichting. Kwaliteitsaccessoires voor studenten en forenzen.",
     },
     intro: {
       en: "The right accessories range from €10 for basics to €90 for high-security locks. Most items are available for immediate pickup or same-day installation.",
@@ -188,12 +188,12 @@ export const servicePages: ServicePage[] = [
       nl: "Groningen-proof fietsen, perfect voor je dagelijkse ritten naar Zernike of het centrum.",
     },
     metaTitle: {
-      en: "Student Bikes Groningen | Reliable & Affordable",
-      nl: "Studentenfiets Kopen Groningen | Betrouwbaar & Betaalbaar",
+      en: "Student Bikes from €120",
+      nl: "Studentenfiets Kopen v.a. €120",
     },
     metaDescription: {
-      en: "Need a student bike in Groningen? We offer sturdy omafietsen and city bikes from €120, fully checked and ready for the daily commute to RUG or Hanze.",
-      nl: "Studentenfiets nodig in Groningen? Wij bieden stevige omafietsen en stadsfietsen vanaf €120, volledig nagekeken en klaar voor de rit naar RUG of Hanze.",
+      en: "Looking for a reliable student bike in Groningen? We offer refurbished city bikes and omafietsen from €120. Perfect for Zernike, Hanze, or RUG commutes.",
+      nl: "Betrouwbare studentenfiets nodig in Groningen? Wij bieden refurbished stadsfietsen en omafietsen vanaf €120. Ideaal voor ritjes naar Zernike of Hanze.",
     },
     intro: {
       en: "Welcome to the ultimate cycling city. As a student in Groningen, a working bike isn't an option—it's a lifeline. We provide no-nonsense, reliable bikes that survive the student lifestyle.",
@@ -230,12 +230,12 @@ export const servicePages: ServicePage[] = [
       nl: "Budgetvriendelijke opties zonder in te leveren op basisveiligheid.",
     },
     metaTitle: {
-      en: "Cheap Bikes Groningen | Best Budget Options",
-      nl: "Goedkope Fiets Kopen Groningen | Beste Budget Opties",
+      en: "Cheap Budget Bikes Groningen",
+      nl: "Goedkope Fietsen Groningen",
     },
     metaDescription: {
-      en: "Looking for the cheapest working bikes in Groningen? Check out our budget options. Safe, functional, and strictly priced for tight budgets.",
-      nl: "Op zoek naar de goedkoopste werkende fietsen in Groningen? Bekijk onze budget opties. Veilig, functioneel en scherp geprijsd voor een krap budget.",
+      en: "Need a bike but on a tight budget? Check out our range of cheap, functional, and safety-checked bicycles in Groningen. Safety at the best price.",
+      nl: "Fiets nodig met een krap budget? Bekijk ons aanbod goedkope, functionele en nagekeken fietsen in Groningen. Veiligheid voor de beste prijs.",
     },
     intro: {
       en: "Sometimes you just need to get from point A to B as cheaply as possible. Our budget category offers the most affordable working bikes in Groningen.",
@@ -255,18 +255,3 @@ export const servicePages: ServicePage[] = [
     },
   },
 ];
-
-export function getServicePageBySlug(
-  slug: string,
-  city: string
-): ServicePage | undefined {
-  return servicePages.find((page) => page.slug === slug && page.city === city);
-}
-
-export function getServicePagesByCity(city: string) {
-  return servicePages.filter((page) => page.city === city);
-}
-
-export function getLocalizedServiceCta(lang: AppLanguage) {
-  return lang === "nl" ? "Bekijk service" : "View service";
-}

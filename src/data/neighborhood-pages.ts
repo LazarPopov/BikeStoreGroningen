@@ -15,12 +15,12 @@ export const neighborhoodPages: NeighborhoodPage[] = [
       nl: "Vinkhuizen",
     },
     metaTitle: {
-      en: "Bike Shop near Vinkhuizen Groningen | Repairs & Sales",
-      nl: "Fietsenwinkel nabij Vinkhuizen Groningen | Reparatie & Verkoop",
+      en: "Bike Shop Groningen Vinkhuizen",
+      nl: "Fietsenmaker Groningen Vinkhuizen",
     },
     metaDescription: {
-      en: "Need reliable bike repair or a new city bike near Vinkhuizen? Our bike shop on Paterswoldseweg is just a short ride away for all your cycling needs.",
-      nl: "Betrouwbare fietsreparatie of een nieuwe stadsfiets nodig nabij Vinkhuizen? Onze fietsenwinkel aan de Paterswoldseweg is slechts een kort ritje verderop.",
+      en: "Need a bike shop near Vinkhuizen? We offer expert repairs and reliable second-hand bikes at our nearby Paterswoldseweg store. Fast and local service.",
+      nl: "Fietsenmaker nabij Vinkhuizen nodig? Voor snelle reparaties of een stevige tweedehands fiets ben je bij ons aan de Paterswoldseweg aan het juiste adres.",
     },
     intro: {
       en: "Serving daily cyclists in Vinkhuizen! Whether you need a quick puncture repair or a sturdy second-hand bike, our main shop is just 10 minutes away.",
@@ -53,11 +53,11 @@ export const neighborhoodPages: NeighborhoodPage[] = [
       nl: "Helpman",
     },
     metaTitle: {
-      en: "Bikes & Repair near Helpman Groningen | Fast Service",
-      nl: "Fietsen & Reparatie nabij Helpman Groningen | Snelle Service",
+      en: "Bikes & Repair Groningen Helpman",
+      nl: "Fietsen & Reparatie Groningen Helpman",
     },
     metaDescription: {
-      en: "Looking for a bike shop near Helpman, Groningen? We offer expert bike repairs, new models, and accessories just a quick cycle from your neighborhood.",
+      en: "Looking for a bike shop near Helpman? We provide fast repairs, new bike sales, and quality accessories just a short ride from your neighborhood.",
       nl: "Op zoek naar een fietsenwinkel vlakbij Helpman, Groningen? Wij bieden vakkundige fietsreparaties, nieuwe modellen en accessoires op korte fietsafstand.",
     },
     intro: {
@@ -91,12 +91,12 @@ export const neighborhoodPages: NeighborhoodPage[] = [
       nl: "Korrewegwijk",
     },
     metaTitle: {
-      en: "Bike Shop near Korrewegwijk | Second-Hand Bikes & Fixes",
-      nl: "Fietsenwinkel nabij Korrewegwijk | Tweedehands Fietsen & Reparatie",
+      en: "Bike Repair Groningen Korrewegwijk",
+      nl: "Fietsenmaker Groningen Korrewegwijk",
     },
     metaDescription: {
-      en: "Fast bike repair and affordable second-hand bikes for students and locals in Korrewegwijk. Visit our nearby Groningen shop for great deals.",
-      nl: "Snelle fietsreparatie en betaalbare tweedehands fietsen voor studenten en locals in de Korrewegwijk. Bezoek onze nabijgelegen winkel in Groningen.",
+      en: "Broken bike in Korrewegwijk? We offer fast repairs and cheap student bikes nearby. Keep your daily commute to the university safe and reliable.",
+      nl: "Fiets kapot in de Korrewegwijk? Wij bieden snelle reparaties en goedkope studentenfietsen in de buurt. Blijf veilig en betrouwbaar naar de uni fietsen.",
     },
     intro: {
       en: "Cycling from the Korrewegwijk to the university? Make sure your bike is up to the task. We offer swift repairs and heavy-duty locks.",
@@ -129,12 +129,12 @@ export const neighborhoodPages: NeighborhoodPage[] = [
       nl: "Centrum",
     },
     metaTitle: {
-      en: "Bike Shop near Groningen Centrum | Repairs, Locks & Bikes",
-      nl: "Fietsenwinkel nabij Groningen Centrum | Reparatie, Sloten & Fietsen",
+      en: "Bike Shop Groningen City Center",
+      nl: "Fietsenmaker Groningen Centrum",
     },
     metaDescription: {
-      en: "Need a bike shop near Groningen Centrum? We provide fast bike repairs, secure locks, accessories, and quality bikes just a short ride from the city center.",
-      nl: "Op zoek naar een fietsenwinkel nabij Groningen Centrum? Wij bieden snelle fietsreparaties, veilige sloten, accessoires en kwaliteitsfietsen op korte fietsafstand van het centrum.",
+      en: "Bike shop near Groningen Centrum needed? We provide fast repairs, secure locks, and quality bikes within walking distance of the Grote Markt.",
+      nl: "Fietsenwinkel nabij Groningen Centrum nodig? Wij bieden snelle reparaties, veilige sloten en kwaliteitsfietsen vlakbij de Grote Markt.",
     },
     intro: {
       en: "For cyclists in Groningen Centrum, speed matters. From flat tires to brake issues, our nearby shop helps you get moving again without hassle.",
@@ -167,12 +167,12 @@ export const neighborhoodPages: NeighborhoodPage[] = [
       nl: "Selwerd",
     },
     metaTitle: {
-      en: "Bike Shop near Selwerd Groningen | Student Bikes & Repair",
-      nl: "Fietsenwinkel nabij Selwerd Groningen | Studentenfietsen & Reparatie",
+      en: "Bike Repair Groningen Selwerd",
+      nl: "Fietsenmaker Groningen Selwerd",
     },
     metaDescription: {
-      en: "Looking for bike repair near Selwerd, Groningen? We help students and residents with affordable second-hand bikes, repairs, and secure locks.",
-      nl: "Op zoek naar fietsreparatie nabij Selwerd, Groningen? Wij helpen studenten en bewoners met betaalbare tweedehands fietsen, reparaties en veilige sloten.",
+      en: "Quick bike repairs near Selwerd. We help students with affordable second-hand bikes, lock replacements, and same-day service near Zernike campus.",
+      nl: "Snelle fietsreparatie nabij Selwerd. Wij helpen studenten met betaalbare fietsen, sloten en snelle service vlakbij de Zernike campus.",
     },
     intro: {
       en: "Selwerd is full of students, commuters, and daily riders. We offer practical bike solutions nearby, from urgent repairs to affordable replacement bikes.",
@@ -181,7 +181,7 @@ export const neighborhoodPages: NeighborhoodPage[] = [
     paragraphs: {
       en: [
         "For many people in Selwerd, the bike is the fastest way to get to Zernike, the city center, shops, and the station, so reliability is essential.",
-        "Our Groningen shop supports customers from Selwerd with puncture repairs, brake adjustments, chain replacements, locks, lights, and ready-to-ride second-hand bicycles.",
+        "Our shop in Groningen supports customers from Selwerd with puncture repairs, brake adjustments, chain replacements, locks, lights, and ready-to-ride second-hand bicycles.",
         "If your current bike is too damaged or too unreliable, we can help you upgrade to a stronger city bike that better fits student life and daily commuting.",
       ],
       nl: [
@@ -192,11 +192,3 @@ export const neighborhoodPages: NeighborhoodPage[] = [
     },
   },
 ];
-
-export function getNeighborhoodPagesByCity(city: string) {
-  return neighborhoodPages.filter((page) => page.city === city);
-}
-
-export function getNeighborhoodPageBySlug(slug: string, city: string) {
-  return neighborhoodPages.find((page) => page.slug === slug && page.city === city);
-}
