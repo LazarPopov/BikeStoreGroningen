@@ -1,3 +1,5 @@
+// src/data/neighborhood-pages.ts
+
 import type { NeighborhoodPage } from "@/types/neighborhood-page";
 
 export const neighborhoodPages: NeighborhoodPage[] = [
@@ -192,3 +194,14 @@ export const neighborhoodPages: NeighborhoodPage[] = [
     },
   },
 ];
+
+
+export function getNeighborhoodPagesByCity(city: string) {
+  return neighborhoodPages.filter((page) => page.city === city);
+}
+
+export function getNeighborhoodPageBySlug(slug: string, city: string) {
+  return neighborhoodPages.find(
+    (page) => page.slug === slug && page.city === city
+  );
+}

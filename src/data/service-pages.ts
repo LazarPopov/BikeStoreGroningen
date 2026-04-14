@@ -255,3 +255,20 @@ export const servicePages: ServicePage[] = [
     },
   },
 ];
+
+// HELPER FUNCTIES (Deze ontbraken en veroorzaakten de build error)
+
+export function getServicePageBySlug(
+  slug: string,
+  city: string
+): ServicePage | undefined {
+  return servicePages.find((page) => page.slug === slug && page.city === city);
+}
+
+export function getServicePagesByCity(city: string) {
+  return servicePages.filter((page) => page.city === city);
+}
+
+export function getLocalizedServiceCta(lang: AppLanguage) {
+  return lang === "nl" ? "Bekijk service" : "View service";
+}
