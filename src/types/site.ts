@@ -8,6 +8,7 @@ export type BusinessHoursItem = {
 
 export type ReviewItem = {
   reviewerName: string;
+  reviewerRole?: string;
   rating: number;
   reviewText: string;
   source: string;

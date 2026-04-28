@@ -7,6 +7,8 @@ type TrackedAnchorProps = {
   href: string;
   children: ReactNode;
   className?: string;
+  rel?: string;
+  target?: string;
   eventName: string;
   eventParams?: Record<string, string | number | boolean | undefined>;
 };
@@ -15,6 +17,8 @@ export function TrackedAnchor({
   href,
   children,
   className,
+  rel,
+  target,
   eventName,
   eventParams,
 }: TrackedAnchorProps) {
@@ -22,6 +26,8 @@ export function TrackedAnchor({
     <a
       href={href}
       className={className}
+      rel={rel}
+      target={target}
       onClick={() =>
         sendGAEvent("event", eventName, {
           link_url: href,

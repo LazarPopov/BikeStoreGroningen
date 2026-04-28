@@ -63,7 +63,7 @@ body {
 }
 
 /* 4. Button Polish */
-/* Fixes the "Send Email" button which is currently washed out */
+/* Keeps primary action buttons readable on light surfaces */
 .btn-primary {
   background: var(--primary);
   color: white;

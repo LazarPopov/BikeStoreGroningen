@@ -1,19 +1,48 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 const CONSENT_STORAGE_KEY = "bikes_cookie_consent";
-type ConsentValue = "accepted" | "rejected" | null;
+const CONSENT_CHANGE_EVENT = "bikes-cookie-consent-change";
+
+type ConsentValue = "accepted" | "rejected";
+type ConsentSnapshot = ConsentValue | "unknown";
 
 declare global {
   interface Window {
-    dataLayer?: Object[];
     gtag?: (...args: unknown[]) => void;
   }
 }
 
-function applyConsent(consent: Exclude<ConsentValue, null>) {
+function isConsentValue(value: string | null): value is ConsentValue {
+  return value === "accepted" || value === "rejected";
+}
+
+function getConsentSnapshot(): ConsentSnapshot {
+  if (typeof window === "undefined") {
+    return "unknown";
+  }
+
+  const storedConsent = window.localStorage.getItem(CONSENT_STORAGE_KEY);
+  return isConsentValue(storedConsent) ? storedConsent : "unknown";
+}
+
+function subscribeToConsentChange(callback: () => void) {
+  if (typeof window === "undefined") {
+    return () => {};
+  }
+
+  window.addEventListener("storage", callback);
+  window.addEventListener(CONSENT_CHANGE_EVENT, callback);
+
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(CONSENT_CHANGE_EVENT, callback);
+  };
+}
+
+function applyConsent(consent: ConsentValue) {
   if (typeof window === "undefined" || typeof window.gtag !== "function") return;
 
   window.gtag("consent", "update", {
@@ -26,15 +55,18 @@ function applyConsent(consent: Exclude<ConsentValue, null>) {
 
 // Pass gaId as a prop instead of using process.env
 export function SiteGoogleAnalytics({ gaId }: { gaId?: string }) {
-  const [consent, setConsent] = useState<ConsentValue>(null);
-  const [isReady, setIsReady] = useState(false);
+  const consent = useSyncExternalStore<ConsentSnapshot>(
+    subscribeToConsentChange,
+    getConsentSnapshot,
+    () => "unknown"
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const dataLayer = (window.dataLayer = window.dataLayer || []);
     window.gtag = window.gtag || function gtag(...args: unknown[]) {
-      dataLayer.push(args as Object);
+      dataLayer.push(args);
     };
 
     // Default "denied" state for GDPR compliance
@@ -47,19 +79,15 @@ export function SiteGoogleAnalytics({ gaId }: { gaId?: string }) {
       region: ["AT", "BE", "BG", "HR", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MT", "NL", "NO", "PL", "PT", "RO", "SE", "SI", "SK"],
     });
 
-    const storedConsent = window.localStorage.getItem(CONSENT_STORAGE_KEY) as ConsentValue;
-
-    if (storedConsent === "accepted" || storedConsent === "rejected") {
-      setConsent(storedConsent);
-      applyConsent(storedConsent);
+    if (consent !== "unknown") {
+      applyConsent(consent);
     }
-    setIsReady(true);
-  }, []);
+  }, [consent]);
 
-  function handleConsent(nextConsent: Exclude<ConsentValue, null>) {
+  function handleConsent(nextConsent: ConsentValue) {
     window.localStorage.setItem(CONSENT_STORAGE_KEY, nextConsent);
-    setConsent(nextConsent);
     applyConsent(nextConsent);
+    window.dispatchEvent(new Event(CONSENT_CHANGE_EVENT));
   }
 
   // If no ID is provided, don't render anything
@@ -69,7 +97,7 @@ export function SiteGoogleAnalytics({ gaId }: { gaId?: string }) {
     <>
       <GoogleAnalytics gaId={gaId} />
 
-      {isReady && consent === null ? (
+      {consent === "unknown" ? (
         <div className="fixed bottom-4 left-4 right-4 z-[9999] mx-auto max-w-3xl rounded-2xl border border-zinc-300 bg-white p-5 shadow-2xl">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>

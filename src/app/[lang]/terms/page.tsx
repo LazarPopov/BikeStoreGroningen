@@ -65,8 +65,8 @@ export default async function TermsPage({ params }: PageProps) {
           <div className="space-y-4 text-zinc-700">
             <p>
               {lang === "nl"
-                ? `${siteConfig.siteName} is bedoeld als informatie, leadgeneratie en contactplatform voor fietsgerelateerde diensten in ${siteConfig.city}.`
-                : `${siteConfig.siteName} is intended as an information, lead generation, and contact platform for bike related services in ${siteConfig.city}.`}
+                ? `${siteConfig.siteName} is bedoeld als informatie- en contactwebsite voor fietsgerelateerde diensten van ${siteConfig.googleBusinessProfileName} in ${siteConfig.city}.`
+                : `${siteConfig.siteName} is intended as an information and contact website for bike related services by ${siteConfig.googleBusinessProfileName} in ${siteConfig.city}.`}
             </p>
 
             <p>
@@ -77,20 +77,20 @@ export default async function TermsPage({ params }: PageProps) {
 
             <p>
               {lang === "nl"
-                ? "Wanneer leads worden doorgestuurd naar een partner of huurder van het platform, kunnen aanvullende voorwaarden van die partij van toepassing zijn."
-                : "When leads are routed to a partner or renter of the platform, additional terms of that party may apply."}
+                ? `Voor aankopen, reparaties en winkelbezoeken kunnen aanvullende voorwaarden van ${siteConfig.googleBusinessProfileName} gelden.`
+                : `For purchases, repairs, and shop visits, additional terms from ${siteConfig.googleBusinessProfileName} may apply.`}
             </p>
 
             <p>
               {lang === "nl"
-                ? "Er wordt geen garantie gegeven op beschikbaarheid, prijzen of inhoud van derde partijen, tenzij dat later uitdrukkelijk op de website wordt vermeld."
-                : "No guarantee is given regarding third party availability, pricing, or content unless explicitly stated later on the website."}
+                ? "Er wordt geen garantie gegeven op actuele beschikbaarheid of prijzen, tenzij dat uitdrukkelijk door de winkel wordt bevestigd."
+                : "No guarantee is given regarding current availability or prices unless explicitly confirmed by the shop."}
             </p>
 
             <p>
               {lang === "nl"
-                ? "Door de website te gebruiken, stemt de bezoeker in met deze voorwaarden en met het gebruik van de contactmogelijkheden en formulieren op het platform."
-                : "By using the website, the visitor agrees to these terms and to the use of the contact options and forms available on the platform."}
+                ? "Door de website te gebruiken, stemt de bezoeker in met deze voorwaarden en met het gebruik van de contactmogelijkheden op de website."
+                : "By using the website, the visitor agrees to these terms and to the use of the contact options available on the website."}
             </p>
           </div>
         </section>

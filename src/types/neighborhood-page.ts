@@ -4,6 +4,7 @@ export type NeighborhoodPage = {
   slug: string;
   city: string;
   neighborhoodName: string;
+  pageType?: "neighborhood" | "landmark";
   imagePath: string; // Added this property
   title: Record<AppLanguage, string>;
   shortTitle: Record<AppLanguage, string>;

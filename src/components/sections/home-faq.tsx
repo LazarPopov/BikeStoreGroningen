@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { AppLanguage } from "@/lib/config/i18n";
 import { homeFaqs } from "@/data/home-faqs";
 
@@ -26,13 +27,17 @@ export function HomeFaq({ lang }: HomeFaqProps) {
             </p>
           </div>
 
-          <div className="relative w-full max-w-md overflow-hidden rounded-2xl">
-            {/* Note: Ensure faq.jpeg is placed in your /public directory if using Next.js */}
-            <img 
-              src="/images/faq.jpg" 
-              alt={lang === "nl" ? "Veelgestelde vragen illustratie" : "FAQ illustration"} 
-              className="h-auto w-full object-cover"
-              loading="lazy"
+          <div className="relative aspect-[4/3] w-full max-w-md overflow-hidden rounded-2xl">
+            <Image
+              src="/images/faq.jpg"
+              alt={
+                lang === "nl"
+                  ? "Veelgestelde vragen illustratie"
+                  : "FAQ illustration"
+              }
+              fill
+              sizes="(max-width: 1024px) 100vw, 448px"
+              className="object-cover"
             />
           </div>
         </div>

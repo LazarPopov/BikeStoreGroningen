@@ -1,5 +1,6 @@
 // src/components/sections/home-services.tsx
 
+import Image from "next/image";
 import type { AppLanguage } from "@/lib/config/i18n";
 import type { SiteConfig } from "@/types/site";
 import { ArrowRight } from "lucide-react";
@@ -21,8 +22,8 @@ export function HomeServices({ siteConfig, lang }: HomeServicesProps) {
     title: lang === "nl" ? "Onze Diensten" : "Our Services",
     subtitle:
       lang === "nl"
-        ? "Kwaliteitsoplossingen voor elke fietser in Groningen."
-        : "Quality solutions for every cyclist in Groningen.",
+        ? "Reparatie, studentenfietsen, tweedehands fietsen en accessoires voor dagelijks fietsen in Groningen."
+        : "Repairs, student bikes, second-hand bikes, and accessories for everyday cycling in Groningen.",
   };
 
   return (
@@ -44,9 +45,11 @@ export function HomeServices({ siteConfig, lang }: HomeServicesProps) {
             className="group flex flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md"
           >
             <div className="relative aspect-[16/10] overflow-hidden">
-              <img
+              <Image
                 src={page.imageUrl || "/images/services.jpg"}
                 alt={page.shortTitle[lang]}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />

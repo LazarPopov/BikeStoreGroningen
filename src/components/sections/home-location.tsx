@@ -16,14 +16,14 @@ export function HomeLocation({ siteConfig, lang }: HomeLocationProps) {
 
         <h2 className="mb-4 text-2xl font-semibold text-zinc-900">
           {lang === "nl"
-            ? `Fietsopties in ${siteConfig.city}`
-            : `Bike options in ${siteConfig.city}`}
+            ? `Fietsenmaker in ${siteConfig.city}`
+            : `Bike repair shop in ${siteConfig.city}`}
         </h2>
 
         <p className="mb-4 text-zinc-700">
           {lang === "nl"
-            ? `${siteConfig.siteName} richt zich op ${siteConfig.city} en buurten zoals ${siteConfig.neighborhoods.join(", ")}.`
-            : `${siteConfig.siteName} focuses on ${siteConfig.city} and neighborhoods such as ${siteConfig.neighborhoods.join(", ")}.`}
+            ? `${siteConfig.googleBusinessProfileName} helpt fietsers in ${siteConfig.city} met reparatie, tweedehands fietsen, nieuwe fietsen en accessoires. Bel de winkel of open de route op Google Maps.`
+            : `${siteConfig.googleBusinessProfileName} helps cyclists in ${siteConfig.city} with repairs, second-hand bikes, new bikes, and accessories. Call the shop or open directions on Google Maps.`}
         </p>
 
         <div className="mb-4 space-y-2 text-zinc-700">
@@ -43,14 +43,22 @@ export function HomeLocation({ siteConfig, lang }: HomeLocationProps) {
           </p>
         </div>
 
-        <a
-          href={siteConfig.googleBusinessUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block rounded-xl bg-black px-5 py-3 text-white"
-        >
-          {lang === "nl" ? "Bekijk op Google" : "View on Google"}
-        </a>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <a
+            href={`tel:${siteConfig.phoneNumber}`}
+            className="inline-block rounded-xl bg-black px-5 py-3 text-center text-white"
+          >
+            {lang === "nl" ? "Bel de winkel" : "Call the shop"}
+          </a>
+          <a
+            href={siteConfig.googleBusinessUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block rounded-xl border border-zinc-300 px-5 py-3 text-center font-medium text-zinc-900"
+          >
+            {lang === "nl" ? "Route op Google Maps" : "Directions on Google Maps"}
+          </a>
+        </div>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50">

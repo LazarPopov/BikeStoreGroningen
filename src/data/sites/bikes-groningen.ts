@@ -26,61 +26,73 @@ export const bikesGroningenConfig: SiteConfig = {
     { day: "Friday", open: "09:00", close: "18:00" },
     { day: "Saturday", open: "10:00", close: "17:00" },
     { day: "Sunday", open: "Closed", close: "Closed" },
-  ],  
+  ],
 
   // --- Integrations & Maps ---
-  googleBusinessUrl: "https://www.google.com/maps/place/The+two+wheels/@53.2122962,6.5532358,17z/data=!3m1!4b1!4m6!3m5!1s0x47c9cd4cee974487:0x2c076c431da266a8!8m2!3d53.212293!4d6.5558161!16s%2Fg%2F1th7xltm?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D",
+  googleBusinessUrl:
+    "https://www.google.com/maps/place/The+two+wheels/@53.2122962,6.5532358,17z/data=!3m1!4b1!4m6!3m5!1s0x47c9cd4cee974487:0x2c076c431da266a8!8m2!3d53.212293!4d6.5558161!16s%2Fg%2F1th7xltm?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D",
   googleBusinessProfileName: "De Twee Wielen",
   googleReviewRating: 4.2,
   googleReviewCount: 102,
-  mapEmbedUrl: "https://www.google.com/maps?q=Paterswoldseweg+30,+9726+BD+Groningen&output=embed",
+  mapEmbedUrl:
+    "https://www.google.com/maps?q=Paterswoldseweg+30,+9726+BD+Groningen&output=embed",
 
   latitude: 53.208,
   longitude: 6.551,
 
   // --- Content ---
   heroTitle: {
-    en: "Bikes in Groningen from De Twee wielen",
-    nl: "Fietsen in Groningen van De Twee wielen",
+    en: "Bike Repair & Bike Shop in Groningen",
+    nl: "Fietsenmaker en fietsenwinkel in Groningen",
   },
 
   heroSubtitle: {
-    en: "Find bikes, repairs, and local bike help in Groningen through our current bike partner De Twee wielen.",
-    nl: "Vind fietsen, reparaties en lokale fietshulp in Groningen via onze huidige fietspartner De Twee wielen.",
+    en: "Call or visit De Twee Wielen on Paterswoldseweg for bike repair, second-hand bikes, student bikes, new bikes, and practical cycling help in Groningen.",
+    nl: "Bel of bezoek De Twee Wielen aan de Paterswoldseweg voor fietsreparatie, tweedehands fietsen, studentenfietsen, nieuwe fietsen en praktische fietshulp in Groningen.",
   },
 
   callToActionText: {
-    en: "Call De Twee Wielen",
-    nl: "Bel De Twee Wielen",
+    en: "Call for bike repair",
+    nl: "Bel voor fietsreparatie",
   },
 
   contactPersonName: "De Twee Wielen",
 
-  neighborhoods: ["Vinkhuizen", "Helpman", "Korrewegwijk"],
+  neighborhoods: [
+    "Vinkhuizen",
+    "Helpman",
+    "Korrewegwijk",
+    "Centrum",
+    "Selwerd",
+    "Paddepoel",
+    "Oosterpoort",
+    "Beijum",
+    "Oosterparkwijk",
+  ],
 
   whatsappNumber: "+31644910369",
   whatsappPrefilledMessage: {
     en: "Hi, I am interested in bike options in Groningen.",
-    nl: "Hoi, ik ben geïnteresseerd in fietsopties in Groningen.",
+    nl: "Hoi, ik ben geinteresseerd in fietsopties in Groningen.",
   },
 
   // --- SEO ---
-seoDefaults: {
+  seoDefaults: {
     en: {
-      metaTitle: "Bike Shop Groningen | Repair & Sales", 
+      metaTitle: "Bike Repair Groningen | De Twee Wielen Bike Shop",
       metaDescription:
-        "Fast bike repairs, affordable second-hand bikes, and premium accessories in Groningen. Expert service for students and locals at De Twee Wielen.",
-      ogTitle: "Bikes & Repair Groningen | De Twee Wielen",
+        "Need a bike repair shop in Groningen? Call or visit De Twee Wielen for repairs, student bikes, second-hand bikes, locks, lights, and expat-friendly cycling help.",
+      ogTitle: "Bike Repair & Bike Shop Groningen | De Twee Wielen",
       ogDescription:
-        "Expert bike services in the heart of Groningen. From flat tires to new e-bikes, De Twee Wielen keeps you cycling safely.",
+        "Fast bike repairs, reliable bikes, student bikes, and practical cycling help from De Twee Wielen in Groningen.",
     },
     nl: {
-      metaTitle: "Fietsenmaker Groningen | Reparatie & Koop",
+      metaTitle: "Fietsenmaker Groningen | De Twee Wielen",
       metaDescription:
-        "Snelle fietsreparaties, betaalbare tweedehands fietsen en premium accessoires in Groningen. Dé fietsspecialist voor studenten en locals.",
-      ogTitle: "Fietsen & Reparatie Groningen | De Twee Wielen",
+        "Fietsenmaker in Groningen voor reparatie, studentenfietsen, tweedehands fietsen, sloten, verlichting en praktische hulp voor studenten en expats.",
+      ogTitle: "Fietsenmaker & fietsenwinkel Groningen | De Twee Wielen",
       ogDescription:
-        "Vakkundige fietsservice in het hart van Groningen. Van een lekke band tot nieuwe e-bikes, De Twee Wielen helpt u veilig op weg.",
+        "Snelle fietsreparaties, betrouwbare fietsen, studentenfietsen en praktische fietshulp van De Twee Wielen in Groningen.",
     },
   },
 

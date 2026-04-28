@@ -1,6 +1,7 @@
 // src/app/[lang]/services/[slug]/page.tsx
 
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -116,10 +117,33 @@ export default async function ServicePage({ params }: PageProps) {
       href: `/${lang}/services/${page.slug}`,
     }));
 
-  const relatedNeighborhoodLinks = getNeighborhoodPagesByCity(siteConfig.city)
-    .slice(0, 5)
+  const localPagePriority = [
+    "zernike-campus",
+    "groningen-station",
+    "grote-markt",
+    "centrum",
+    "korrewegwijk",
+    "paddepoel",
+  ];
+
+  const relatedNeighborhoodLinks = [...getNeighborhoodPagesByCity(siteConfig.city)]
+    .sort((first, second) => {
+      const firstIndex = localPagePriority.indexOf(first.slug);
+      const secondIndex = localPagePriority.indexOf(second.slug);
+
+      return (
+        (firstIndex === -1 ? localPagePriority.length : firstIndex) -
+        (secondIndex === -1 ? localPagePriority.length : secondIndex)
+      );
+    })
+    .slice(0, 6)
     .map((page) => ({
-      label: page.shortTitle[lang],
+      label:
+        page.pageType === "landmark"
+          ? lang === "nl"
+            ? `Fietsenmaker nabij ${page.shortTitle[lang]}`
+            : `Bike repair near ${page.shortTitle[lang]}`
+          : page.shortTitle[lang],
       href: `/${lang}/buurten/${page.slug}`,
     }));
 
@@ -146,10 +170,12 @@ export default async function ServicePage({ params }: PageProps) {
           </h1>
 
           {servicePage.imageUrl && (
-            <div className="mb-8 overflow-hidden rounded-3xl border border-zinc-200">
-              <img
+            <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-3xl border border-zinc-200">
+              <Image
                 src={servicePage.imageUrl}
                 alt={servicePage.title[lang]}
+                fill
+                sizes="(max-width: 1024px) 100vw, 896px"
                 className="h-full w-full object-cover"
               />
             </div>
@@ -160,38 +186,54 @@ export default async function ServicePage({ params }: PageProps) {
           </p>
 
           <div className="space-y-8 text-lg leading-8 text-zinc-700">
-            {servicePage.paragraphs[lang].map((paragraph, index) => (
-              <div key={`${servicePage.slug}-${index}`} className="space-y-4">
-                {servicePage.paragraphImages?.[index] && (
-                  <div className="overflow-hidden rounded-3xl border border-zinc-200">
-                    <img
-                      src={servicePage.paragraphImages[index]}
-                      alt={`${servicePage.title[lang]} ${index + 1}`}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                )}
+            {servicePage.paragraphs[lang].map((paragraph, index) => {
+              const paragraphImage = servicePage.paragraphImages?.[index];
 
-                <p>{paragraph}</p>
-              </div>
-            ))}
+              return (
+                <div key={`${servicePage.slug}-${index}`} className="space-y-4">
+                  {paragraphImage && (
+                    <div className="relative aspect-[16/9] overflow-hidden rounded-3xl border border-zinc-200">
+                      <Image
+                        src={paragraphImage}
+                        alt={`${servicePage.title[lang]} ${index + 1}`}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 896px"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  )}
+
+                  <p>{paragraph}</p>
+                </div>
+              );
+            })}
           </div>
 
           <div className="mt-10 rounded-2xl bg-zinc-100 p-6">
             <h2 className="mb-3 text-2xl font-semibold">
-              {lang === "nl" ? "Volgende stap" : "Next Step"}
+              {lang === "nl" ? "Bel of kom langs" : "Call or visit"}
             </h2>
             <p className="mb-4 text-zinc-700">
               {lang === "nl"
-                ? "Gebruik de contactpagina om je wensen door te geven en snel fietsopties of hulp te ontvangen."
-                : "Use the contact page to share your requirements and get bike options or help quickly."}
+                ? `${siteConfig.googleBusinessProfileName} helpt je direct in de winkel met reparatie, advies en fietsopties in ${siteConfig.city}.`
+                : `${siteConfig.googleBusinessProfileName} can help you directly at the shop with repairs, advice, and bike options in ${siteConfig.city}.`}
             </p>
-            <a
-              href={`/${lang}/contact`}
-              className="inline-block rounded-xl bg-black px-5 py-3 text-white"
-            >
-              {lang === "nl" ? "Ga naar contact" : "Go to contact"}
-            </a>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <a
+                href={`tel:${siteConfig.phoneNumber}`}
+                className="inline-block rounded-xl bg-black px-5 py-3 text-center text-white"
+              >
+                {lang === "nl" ? "Bel de winkel" : "Call the shop"}
+              </a>
+              <a
+                href={siteConfig.googleBusinessUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-xl border border-zinc-300 bg-white px-5 py-3 text-center font-medium text-zinc-900"
+              >
+                {lang === "nl" ? "Route op Google Maps" : "Directions on Google Maps"}
+              </a>
+            </div>
           </div>
         </article>
 
@@ -207,8 +249,8 @@ export default async function ServicePage({ params }: PageProps) {
         <RelatedLinks
           title={
             lang === "nl"
-              ? "Buurten in Groningen"
-              : "Neighborhoods in Groningen"
+              ? "Lokale pagina's in Groningen"
+              : "Local pages in Groningen"
           }
           items={relatedNeighborhoodLinks}
         />

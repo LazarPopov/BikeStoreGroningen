@@ -6,7 +6,6 @@ type HomeReviewsProps = {
   lang: AppLanguage;
 };
 
-// Helper component to render visual stars
 const StarRating = ({ rating }: { rating: number }) => {
   return (
     <div className="flex gap-1 text-yellow-400">
@@ -23,6 +22,15 @@ const StarRating = ({ rating }: { rating: number }) => {
   );
 };
 
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("");
+}
+
 export function HomeReviews({ siteConfig, lang }: HomeReviewsProps) {
   return (
     <section className="py-8">
@@ -32,8 +40,8 @@ export function HomeReviews({ siteConfig, lang }: HomeReviewsProps) {
         </h2>
         <p className="mt-3 text-lg text-zinc-600">
           {lang === "nl"
-            ? "Voorbeeldreviews die later makkelijk vervangbaar moeten zijn per huurder of partner."
-            : "Example reviews that must later be easy to swap per renter or partner."}
+            ? "Ervaringen van klanten die langskwamen voor fietsen, reparaties en lokale hulp."
+            : "Customer experiences from bike purchases, repairs, and local support."}
         </p>
       </div>
 
@@ -51,28 +59,21 @@ export function HomeReviews({ siteConfig, lang }: HomeReviewsProps) {
                 </span>
               </div>
               <blockquote className="mb-6 text-zinc-700 leading-relaxed">
-                "{review.reviewText}"
+                {review.reviewText}
               </blockquote>
             </div>
 
             <div className="flex items-center gap-4 border-t border-zinc-100 pt-4">
-              {/* Profile Picture */}
-              <img
-                // Falls back to a generated initial avatar if review.avatarUrl doesn't exist yet
-                src={
-                  (review as any).avatarUrl ||
-                  `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                    review.reviewerName
-                  )}&background=f4f4f5&color=27272a`
-                }
-                alt={`${review.reviewerName}'s profile picture`}
-                className="h-12 w-12 rounded-full object-cover shadow-sm"
-              />
+              <div
+                aria-hidden="true"
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-sm font-bold text-zinc-800 shadow-sm"
+              >
+                {getInitials(review.reviewerName)}
+              </div>
               <div>
                 <p className="font-semibold text-zinc-900">{review.reviewerName}</p>
-                {/* Optional: Add role/title if you update the data model later */}
-                {(review as any).reviewerRole && (
-                  <p className="text-sm text-zinc-500">{(review as any).reviewerRole}</p>
+                {review.reviewerRole && (
+                  <p className="text-sm text-zinc-500">{review.reviewerRole}</p>
                 )}
               </div>
             </div>

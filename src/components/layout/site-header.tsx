@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MapPin, Phone, Globe, ChevronDown } from "lucide-react";
+import { MapPin, Phone, Globe } from "lucide-react";
 import type { AppLanguage } from "@/lib/config/i18n";
 import type { SiteConfig } from "@/types/site";
-import { cn } from "@/lib/utils"; 
+import { cn } from "@/lib/utils";
 
 type SiteHeaderProps = {
   siteConfig: SiteConfig;
@@ -20,6 +20,7 @@ export function SiteHeader({ siteConfig, lang }: SiteHeaderProps) {
       ? {
           home: "Home",
           services: "Diensten",
+          neighborhoods: "Buurten",
           about: "Over",
           contact: "Contact",
           call: "Bel nu",
@@ -28,6 +29,7 @@ export function SiteHeader({ siteConfig, lang }: SiteHeaderProps) {
       : {
           home: "Home",
           services: "Services",
+          neighborhoods: "Areas",
           about: "About",
           contact: "Contact",
           call: "Call now",
@@ -42,6 +44,7 @@ export function SiteHeader({ siteConfig, lang }: SiteHeaderProps) {
 
   // SEO: Check if we are on any service-related page to highlight the nav
   const isServicesActive = pathname?.includes(`/${lang}/services`);
+  const isNeighborhoodsActive = pathname?.includes(`/${lang}/buurten`);
 
   return (
     <header className="flex flex-col gap-3">
@@ -106,6 +109,17 @@ export function SiteHeader({ siteConfig, lang }: SiteHeaderProps) {
               )}
             >
               {labels.services}
+            </Link>
+
+            <Link
+              href={`/${lang}/buurten`}
+              className={cn(
+                "transition-colors hover:text-black",
+                isNeighborhoodsActive &&
+                  "text-black underline decoration-zinc-300 underline-offset-8"
+              )}
+            >
+              {labels.neighborhoods}
             </Link>
 
             <Link 

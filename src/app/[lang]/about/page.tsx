@@ -70,24 +70,6 @@ export default async function AboutPage({ params }: PageProps) {
   const siteConfig = getSiteConfig("bikes-groningen");
   const isDutch = lang === "nl";
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BikeStore",
-    name: siteConfig.googleBusinessProfileName,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: siteConfig.address,
-      addressLocality: siteConfig.city,
-      postalCode: siteConfig.postalCode,
-      addressCountry: "NL",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: siteConfig.googleReviewRating,
-      reviewCount: siteConfig.googleReviewCount,
-    },
-  };
-
   const serviceLinks = [
     {
       href: `/${lang}/services/second-hand-bikes`,
@@ -147,11 +129,6 @@ export default async function AboutPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-white px-6 py-10">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-
       <div className="mx-auto max-w-6xl space-y-8">
         <SiteHeader siteConfig={siteConfig} lang={lang} />
 
@@ -161,7 +138,7 @@ export default async function AboutPage({ params }: PageProps) {
               src="/images/bikes-groningen-hero.jpg"
               alt="bike-store-groningen"
               fill
-              priority
+              preload
               className="object-cover"
             />
           </div>
@@ -180,9 +157,9 @@ export default async function AboutPage({ params }: PageProps) {
             <p className="max-w-4xl text-lg text-zinc-700">
               {isDutch ? (
                 <>
-                  {siteConfig.siteName} is het lokale platform voor mensen die in{" "}
-                  {siteConfig.city} een fiets zoeken. Via onze huidige
-                  fietspartner {siteConfig.googleBusinessProfileName} helpen we
+                  {siteConfig.googleBusinessProfileName} is de lokale
+                  fietsenwinkel voor mensen die in {siteConfig.city} een
+                  betrouwbare fiets of snelle reparatie zoeken. We helpen
                   studenten, expats en dagelijkse fietsers met{" "}
                   <Link
                     href={`/${lang}/services/second-hand-bikes`}
@@ -208,10 +185,10 @@ export default async function AboutPage({ params }: PageProps) {
                 </>
               ) : (
                 <>
-                  {siteConfig.siteName} is the local platform for people looking
-                  for a bike in {siteConfig.city}. Through our current bike
-                  partner {siteConfig.googleBusinessProfileName}, we help
-                  students, expats, and daily riders with{" "}
+                  {siteConfig.googleBusinessProfileName} is the local bike shop
+                  for people looking for a reliable bike or fast repair in{" "}
+                  {siteConfig.city}. We help students, expats, and daily riders
+                  with{" "}
                   <Link
                     href={`/${lang}/services/second-hand-bikes`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
@@ -258,7 +235,7 @@ export default async function AboutPage({ params }: PageProps) {
                 {isDutch ? (
                   <>
                     Zoek je een betaalbare optie voor dagelijks gebruik? Bekijk
-                    dan onze pagina's voor{" "}
+                    dan onze pagina&apos;s voor{" "}
                     <Link
                       href={`/${lang}/services/student-bikes`}
                       className="font-medium text-zinc-900 underline underline-offset-4"
@@ -335,6 +312,22 @@ export default async function AboutPage({ params }: PageProps) {
             </h2>
 
             <div className="space-y-3 text-zinc-700">
+              <div className="grid gap-3 pb-3 sm:grid-cols-2">
+                <a
+                  href={`tel:${siteConfig.phoneNumber}`}
+                  className="rounded-xl bg-zinc-900 px-4 py-3 text-center text-sm font-semibold text-white"
+                >
+                  {isDutch ? "Bel de winkel" : "Call the shop"}
+                </a>
+                <a
+                  href={siteConfig.googleBusinessUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-xl border border-zinc-300 px-4 py-3 text-center text-sm font-semibold text-zinc-900"
+                >
+                  {isDutch ? "Route" : "Directions"}
+                </a>
+              </div>
               <p>
                 <strong>{isDutch ? "Partner:" : "Partner:"}</strong>{" "}
                 {siteConfig.googleBusinessProfileName}
@@ -377,21 +370,6 @@ export default async function AboutPage({ params }: PageProps) {
                   className="text-zinc-900 underline underline-offset-4"
                 >
                   {isDutch ? "Bekijk bedrijfsprofiel" : "View business profile"}
-                </a>
-              </p>
-              <p>
-                <strong>WhatsApp:</strong>{" "}
-                <a
-                  href={`https://wa.me/${siteConfig.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
-                    isDutch
-                      ? siteConfig.whatsappPrefilledMessage.nl
-                      : siteConfig.whatsappPrefilledMessage.en
-                  )}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-zinc-900 underline underline-offset-4"
-                >
-                  {siteConfig.whatsappNumber}
                 </a>
               </p>
             </div>
@@ -540,8 +518,9 @@ export default async function AboutPage({ params }: PageProps) {
             <p>
               {isDutch ? (
                 <>
-                  Op de site gebruiken we de titel "{siteConfig.heroTitle.nl}"
-                  en de ondertitel "{siteConfig.heroSubtitle.nl}" om direct
+                  Op de site gebruiken we de titel{" "}
+                  <q>{siteConfig.heroTitle.nl}</q> en de ondertitel{" "}
+                  <q>{siteConfig.heroSubtitle.nl}</q> om direct
                   duidelijk te maken wat bezoekers kunnen verwachten. Lees ook
                   meer over{" "}
                   <Link
@@ -589,9 +568,10 @@ export default async function AboutPage({ params }: PageProps) {
                 </>
               ) : (
                 <>
-                  On the site we use the title "{siteConfig.heroTitle.en}" and
-                  the subtitle "{siteConfig.heroSubtitle.en}" to make it
-                  immediately clear what visitors can expect. You can also read
+                  On the site we use the title{" "}
+                  <q>{siteConfig.heroTitle.en}</q> and the subtitle{" "}
+                  <q>{siteConfig.heroSubtitle.en}</q> to make it immediately
+                  clear what visitors can expect. You can also read
                   more about{" "}
                   <Link
                     href={`/${lang}/services/second-hand-bikes`}
@@ -633,6 +613,61 @@ export default async function AboutPage({ params }: PageProps) {
                     className="font-medium text-zinc-900 underline underline-offset-4"
                   >
                     accessories
+                  </Link>
+                  .
+                </>
+              )}
+            </p>
+
+            <p>
+              {isDutch ? (
+                <>
+                  Voor lokale zoekvragen bouwen we ook duidelijke pagina&apos;s
+                  rond{" "}
+                  <Link
+                    href={`/${lang}/buurten/zernike-campus`}
+                    className="font-medium text-zinc-900 underline underline-offset-4"
+                  >
+                    fietsenmaker nabij Zernike Campus
+                  </Link>
+                  ,{" "}
+                  <Link
+                    href={`/${lang}/buurten/groningen-station`}
+                    className="font-medium text-zinc-900 underline underline-offset-4"
+                  >
+                    fietsenwinkel nabij Station Groningen
+                  </Link>{" "}
+                  en{" "}
+                  <Link
+                    href={`/${lang}/buurten/grote-markt`}
+                    className="font-medium text-zinc-900 underline underline-offset-4"
+                  >
+                    fietsreparatie nabij Grote Markt
+                  </Link>
+                  .
+                </>
+              ) : (
+                <>
+                  For local searches, we also keep clear pages around{" "}
+                  <Link
+                    href={`/${lang}/buurten/zernike-campus`}
+                    className="font-medium text-zinc-900 underline underline-offset-4"
+                  >
+                    bike repair near Zernike Campus
+                  </Link>
+                  ,{" "}
+                  <Link
+                    href={`/${lang}/buurten/groningen-station`}
+                    className="font-medium text-zinc-900 underline underline-offset-4"
+                  >
+                    bike shop near Groningen Station
+                  </Link>
+                  , and{" "}
+                  <Link
+                    href={`/${lang}/buurten/grote-markt`}
+                    className="font-medium text-zinc-900 underline underline-offset-4"
+                  >
+                    bike repair near Grote Markt
                   </Link>
                   .
                 </>

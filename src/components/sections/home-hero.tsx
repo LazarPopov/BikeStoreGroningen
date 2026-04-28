@@ -44,16 +44,18 @@ export function HomeHero({ siteConfig, lang }: HomeHeroProps) {
             </TrackedAnchor>
 
             <TrackedAnchor
-              href={`mailto:${siteConfig.email}`}
+              href={siteConfig.googleBusinessUrl}
               className="rounded-xl border-2 border-zinc-200 bg-white px-6 py-3.5 text-center font-medium text-zinc-900 transition-colors hover:border-zinc-300 hover:bg-zinc-50 active:scale-95"
-              eventName="click_email"
+              target="_blank"
+              rel="noopener noreferrer"
+              eventName="click_google_maps"
               eventParams={{
                 placement: "home_hero",
                 city: siteConfig.city,
                 language: lang,
               }}
             >
-              {lang === "nl" ? "E-mail sturen" : "Send Email"}
+              {lang === "nl" ? "Route op Google Maps" : "Directions on Google Maps"}
             </TrackedAnchor>
           </div>
         </div>
@@ -66,7 +68,7 @@ export function HomeHero({ siteConfig, lang }: HomeHeroProps) {
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover transition-transform duration-700 group-hover:scale-105"
-            priority
+            preload
           />
         </div>
 

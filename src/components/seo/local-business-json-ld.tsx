@@ -10,6 +10,7 @@ export function LocalBusinessJsonLd({
   siteConfig,
   lang,
 }: LocalBusinessJsonLdProps) {
+  const baseUrl = `https://${siteConfig.domain}`;
   const openingHoursSpecification = siteConfig.openingHours
     .filter((item) => item.open !== "Closed" && item.close !== "Closed")
     .map((item) => ({
@@ -22,8 +23,15 @@ export function LocalBusinessJsonLd({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BikeStore",
-    name: siteConfig.siteName,
-    url: `https://${siteConfig.domain}/${lang}`,
+    "@id": `${baseUrl}/#local-business`,
+    name: siteConfig.googleBusinessProfileName,
+    alternateName: siteConfig.siteName,
+    description:
+      lang === "nl"
+        ? `Fietsenmaker en fietsenwinkel in ${siteConfig.city} voor reparaties, tweedehands fietsen, nieuwe fietsen, sloten en verlichting.`
+        : `Bike repair shop and bike store in ${siteConfig.city} for repairs, second-hand bikes, new bikes, locks, and lights.`,
+    image: `${baseUrl}/images/bikes-groningen-hero.jpg`,
+    url: `${baseUrl}/${lang}`,
     telephone: siteConfig.phoneNumber,
     email: siteConfig.email,
     address: {
@@ -31,7 +39,7 @@ export function LocalBusinessJsonLd({
       streetAddress: siteConfig.address,
       postalCode: siteConfig.postalCode,
       addressLocality: siteConfig.city,
-      addressCountry: siteConfig.country,
+      addressCountry: "NL",
     },
     geo: {
       "@type": "GeoCoordinates",
@@ -39,10 +47,45 @@ export function LocalBusinessJsonLd({
       longitude: siteConfig.longitude,
     },
     hasMap: siteConfig.googleBusinessUrl,
-    areaServed: siteConfig.neighborhoods.map((neighborhood) => ({
-      "@type": "Place",
-      name: `${neighborhood}, ${siteConfig.city}`,
-    })),
+    sameAs: [siteConfig.googleBusinessUrl],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: siteConfig.googleReviewRating,
+      reviewCount: siteConfig.googleReviewCount,
+    },
+    areaServed: [
+      {
+        "@type": "City",
+        name: siteConfig.city,
+      },
+      ...siteConfig.neighborhoods.map((neighborhood) => ({
+        "@type": "Place",
+        name: `${neighborhood}, ${siteConfig.city}`,
+      })),
+    ],
+    makesOffer: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: lang === "nl" ? "Fietsreparatie" : "Bike repair",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Product",
+          name: lang === "nl" ? "Tweedehands fietsen" : "Second-hand bikes",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Product",
+          name: lang === "nl" ? "Nieuwe fietsen" : "New bikes",
+        },
+      },
+    ],
     openingHoursSpecification,
   };
 

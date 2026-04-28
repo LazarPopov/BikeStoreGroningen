@@ -65,8 +65,8 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
           <div className="space-y-4 text-zinc-700">
             <p>
               {lang === "nl"
-                ? `${siteConfig.siteName} kan persoonsgegevens verzamelen wanneer een bezoeker contact opneemt of een leadformulier invult.`
-                : `${siteConfig.siteName} may collect personal data when a visitor gets in touch or fills in a lead form.`}
+                ? `${siteConfig.siteName} kan persoonsgegevens verzamelen wanneer een bezoeker contact opneemt met ${siteConfig.googleBusinessProfileName}.`
+                : `${siteConfig.siteName} may collect personal data when a visitor gets in touch with ${siteConfig.googleBusinessProfileName}.`}
             </p>
 
             <p>
@@ -77,8 +77,8 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
 
             <p>
               {lang === "nl"
-                ? "De gegevens worden gebruikt om contact op te nemen, aanvragen te verwerken, leads door te sturen naar de juiste partner en de dienstverlening te verbeteren."
-                : "The data is used to respond to inquiries, process requests, route leads to the correct partner, and improve the service."}
+                ? "De gegevens worden gebruikt om contact op te nemen, aanvragen te verwerken en de dienstverlening te verbeteren."
+                : "The data is used to respond to inquiries, process requests, and improve the service."}
             </p>
 
             <p>

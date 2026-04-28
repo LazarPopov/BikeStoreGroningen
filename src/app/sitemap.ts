@@ -6,13 +6,9 @@ import { getNeighborhoodPagesByCity } from "@/data/neighborhood-pages";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteConfig = getSiteConfig("bikes-groningen");
-  
-  // NOTE: Ensure your siteConfig.domain is set to "www.bikestoregroningen.nl" 
-  // so it matches your live URLs!
   const baseUrl = `https://${siteConfig.domain}`;
 
-  // 1. Added "/services" and "/buurten" so the index pages are indexed by Google
-  const staticRoutes = ["", "/about", "/contact", "/blog", "/services", "/buurten"] as const;
+  const staticRoutes = ["", "/about", "/contact", "/services", "/buurten"] as const;
 
   const staticEntries: MetadataRoute.Sitemap = SUPPORTED_LANGUAGES.flatMap((lang) =>
     staticRoutes.map((route) => ({

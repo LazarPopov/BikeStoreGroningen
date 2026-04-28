@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { RelatedLinks } from "@/components/common/related-links";
 import { getSiteConfig } from "@/lib/config/get-site-config";
 import {
   getNeighborhoodPageBySlug,
@@ -100,6 +101,8 @@ export default async function NeighborhoodPage({ params }: PageProps) {
   }
 
   const canonicalUrl = `https://${siteConfig.domain}/${lang}/buurten/${neighborhoodPage.slug}`;
+  const isDutch = lang === "nl";
+  const isLandmark = neighborhoodPage.pageType === "landmark";
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -119,6 +122,25 @@ export default async function NeighborhoodPage({ params }: PageProps) {
     },
   };
 
+  const relatedServiceLinks = [
+    {
+      label: isDutch ? "Fietsreparatie Groningen" : "Bike repair in Groningen",
+      href: `/${lang}/services/bike-repair`,
+    },
+    {
+      label: isDutch ? "Studentenfietsen Groningen" : "Student bikes in Groningen",
+      href: `/${lang}/services/student-bikes`,
+    },
+    {
+      label: isDutch ? "Tweedehands fietsen Groningen" : "Second-hand bikes in Groningen",
+      href: `/${lang}/services/second-hand-bikes`,
+    },
+    {
+      label: isDutch ? "Sloten en verlichting" : "Locks and lights",
+      href: `/${lang}/services/bike-accessories`,
+    },
+  ];
+
   return (
     <main className="min-h-screen bg-white px-6 py-10">
       <script
@@ -131,7 +153,14 @@ export default async function NeighborhoodPage({ params }: PageProps) {
 
         <article className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
           <p className="mb-3 text-sm uppercase tracking-wide text-zinc-500">
-            {siteConfig.city} | {neighborhoodPage.neighborhoodName}
+            {siteConfig.city} |{" "}
+            {isLandmark
+              ? isDutch
+                ? "Lokale zoekplek"
+                : "Local landmark"
+              : isDutch
+                ? "Buurt"
+                : "Neighborhood"}
           </p>
 
           <h1 className="mb-4 text-4xl font-bold text-zinc-900">
@@ -147,7 +176,47 @@ export default async function NeighborhoodPage({ params }: PageProps) {
               <p key={`${neighborhoodPage.slug}-${index}`}>{paragraph}</p>
             ))}
           </div>
+
+          <div className="mt-10 rounded-2xl bg-zinc-100 p-6">
+            <h2 className="mb-3 text-2xl font-semibold">
+              {isDutch ? "Bel of open de route" : "Call or get directions"}
+            </h2>
+            <p className="mb-4 text-zinc-700">
+              {isLandmark
+                ? isDutch
+                  ? `${siteConfig.googleBusinessProfileName} helpt fietsers rond ${neighborhoodPage.neighborhoodName} vanuit de winkel aan ${siteConfig.address}.`
+                  : `${siteConfig.googleBusinessProfileName} helps cyclists around ${neighborhoodPage.neighborhoodName} from the shop on ${siteConfig.address}.`
+                : isDutch
+                  ? `${siteConfig.googleBusinessProfileName} helpt fietsers uit ${neighborhoodPage.neighborhoodName} bij de winkel aan ${siteConfig.address}.`
+                  : `${siteConfig.googleBusinessProfileName} helps cyclists from ${neighborhoodPage.neighborhoodName} at the shop on ${siteConfig.address}.`}
+            </p>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <a
+                href={`tel:${siteConfig.phoneNumber}`}
+                className="inline-block rounded-xl bg-black px-5 py-3 text-center text-white"
+              >
+                {lang === "nl" ? "Bel de winkel" : "Call the shop"}
+              </a>
+              <a
+                href={siteConfig.googleBusinessUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-xl border border-zinc-300 bg-white px-5 py-3 text-center font-medium text-zinc-900"
+              >
+                {lang === "nl" ? "Route op Google Maps" : "Directions on Google Maps"}
+              </a>
+            </div>
+          </div>
         </article>
+
+        <RelatedLinks
+          title={
+            isDutch
+              ? "Handige services voor deze locatie"
+              : "Useful services for this area"
+          }
+          items={relatedServiceLinks}
+        />
 
         <SiteFooter siteConfig={siteConfig} lang={lang} />
       </div>

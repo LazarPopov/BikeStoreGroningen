@@ -57,41 +57,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
-  // JSON-LD Structured Data for Local SEO
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BikeStore",
-    "name": bikesGroningenConfig.googleBusinessProfileName,
-    "image": `https://${bikesGroningenConfig.domain}/og-image.jpg`,
-    "@id": `https://${bikesGroningenConfig.domain}`,
-    "url": `https://${bikesGroningenConfig.domain}`,
-    "telephone": bikesGroningenConfig.phoneNumber,
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": bikesGroningenConfig.address,
-      "addressLocality": bikesGroningenConfig.city,
-      "postalCode": bikesGroningenConfig.postalCode,
-      "addressCountry": "NL"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": bikesGroningenConfig.latitude,
-      "longitude": bikesGroningenConfig.longitude
-    },
-    "openingHoursSpecification": bikesGroningenConfig.openingHours.map(oh => ({
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": oh.day,
-      "opens": oh.open === "Closed" ? "00:00" : oh.open,
-      "closes": oh.close === "Closed" ? "00:00" : oh.close
-    })),
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": bikesGroningenConfig.googleReviewRating,
-      "reviewCount": bikesGroningenConfig.googleReviewCount
-    }
-  };
-
   return (
     <html
       lang="nl"
@@ -111,11 +76,6 @@ export default function RootLayout({
               })(window,document,'script','dataLayer','${bikesGroningenConfig.gtmId}');
             `,
           }}
-        />
-        {/* Local Business Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="min-h-full flex flex-col">

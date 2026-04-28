@@ -72,7 +72,7 @@ export function NewsletterSignupForm({
       ? {
           title: "Blijf op de hoogte",
           subtitle:
-            "Ontvang updates over nieuwe blogs, aanbiedingen en seizoensdeals.",
+            "Ontvang updates over fietstips, aanbiedingen en seizoensdeals.",
           email: "E-mail",
           placeholder: "jij@example.com",
           button: "Inschrijven",
@@ -82,7 +82,7 @@ export function NewsletterSignupForm({
       : {
           title: "Stay Updated",
           subtitle:
-            "Get updates about new blog posts, offers, and seasonal bike deals.",
+            "Get updates about bike tips, offers, and seasonal bike deals.",
           email: "Email",
           placeholder: "you@example.com",
           button: "Subscribe",

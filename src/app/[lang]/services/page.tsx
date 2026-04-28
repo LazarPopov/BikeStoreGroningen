@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -28,12 +29,12 @@ export async function generateMetadata({
   const siteConfig = getSiteConfig("bikes-groningen");
   
   const title = lang === "nl" 
-    ? `Fietsdiensten in ${siteConfig.city} | Reparaties & Verkoop` 
-    : `Bike Services in ${siteConfig.city} | Repairs & Sales`;
+    ? `Fietsenmaker in ${siteConfig.city} | Studenten & expats`
+    : `Bike Repair Shop in ${siteConfig.city} | Students & Expats`;
     
   const description = lang === "nl"
-    ? `Ontdek alle fietsdiensten van ${siteConfig.googleBusinessProfileName} in ${siteConfig.city}. Van goedkope studentenfietsen en tweedehands opties tot snelle reparaties.`
-    : `Explore all bike services by ${siteConfig.googleBusinessProfileName} in ${siteConfig.city}. From cheap student bikes and second-hand options to fast repairs.`;
+    ? `Ontdek fietsreparatie, tweedehands fietsen, studentenfietsen en accessoires van ${siteConfig.googleBusinessProfileName} in ${siteConfig.city}.`
+    : `Explore bike repair, second-hand bikes, student bikes, and accessories from ${siteConfig.googleBusinessProfileName} in ${siteConfig.city}.`;
 
   return {
     title,
@@ -93,8 +94,8 @@ export default async function ServicesOverviewPage({ params }: PageProps) {
             </h1>
             <p className="text-lg text-zinc-700">
               {isDutch
-                ? `${siteConfig.siteName} biedt een compleet pakket aan oplossingen voor elke fietser in ${siteConfig.city}. Of je nu op zoek bent naar een goedkope studentenfiets of een vakkundige reparatie.`
-                : `${siteConfig.siteName} offers a complete range of solutions for every cyclist in ${siteConfig.city}. Whether you are looking for a cheap student bike or professional repairs.`}
+                ? `${siteConfig.siteName} biedt praktische fietshulp voor studenten, expats, forenzen en locals in ${siteConfig.city}. Bel of kom langs voor reparatie, een studentenfiets, tweedehands fiets of accessoires voor dagelijks gebruik.`
+                : `${siteConfig.siteName} offers practical bike help for students, expats, commuters, and locals in ${siteConfig.city}. Call or visit for repair, a student bike, second-hand bike, or everyday accessories.`}
             </p>
           </div>
         </section>
@@ -107,10 +108,12 @@ export default async function ServicesOverviewPage({ params }: PageProps) {
               href={`/${lang}/services/${service.slug}`}
               className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-md"
             >
-              <div className="aspect-[16/9] w-full overflow-hidden border-b border-zinc-100">
-                <img
-                  src={service.imageUrl}
+              <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-zinc-100">
+                <Image
+                  src={service.imageUrl || "/images/bikes-groningen-hero.jpg"}
                   alt={service.title[lang]}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
@@ -132,20 +135,30 @@ export default async function ServicesOverviewPage({ params }: PageProps) {
 
         {/* Bottom CTA for Contact */}
         <section className="rounded-2xl border border-zinc-200 bg-zinc-50 p-8 text-center shadow-sm">
-          <h2 className="mb-4 text-2xl font-bold text-zinc-900">
+            <h2 className="mb-4 text-2xl font-bold text-zinc-900">
             {isDutch ? "Hulp nodig?" : "Need help?"}
           </h2>
           <p className="mx-auto mb-6 max-w-xl text-zinc-700">
             {isDutch
-              ? "Weet je niet zeker welke dienst je nodig hebt of wil je direct een afspraak maken? Onze experts staan voor je klaar."
-              : "Not sure which service you need or want to book an appointment directly? Our experts are here to help."}
+              ? "Bel de winkel of open de route naar De Twee Wielen voor directe hulp met reparatie, verkoop en accessoires."
+              : "Call the shop or open directions to De Twee Wielen for direct help with repairs, bike sales, and accessories."}
           </p>
-          <Link
-            href={`/${lang}/contact`}
-            className="inline-block rounded-full bg-black px-8 py-3 font-medium text-white transition-colors hover:bg-zinc-800"
-          >
-            {isDutch ? "Neem contact op" : "Contact us"}
-          </Link>
+          <div className="flex flex-col justify-center gap-3 sm:flex-row">
+            <a
+              href={`tel:${siteConfig.phoneNumber}`}
+              className="inline-block rounded-full bg-black px-8 py-3 font-medium text-white transition-colors hover:bg-zinc-800"
+            >
+              {isDutch ? "Bel de winkel" : "Call the shop"}
+            </a>
+            <a
+              href={siteConfig.googleBusinessUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-full border border-zinc-300 px-8 py-3 font-medium text-zinc-900 transition-colors hover:bg-white"
+            >
+              {isDutch ? "Route op Google Maps" : "Directions on Google Maps"}
+            </a>
+          </div>
         </section>
 
         <SiteFooter siteConfig={siteConfig} lang={lang} />

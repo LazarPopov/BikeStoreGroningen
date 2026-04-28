@@ -43,7 +43,7 @@ export function LeadForm({ siteConfig, lang }: LeadFormProps) {
     }
 
     return window.location.href;
-  }, [pathname, searchParams]);
+  }, []);
 
   useEffect(() => {
     if (state.status === "success") {

@@ -91,6 +91,20 @@ export function SiteFooter({ siteConfig, lang }: SiteFooterProps) {
             </TrackedLink>
 
             <TrackedLink
+              href={`/${lang}/buurten`}
+              className="underline-offset-4 hover:text-black hover:underline"
+              eventName="click_footer_link"
+              eventParams={{
+                footer_target: "neighborhoods",
+                footer_group: "important_pages",
+                city: siteConfig.city,
+                language: lang,
+              }}
+            >
+              {isDutch ? "Buurten en plekken" : "Areas and landmarks"}
+            </TrackedLink>
+
+            <TrackedLink
               href={`/${lang}/contact`}
               className="underline-offset-4 hover:text-black hover:underline"
               eventName="click_footer_link"

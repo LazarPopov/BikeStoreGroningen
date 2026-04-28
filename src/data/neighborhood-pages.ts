@@ -193,11 +193,292 @@ export const neighborhoodPages: NeighborhoodPage[] = [
       ],
     },
   },
+  {
+    slug: "zernike-campus",
+    city: "Groningen",
+    neighborhoodName: "Zernike Campus",
+    pageType: "landmark",
+    imagePath: "/images/bikes-groningen-hero.jpg",
+    title: {
+      en: "Bike Repair near Zernike Campus Groningen",
+      nl: "Fietsenmaker nabij Zernike Campus Groningen",
+    },
+    shortTitle: {
+      en: "Zernike Campus",
+      nl: "Zernike Campus",
+    },
+    metaTitle: {
+      en: "Bike Repair near Zernike Campus | De Twee Wielen",
+      nl: "Fietsenmaker nabij Zernike Campus | De Twee Wielen",
+    },
+    metaDescription: {
+      en: "Bike repair and student bikes for riders around Zernike Campus, RUG, and Hanze. Call De Twee Wielen or open directions to Paterswoldseweg 30.",
+      nl: "Fietsreparatie en studentenfietsen voor fietsers rond Zernike Campus, RUG en Hanze. Bel De Twee Wielen of open de route naar Paterswoldseweg 30.",
+    },
+    intro: {
+      en: "Studying or working around Zernike Campus? De Twee Wielen helps with bike repairs, student bikes, locks, lights, and practical cycling advice from the shop on Paterswoldseweg.",
+      nl: "Studeer of werk je rond Zernike Campus? De Twee Wielen helpt met fietsreparatie, studentenfietsen, sloten, verlichting en praktisch fietsadvies vanuit de winkel aan de Paterswoldseweg.",
+    },
+    paragraphs: {
+      en: [
+        "Zernike Campus brings together RUG, Hanze, labs, lecture halls, and student housing routes, so a working bike is essential for getting through the day.",
+        "If your tire, brakes, lights, chain, or lock fail around campus, call the shop or open Google Maps before you ride across town. The route to Paterswoldseweg is straightforward from the campus side of Groningen.",
+        "This page is for students, expats, and daily commuters who need bike repair near Zernike, a reliable student bike, or stronger accessories for regular rides between campus, the station, and the city center.",
+      ],
+      nl: [
+        "Zernike Campus brengt RUG, Hanze, labs, collegezalen en studentenroutes samen, dus een werkende fiets is essentieel voor je dag.",
+        "Als je band, remmen, verlichting, ketting of slot rond de campus problemen geeft, bel de winkel of open Google Maps voordat je door de stad fietst. De route naar de Paterswoldseweg is overzichtelijk vanaf de campuskant van Groningen.",
+        "Deze pagina is voor studenten, expats en dagelijkse fietsers die een fietsenmaker nabij Zernike zoeken, een betrouwbare studentenfiets nodig hebben of betere accessoires willen voor ritten tussen campus, station en centrum.",
+      ],
+    },
+  },
+  {
+    slug: "groningen-station",
+    city: "Groningen",
+    neighborhoodName: "Groningen Station",
+    pageType: "landmark",
+    imagePath: "/images/bikes-groningen-hero.jpg",
+    title: {
+      en: "Bike Shop near Groningen Station",
+      nl: "Fietsenwinkel nabij Station Groningen",
+    },
+    shortTitle: {
+      en: "Groningen Station",
+      nl: "Station Groningen",
+    },
+    metaTitle: {
+      en: "Bike Shop near Groningen Station | De Twee Wielen",
+      nl: "Fietsenmaker nabij Station Groningen | De Twee Wielen",
+    },
+    metaDescription: {
+      en: "Need bike repair or a reliable used bike near Groningen Station? Call De Twee Wielen or open directions to the shop on Paterswoldseweg.",
+      nl: "Fietsreparatie of een betrouwbare tweedehands fiets nodig nabij Station Groningen? Bel De Twee Wielen of open de route naar de winkel aan de Paterswoldseweg.",
+    },
+    intro: {
+      en: "Groningen Station is a common starting point for students, commuters, and newcomers. De Twee Wielen helps nearby riders with repairs, used bikes, locks, and lights.",
+      nl: "Station Groningen is een logisch startpunt voor studenten, forenzen en nieuwkomers. De Twee Wielen helpt fietsers in de buurt met reparaties, tweedehands fietsen, sloten en verlichting.",
+    },
+    paragraphs: {
+      en: [
+        "Many people arrive in Groningen by train and need a bike almost immediately for lectures, work, housing viewings, or daily errands.",
+        "From the station area, the shop on Paterswoldseweg is a practical destination for a quick repair check, a safer lock, working lights, or advice on a reliable city bike.",
+        "If you are new to Groningen, call first or open the map route. The team can help you understand what matters most for city cycling: brakes, lights, tires, comfort, and theft-resistant locking.",
+      ],
+      nl: [
+        "Veel mensen komen met de trein aan in Groningen en hebben snel een fiets nodig voor colleges, werk, bezichtigingen of dagelijkse ritten.",
+        "Vanaf het stationsgebied is de winkel aan de Paterswoldseweg een praktische plek voor een reparatiecheck, een beter slot, werkende verlichting of advies over een betrouwbare stadsfiets.",
+        "Ben je nieuw in Groningen? Bel eerst of open de route. Het team helpt je met wat belangrijk is voor fietsen in de stad: remmen, verlichting, banden, comfort en goede beveiliging.",
+      ],
+    },
+  },
+  {
+    slug: "grote-markt",
+    city: "Groningen",
+    neighborhoodName: "Grote Markt",
+    pageType: "landmark",
+    imagePath: "/images/bikes-groningen-hero.jpg",
+    title: {
+      en: "Bike Repair near Grote Markt Groningen",
+      nl: "Fietsreparatie nabij Grote Markt Groningen",
+    },
+    shortTitle: {
+      en: "Grote Markt",
+      nl: "Grote Markt",
+    },
+    metaTitle: {
+      en: "Bike Repair near Grote Markt | De Twee Wielen",
+      nl: "Fietsenmaker nabij Grote Markt | De Twee Wielen",
+    },
+    metaDescription: {
+      en: "Bike repair, locks, lights, and city bikes for riders around Grote Markt and Groningen city center. Call De Twee Wielen or open directions.",
+      nl: "Fietsreparatie, sloten, verlichting en stadsfietsen voor fietsers rond de Grote Markt en het centrum van Groningen. Bel De Twee Wielen of open de route.",
+    },
+    intro: {
+      en: "Cycling through the city center, Grote Markt, Vismarkt, or Herestraat? De Twee Wielen supports daily riders with practical repairs and city-ready bike advice.",
+      nl: "Fiets je door het centrum, de Grote Markt, Vismarkt of Herestraat? De Twee Wielen helpt dagelijkse fietsers met praktische reparaties en advies voor stadsfietsen.",
+    },
+    paragraphs: {
+      en: [
+        "Grote Markt and the surrounding streets are busy cycling areas where worn brakes, flat tires, loose lights, and weak locks quickly become a problem.",
+        "This page is distinct from the general Centrum page because it focuses on city-center riders moving through the main squares, shopping streets, nightlife streets, and university buildings.",
+        "Call the shop or open Google Maps if you need help before your next ride across Groningen. The shop can help with repair, replacement parts, student bikes, and accessories for everyday city use.",
+      ],
+      nl: [
+        "De Grote Markt en omliggende straten zijn drukke fietsgebieden waar versleten remmen, lekke banden, losse lampjes en zwakke sloten snel voor problemen zorgen.",
+        "Deze pagina is anders dan de algemene Centrum-pagina omdat hij focust op fietsers rond de pleinen, winkelstraten, uitgaansstraten en universiteitsgebouwen.",
+        "Bel de winkel of open Google Maps als je hulp nodig hebt voor je volgende rit door Groningen. De winkel helpt met reparatie, onderdelen, studentenfietsen en accessoires voor dagelijks stadsgebruik.",
+      ],
+    },
+  },
+  {
+    slug: "paddepoel",
+    city: "Groningen",
+    neighborhoodName: "Paddepoel",
+    imagePath: "/images/bikes-groningen-hero.jpg",
+    title: {
+      en: "Bike Repair for Paddepoel Groningen",
+      nl: "Fietsenmaker voor Paddepoel Groningen",
+    },
+    shortTitle: {
+      en: "Paddepoel",
+      nl: "Paddepoel",
+    },
+    metaTitle: {
+      en: "Bike Repair Paddepoel Groningen | De Twee Wielen",
+      nl: "Fietsenmaker Paddepoel Groningen | De Twee Wielen",
+    },
+    metaDescription: {
+      en: "Bike repair, student bikes, locks, and lights for Paddepoel riders. Call De Twee Wielen or open directions to Paterswoldseweg 30.",
+      nl: "Fietsreparatie, studentenfietsen, sloten en verlichting voor fietsers uit Paddepoel. Bel De Twee Wielen of open de route naar Paterswoldseweg 30.",
+    },
+    intro: {
+      en: "Paddepoel is a strong cycling area for students, families, and commuters heading between Zernike, shopping streets, and the city center.",
+      nl: "Paddepoel is een sterke fietswijk voor studenten, gezinnen en forenzen die tussen Zernike, winkels en het centrum rijden.",
+    },
+    paragraphs: {
+      en: [
+        "Around Paddepoel, many rides are practical: campus, shopping, station connections, sports, and daily errands. That makes a dependable bike more important than a flashy one.",
+        "De Twee Wielen helps Paddepoel riders with punctures, brake adjustments, chain issues, lights, locks, and sturdy used bikes for daily Groningen routes.",
+        "If you are already cycling toward the center or station side of the city, open the route to Paterswoldseweg and visit the shop for repair or buying advice.",
+      ],
+      nl: [
+        "Rond Paddepoel zijn veel ritten praktisch: campus, winkels, station, sport en dagelijkse boodschappen. Daardoor is een betrouwbare fiets belangrijker dan een opvallende fiets.",
+        "De Twee Wielen helpt fietsers uit Paddepoel met lekke banden, remmen, kettingen, verlichting, sloten en stevige tweedehands fietsen voor dagelijkse Groningse routes.",
+        "Fiets je richting centrum of station? Open de route naar de Paterswoldseweg en kom langs voor reparatie of aankoopadvies.",
+      ],
+    },
+  },
+  {
+    slug: "oosterpoort",
+    city: "Groningen",
+    neighborhoodName: "Oosterpoort",
+    imagePath: "/images/bikes-groningen-hero.jpg",
+    title: {
+      en: "Bike Shop for Oosterpoort Groningen",
+      nl: "Fietsenwinkel voor Oosterpoort Groningen",
+    },
+    shortTitle: {
+      en: "Oosterpoort",
+      nl: "Oosterpoort",
+    },
+    metaTitle: {
+      en: "Bike Shop Oosterpoort Groningen | De Twee Wielen",
+      nl: "Fietsenmaker Oosterpoort Groningen | De Twee Wielen",
+    },
+    metaDescription: {
+      en: "Bike repair and city bike help for Oosterpoort riders near the station, Hereweg, and Groningen city center. Call De Twee Wielen or open directions.",
+      nl: "Fietsreparatie en stadsfietshulp voor fietsers uit Oosterpoort bij station, Hereweg en centrum. Bel De Twee Wielen of open de route.",
+    },
+    intro: {
+      en: "Oosterpoort riders often move between the station, Hereweg, the city center, and work or study. De Twee Wielen helps keep those daily rides simple.",
+      nl: "Fietsers uit Oosterpoort rijden vaak tussen station, Hereweg, centrum en werk of studie. De Twee Wielen helpt die dagelijkse ritten simpel te houden.",
+    },
+    paragraphs: {
+      en: [
+        "Oosterpoort is close to busy routes where reliable brakes, lights, tires, and locks matter every day.",
+        "For riders heading across the south and west side of Groningen, the shop on Paterswoldseweg is a practical stop for repair, accessories, and advice on a stronger city bike.",
+        "Call before you visit or open the map route if you need help with a flat tire, loose brake, worn chain, stolen light, or replacement bike.",
+      ],
+      nl: [
+        "Oosterpoort ligt dicht bij drukke routes waar betrouwbare remmen, verlichting, banden en sloten dagelijks belangrijk zijn.",
+        "Voor fietsers die via de zuid- en westkant van Groningen rijden, is de winkel aan de Paterswoldseweg een praktische stop voor reparatie, accessoires en advies over een sterkere stadsfiets.",
+        "Bel voordat je langskomt of open de route als je hulp nodig hebt met een lekke band, losse rem, versleten ketting, gestolen lampje of vervangende fiets.",
+      ],
+    },
+  },
+  {
+    slug: "beijum",
+    city: "Groningen",
+    neighborhoodName: "Beijum",
+    imagePath: "/images/bikes-groningen-hero.jpg",
+    title: {
+      en: "Bike Repair for Beijum Groningen",
+      nl: "Fietsenmaker voor Beijum Groningen",
+    },
+    shortTitle: {
+      en: "Beijum",
+      nl: "Beijum",
+    },
+    metaTitle: {
+      en: "Bike Repair Beijum Groningen | De Twee Wielen",
+      nl: "Fietsenmaker Beijum Groningen | De Twee Wielen",
+    },
+    metaDescription: {
+      en: "Bike repair, locks, lights, and reliable used bikes for Beijum riders commuting through Groningen. Call De Twee Wielen or open directions.",
+      nl: "Fietsreparatie, sloten, verlichting en betrouwbare tweedehands fietsen voor fietsers uit Beijum. Bel De Twee Wielen of open de route.",
+    },
+    intro: {
+      en: "From Beijum and Kardinge toward the city center, a dependable bike makes daily Groningen life much easier.",
+      nl: "Van Beijum en Kardinge richting centrum maakt een betrouwbare fiets het dagelijkse leven in Groningen veel makkelijker.",
+    },
+    paragraphs: {
+      en: [
+        "Beijum riders often cover longer city routes, so small bike problems can become irritating quickly: dragging brakes, worn tires, weak lights, or an unreliable lock.",
+        "De Twee Wielen supports Beijum cyclists with practical repairs, second-hand city bikes, student bikes, and accessories that make regular commuting safer.",
+        "This page is written for Beijum specifically because the cycling use case is different from inner-city pages: longer routes, daily commuting, and a need for durable basics.",
+      ],
+      nl: [
+        "Fietsers uit Beijum maken vaak langere stadsritten, waardoor kleine problemen snel irritant worden: aanlopende remmen, versleten banden, zwakke verlichting of een onbetrouwbaar slot.",
+        "De Twee Wielen helpt fietsers uit Beijum met praktische reparaties, tweedehands stadsfietsen, studentenfietsen en accessoires die dagelijks fietsen veiliger maken.",
+        "Deze pagina is specifiek voor Beijum geschreven omdat de fietsvraag anders is dan in het centrum: langere routes, dagelijks woon-werkverkeer en behoefte aan sterke basisonderdelen.",
+      ],
+    },
+  },
+  {
+    slug: "oosterparkwijk",
+    city: "Groningen",
+    neighborhoodName: "Oosterparkwijk",
+    imagePath: "/images/bikes-groningen-hero.jpg",
+    title: {
+      en: "Bike Repair for Oosterparkwijk Groningen",
+      nl: "Fietsenmaker voor Oosterparkwijk Groningen",
+    },
+    shortTitle: {
+      en: "Oosterparkwijk",
+      nl: "Oosterparkwijk",
+    },
+    metaTitle: {
+      en: "Bike Repair Oosterparkwijk Groningen | De Twee Wielen",
+      nl: "Fietsenmaker Oosterparkwijk Groningen | De Twee Wielen",
+    },
+    metaDescription: {
+      en: "Bike repair and daily cycling help for Oosterparkwijk riders near UMCG, Oosterpark, and Groningen city routes. Call De Twee Wielen or open directions.",
+      nl: "Fietsreparatie en dagelijkse fietshulp voor fietsers uit Oosterparkwijk bij UMCG, Oosterpark en stadsroutes. Bel De Twee Wielen of open de route.",
+    },
+    intro: {
+      en: "Oosterparkwijk sits close to UMCG, Oosterpark, and busy routes into the center, so safe daily cycling matters.",
+      nl: "Oosterparkwijk ligt dicht bij UMCG, Oosterpark en drukke routes naar het centrum, dus veilig dagelijks fietsen is belangrijk.",
+    },
+    paragraphs: {
+      en: [
+        "For Oosterparkwijk residents, the bike is often the easiest way to reach work, study, healthcare, shops, and the city center.",
+        "De Twee Wielen helps with repairs that matter for everyday riders: tires, brakes, chains, lights, locks, saddles, and practical advice on reliable used bikes.",
+        "This page avoids generic Groningen copy by focusing on the eastern city routes and the daily cycling needs around Oosterparkwijk and UMCG.",
+      ],
+      nl: [
+        "Voor bewoners van Oosterparkwijk is de fiets vaak de makkelijkste manier naar werk, studie, zorg, winkels en het centrum.",
+        "De Twee Wielen helpt met reparaties die belangrijk zijn voor dagelijkse fietsers: banden, remmen, kettingen, verlichting, sloten, zadels en praktisch advies over betrouwbare tweedehands fietsen.",
+        "Deze pagina vermijdt algemene Groningen-tekst door te focussen op de oostelijke stadsroutes en de dagelijkse fietsvraag rond Oosterparkwijk en UMCG.",
+      ],
+    },
+  },
 ];
 
 
 export function getNeighborhoodPagesByCity(city: string) {
   return neighborhoodPages.filter((page) => page.city === city);
+}
+
+export function getLandmarkPagesByCity(city: string) {
+  return neighborhoodPages.filter(
+    (page) => page.city === city && page.pageType === "landmark"
+  );
+}
+
+export function getResidentialNeighborhoodPagesByCity(city: string) {
+  return neighborhoodPages.filter(
+    (page) => page.city === city && page.pageType !== "landmark"
+  );
 }
 
 export function getNeighborhoodPageBySlug(slug: string, city: string) {
