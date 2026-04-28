@@ -1,20 +1,26 @@
-// src/app/[lang]/services/[slug]/page.tsx
-
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SiteFooter } from "@/components/layout/site-footer";
 import { BreadcrumbNav } from "@/components/common/breadcrumb-nav";
 import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { RelatedLinks } from "@/components/common/related-links";
-import { getSiteConfig } from "@/lib/config/get-site-config";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
 import {
-  getServicePageBySlug,
-  getServicePagesByCity,
+  getNeighborhoodPagesForSite,
+} from "@/data/neighborhood-pages";
+import {
+  getServicePageBySlugForSite,
+  getServicePagesForSite,
 } from "@/data/service-pages";
-import { getNeighborhoodPagesByCity } from "@/data/neighborhood-pages";
+import { getActiveSiteConfig } from "@/lib/config/get-site-config";
 import { isSupportedLanguage, SUPPORTED_LANGUAGES } from "@/lib/config/i18n";
+import {
+  getDisplayBusinessName,
+  getPrimaryCta,
+  getRenter,
+  getSecondaryCta,
+} from "@/lib/config/site-config-utils";
 
 type PageProps = {
   params: Promise<{ lang: string; slug: string }>;
@@ -23,8 +29,8 @@ type PageProps = {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  const siteConfig = getSiteConfig("bikes-groningen");
-  const pages = getServicePagesByCity(siteConfig.city);
+  const siteConfig = getActiveSiteConfig();
+  const pages = getServicePagesForSite(siteConfig);
 
   return SUPPORTED_LANGUAGES.flatMap((lang) =>
     pages.map((page) => ({
@@ -43,8 +49,8 @@ export async function generateMetadata({
     return {};
   }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
-  const servicePage = getServicePageBySlug(slug, siteConfig.city);
+  const siteConfig = getActiveSiteConfig();
+  const servicePage = getServicePageBySlugForSite(slug, siteConfig);
 
   if (!servicePage) {
     return {};
@@ -85,21 +91,27 @@ export default async function ServicePage({ params }: PageProps) {
     notFound();
   }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
-  const servicePage = getServicePageBySlug(slug, siteConfig.city);
+  const siteConfig = getActiveSiteConfig();
+  const servicePage = getServicePageBySlugForSite(slug, siteConfig);
 
   if (!servicePage) {
     notFound();
   }
 
+  const isDutch = lang === "nl";
+  const renter = getRenter(siteConfig);
+  const businessName = getDisplayBusinessName(siteConfig);
+  const primaryCta = getPrimaryCta(siteConfig, lang);
+  const secondaryCta = getSecondaryCta(siteConfig, lang);
+
   const breadcrumbItems = [
     {
-      name: lang === "nl" ? "Home" : "Home",
+      name: "Home",
       href: `/${lang}`,
       url: `https://${siteConfig.domain}/${lang}`,
     },
     {
-      name: lang === "nl" ? "Services" : "Services",
+      name: isDutch ? "Diensten" : "Services",
       href: `/${lang}/services`,
       url: `https://${siteConfig.domain}/${lang}/services`,
     },
@@ -109,7 +121,7 @@ export default async function ServicePage({ params }: PageProps) {
     },
   ];
 
-  const relatedServiceLinks = getServicePagesByCity(siteConfig.city)
+  const relatedServiceLinks = getServicePagesForSite(siteConfig)
     .filter((page) => page.slug !== servicePage.slug)
     .slice(0, 4)
     .map((page) => ({
@@ -117,32 +129,14 @@ export default async function ServicePage({ params }: PageProps) {
       href: `/${lang}/services/${page.slug}`,
     }));
 
-  const localPagePriority = [
-    "zernike-campus",
-    "groningen-station",
-    "grote-markt",
-    "centrum",
-    "korrewegwijk",
-    "paddepoel",
-  ];
-
-  const relatedNeighborhoodLinks = [...getNeighborhoodPagesByCity(siteConfig.city)]
-    .sort((first, second) => {
-      const firstIndex = localPagePriority.indexOf(first.slug);
-      const secondIndex = localPagePriority.indexOf(second.slug);
-
-      return (
-        (firstIndex === -1 ? localPagePriority.length : firstIndex) -
-        (secondIndex === -1 ? localPagePriority.length : secondIndex)
-      );
-    })
+  const relatedNeighborhoodLinks = getNeighborhoodPagesForSite(siteConfig)
     .slice(0, 6)
     .map((page) => ({
       label:
         page.pageType === "landmark"
-          ? lang === "nl"
-            ? `Fietsenmaker nabij ${page.shortTitle[lang]}`
-            : `Bike repair near ${page.shortTitle[lang]}`
+          ? isDutch
+            ? `Fietshulp nabij ${page.shortTitle[lang]}`
+            : `Bike help near ${page.shortTitle[lang]}`
           : page.shortTitle[lang],
       href: `/${lang}/buurten/${page.slug}`,
     }));
@@ -162,14 +156,14 @@ export default async function ServicePage({ params }: PageProps) {
           />
 
           <p className="mb-3 text-sm uppercase tracking-wide text-zinc-500">
-            {siteConfig.city} | Services
+            {siteConfig.city} | {isDutch ? "Diensten" : "Services"}
           </p>
 
           <h1 className="mb-4 text-4xl font-bold">
             {servicePage.title[lang]}
           </h1>
 
-          {servicePage.imageUrl && (
+          {servicePage.imageUrl ? (
             <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-3xl border border-zinc-200">
               <Image
                 src={servicePage.imageUrl}
@@ -179,7 +173,7 @@ export default async function ServicePage({ params }: PageProps) {
                 className="h-full w-full object-cover"
               />
             </div>
-          )}
+          ) : null}
 
           <p className="mb-8 text-lg text-zinc-700">
             {servicePage.intro[lang]}
@@ -191,7 +185,7 @@ export default async function ServicePage({ params }: PageProps) {
 
               return (
                 <div key={`${servicePage.slug}-${index}`} className="space-y-4">
-                  {paragraphImage && (
+                  {paragraphImage ? (
                     <div className="relative aspect-[16/9] overflow-hidden rounded-3xl border border-zinc-200">
                       <Image
                         src={paragraphImage}
@@ -201,7 +195,7 @@ export default async function ServicePage({ params }: PageProps) {
                         className="h-full w-full object-cover"
                       />
                     </div>
-                  )}
+                  ) : null}
 
                   <p>{paragraph}</p>
                 </div>
@@ -211,27 +205,37 @@ export default async function ServicePage({ params }: PageProps) {
 
           <div className="mt-10 rounded-2xl bg-zinc-100 p-6">
             <h2 className="mb-3 text-2xl font-semibold">
-              {lang === "nl" ? "Bel of kom langs" : "Call or visit"}
+              {renter
+                ? isDutch
+                  ? "Bel of kom langs"
+                  : "Call or visit"
+                : isDutch
+                  ? "Vraag fietshulp aan"
+                  : "Request bike help"}
             </h2>
             <p className="mb-4 text-zinc-700">
-              {lang === "nl"
-                ? `${siteConfig.googleBusinessProfileName} helpt je direct in de winkel met reparatie, advies en fietsopties in ${siteConfig.city}.`
-                : `${siteConfig.googleBusinessProfileName} can help you directly at the shop with repairs, advice, and bike options in ${siteConfig.city}.`}
+              {renter
+                ? isDutch
+                  ? `${businessName} helpt je direct in de winkel met reparatie, advies en fietsopties in ${siteConfig.city}.`
+                  : `${businessName} can help you directly at the shop with repairs, advice, and bike options in ${siteConfig.city}.`
+                : isDutch
+                  ? `Vertel wat je nodig hebt voor ${servicePage.shortTitle[lang].toLowerCase()} in ${siteConfig.city}.`
+                  : `Tell us what you need for ${servicePage.shortTitle[lang].toLowerCase()} in ${siteConfig.city}.`}
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
-                href={`tel:${siteConfig.phoneNumber}`}
+                href={primaryCta.href}
                 className="inline-block rounded-xl bg-black px-5 py-3 text-center text-white"
               >
-                {lang === "nl" ? "Bel de winkel" : "Call the shop"}
+                {primaryCta.label}
               </a>
               <a
-                href={siteConfig.googleBusinessUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={secondaryCta.href}
+                target={secondaryCta.target}
+                rel={secondaryCta.rel}
                 className="inline-block rounded-xl border border-zinc-300 bg-white px-5 py-3 text-center font-medium text-zinc-900"
               >
-                {lang === "nl" ? "Route op Google Maps" : "Directions on Google Maps"}
+                {secondaryCta.label}
               </a>
             </div>
           </div>
@@ -239,19 +243,13 @@ export default async function ServicePage({ params }: PageProps) {
 
         <RelatedLinks
           title={
-            lang === "nl"
-              ? "Gerelateerde servicepagina's"
-              : "Related service pages"
+            isDutch ? "Gerelateerde servicepagina's" : "Related service pages"
           }
           items={relatedServiceLinks}
         />
 
         <RelatedLinks
-          title={
-            lang === "nl"
-              ? "Fietshulp per buurt en plek"
-              : "Bike help by area"
-          }
+          title={isDutch ? "Fietshulp per buurt en plek" : "Bike help by area"}
           items={relatedNeighborhoodLinks}
         />
 

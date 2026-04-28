@@ -1,4 +1,5 @@
 import type { AppLanguage } from "@/lib/config/i18n";
+import { getRenter } from "@/lib/config/site-config-utils";
 import type { SiteConfig } from "@/types/site";
 
 type LocalBusinessJsonLdProps = {
@@ -10,8 +11,14 @@ export function LocalBusinessJsonLd({
   siteConfig,
   lang,
 }: LocalBusinessJsonLdProps) {
+  const renter = getRenter(siteConfig);
+
+  if (!renter) {
+    return null;
+  }
+
   const baseUrl = `https://${siteConfig.domain}`;
-  const openingHoursSpecification = siteConfig.openingHours
+  const openingHoursSpecification = renter.openingHours
     .filter((item) => item.open !== "Closed" && item.close !== "Closed")
     .map((item) => ({
       "@type": "OpeningHoursSpecification",
@@ -22,36 +29,36 @@ export function LocalBusinessJsonLd({
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "BikeStore",
+    "@type": ["BikeStore", "LocalBusiness"],
     "@id": `${baseUrl}/#local-business`,
-    name: siteConfig.googleBusinessProfileName,
+    name: renter.googleBusinessProfileName,
     alternateName: siteConfig.siteName,
     description:
       lang === "nl"
         ? `Fietsenmaker en fietsenwinkel in ${siteConfig.city} voor reparaties, tweedehands fietsen, nieuwe fietsen, sloten en verlichting.`
         : `Bike repair shop and bike store in ${siteConfig.city} for repairs, second-hand bikes, new bikes, locks, and lights.`,
-    image: `${baseUrl}/images/bikes-groningen-hero.jpg`,
+    image: `${baseUrl}${siteConfig.heroImagePath}`,
     url: `${baseUrl}/${lang}`,
-    telephone: siteConfig.phoneNumber,
-    email: siteConfig.email,
+    telephone: renter.phoneNumber,
+    email: renter.email,
     address: {
       "@type": "PostalAddress",
-      streetAddress: siteConfig.address,
-      postalCode: siteConfig.postalCode,
+      streetAddress: renter.address,
+      postalCode: renter.postalCode,
       addressLocality: siteConfig.city,
       addressCountry: "NL",
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: siteConfig.latitude,
-      longitude: siteConfig.longitude,
+      latitude: renter.latitude,
+      longitude: renter.longitude,
     },
-    hasMap: siteConfig.googleBusinessUrl,
-    sameAs: [siteConfig.googleBusinessUrl],
+    hasMap: renter.googleBusinessUrl,
+    sameAs: [renter.googleBusinessUrl],
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: siteConfig.googleReviewRating,
-      reviewCount: siteConfig.googleReviewCount,
+      ratingValue: renter.googleReviewRating,
+      reviewCount: renter.googleReviewCount,
     },
     areaServed: [
       {

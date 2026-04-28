@@ -6,7 +6,7 @@ import type { SiteConfig } from "@/types/site";
 import { ArrowRight } from "lucide-react";
 import {
   getLocalizedServiceCta,
-  getServicePagesByCity,
+  getServicePagesForSite,
 } from "@/data/service-pages";
 import { TrackedLink } from "@/components/analytics/tracked-link";
 
@@ -16,14 +16,14 @@ type HomeServicesProps = {
 };
 
 export function HomeServices({ siteConfig, lang }: HomeServicesProps) {
-  const pages = getServicePagesByCity(siteConfig.city);
+  const pages = getServicePagesForSite(siteConfig);
 
   const labels = {
     title: lang === "nl" ? "Onze Diensten" : "Our Services",
     subtitle:
       lang === "nl"
-        ? "Reparatie, studentenfietsen, tweedehands fietsen en accessoires voor dagelijks fietsen in Groningen."
-        : "Repairs, student bikes, second-hand bikes, and accessories for everyday cycling in Groningen.",
+        ? `Reparatie, studentenfietsen, tweedehands fietsen en accessoires voor dagelijks fietsen in ${siteConfig.city}.`
+        : `Repairs, student bikes, second-hand bikes, and accessories for everyday cycling in ${siteConfig.city}.`,
   };
 
   return (

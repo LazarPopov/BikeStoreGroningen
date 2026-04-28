@@ -1,7 +1,8 @@
 import type { AppLanguage } from "@/lib/config/i18n";
 import type { SiteConfig } from "@/types/site";
 import { TrackedLink } from "@/components/analytics/tracked-link";
-import { getServicePagesByCity } from "@/data/service-pages";
+import { getServicePagesForSite } from "@/data/service-pages";
+import { getContactEmail, getRenter } from "@/lib/config/site-config-utils";
 
 type SiteFooterProps = {
   siteConfig: SiteConfig;
@@ -9,43 +10,67 @@ type SiteFooterProps = {
 };
 
 export function SiteFooter({ siteConfig, lang }: SiteFooterProps) {
-  const services = getServicePagesByCity(siteConfig.city);
+  const services = getServicePagesForSite(siteConfig);
+  const renter = getRenter(siteConfig);
+  const contactEmail = getContactEmail(siteConfig);
   const isDutch = lang === "nl";
 
   return (
     <footer className="mt-12 rounded-2xl border border-zinc-200 bg-zinc-50 px-6 py-10">
       <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
-        {/* Column 1: Brand & Contact */}
         <div>
-          <h2 className="mb-4 text-xl font-bold text-zinc-900">{siteConfig.siteName}</h2>
+          <h2 className="mb-4 text-xl font-bold text-zinc-900">
+            {siteConfig.siteName}
+          </h2>
           <div className="space-y-1 text-sm text-zinc-600">
-            <p>{siteConfig.address}</p>
-            <p>
-              {siteConfig.postalCode}, {siteConfig.city}
-            </p>
-            <p className="pt-2 font-medium text-zinc-900">{siteConfig.phoneNumber}</p>
-            <p>{siteConfig.email}</p>
-          </div>
-        </div>
-
-        {/* Column 2: Opening Hours */}
-        <div>
-          <h3 className="mb-4 text-lg font-semibold text-zinc-900">
-            {isDutch ? "Openingstijden" : "Opening Hours"}
-          </h3>
-          <div className="space-y-1 text-sm text-zinc-600">
-            {siteConfig.openingHours.map((item) => (
-              <p key={item.day} className="flex justify-between md:block lg:flex">
-                <span className="font-medium">{item.day}:</span>
-                <span>
-                  {item.open} {item.close !== "Closed" ? `- ${item.close}` : ""}
-                </span>
+            {renter ? (
+              <>
+                <p>{renter.address}</p>
+                <p>
+                  {renter.postalCode}, {siteConfig.city}
+                </p>
+                <p className="pt-2 font-medium text-zinc-900">
+                  {renter.phoneNumber}
+                </p>
+              </>
+            ) : (
+              <p>
+                {siteConfig.city}, {siteConfig.country}
               </p>
-            ))}
+            )}
+            <p>{contactEmail}</p>
           </div>
         </div>
 
-        {/* Column 3: Services */}
+        {renter ? (
+          <div>
+            <h3 className="mb-4 text-lg font-semibold text-zinc-900">
+              {isDutch ? "Openingstijden" : "Opening Hours"}
+            </h3>
+            <div className="space-y-1 text-sm text-zinc-600">
+              {renter.openingHours.map((item) => (
+                <p key={item.day} className="flex justify-between md:block lg:flex">
+                  <span className="font-medium">{item.day}:</span>
+                  <span>
+                    {item.open} {item.close !== "Closed" ? `- ${item.close}` : ""}
+                  </span>
+                </p>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div>
+            <h3 className="mb-4 text-lg font-semibold text-zinc-900">
+              {isDutch ? "Aanvragen" : "Requests"}
+            </h3>
+            <p className="text-sm text-zinc-600">
+              {isDutch
+                ? `Verstuur een fietshulpaanvraag voor ${siteConfig.city}.`
+                : `Send a bike help request for ${siteConfig.city}.`}
+            </p>
+          </div>
+        )}
+
         <div>
           <h3 className="mb-4 text-lg font-semibold text-zinc-900">
             {isDutch ? "Onze Diensten" : "Our Services"}
@@ -70,7 +95,6 @@ export function SiteFooter({ siteConfig, lang }: SiteFooterProps) {
           </div>
         </div>
 
-        {/* Column 4: Important Pages */}
         <div>
           <h3 className="mb-4 text-lg font-semibold text-zinc-900">
             {isDutch ? "Informatie" : "Information"}
@@ -150,7 +174,10 @@ export function SiteFooter({ siteConfig, lang }: SiteFooterProps) {
       </div>
 
       <div className="mt-10 border-t border-zinc-200 pt-6 text-center text-xs text-zinc-400">
-        <p>© {new Date().getFullYear()} {siteConfig.siteName} {siteConfig.city}. All rights reserved.</p>
+        <p>
+          &copy; {new Date().getFullYear()} {siteConfig.siteName}{" "}
+          {siteConfig.city}. All rights reserved.
+        </p>
       </div>
     </footer>
   );

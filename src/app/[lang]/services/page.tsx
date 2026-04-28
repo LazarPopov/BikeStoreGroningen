@@ -1,15 +1,21 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SiteFooter } from "@/components/layout/site-footer";
+import { ArrowRight } from "lucide-react";
 import { BreadcrumbNav } from "@/components/common/breadcrumb-nav";
 import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
-import { getSiteConfig } from "@/lib/config/get-site-config";
-import { getServicePagesByCity } from "@/data/service-pages";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
+import { getServicePagesForSite } from "@/data/service-pages";
+import { getActiveSiteConfig } from "@/lib/config/get-site-config";
 import { isSupportedLanguage, SUPPORTED_LANGUAGES } from "@/lib/config/i18n";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import {
+  getDisplayBusinessName,
+  getPrimaryCta,
+  getRenter,
+  getSecondaryCta,
+} from "@/lib/config/site-config-utils";
 
 type PageProps = {
   params: Promise<{ lang: string }>;
@@ -24,17 +30,19 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { lang } = await params;
 
-  if (!isSupportedLanguage(lang)) return {};
+  if (!isSupportedLanguage(lang)) {
+    return {};
+  }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
-  
-  const title = lang === "nl" 
+  const siteConfig = getActiveSiteConfig();
+  const businessName = getDisplayBusinessName(siteConfig);
+  const isDutch = lang === "nl";
+  const title = isDutch
     ? `Fietsenmaker in ${siteConfig.city} | Studenten & expats`
     : `Bike Repair Shop in ${siteConfig.city} | Students & Expats`;
-    
-  const description = lang === "nl"
-    ? `Ontdek fietsreparatie, tweedehands fietsen, studentenfietsen en accessoires van ${siteConfig.googleBusinessProfileName} in ${siteConfig.city}.`
-    : `Explore bike repair, second-hand bikes, student bikes, and accessories from ${siteConfig.googleBusinessProfileName} in ${siteConfig.city}.`;
+  const description = isDutch
+    ? `Ontdek fietsreparatie, tweedehands fietsen, studentenfietsen en accessoires van ${businessName} in ${siteConfig.city}.`
+    : `Explore bike repair, second-hand bikes, student bikes, and accessories from ${businessName} in ${siteConfig.city}.`;
 
   return {
     title,
@@ -56,8 +64,12 @@ export default async function ServicesOverviewPage({ params }: PageProps) {
     notFound();
   }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
-  const services = getServicePagesByCity(siteConfig.city);
+  const siteConfig = getActiveSiteConfig();
+  const services = getServicePagesForSite(siteConfig);
+  const businessName = getDisplayBusinessName(siteConfig);
+  const renter = getRenter(siteConfig);
+  const primaryCta = getPrimaryCta(siteConfig, lang);
+  const secondaryCta = getSecondaryCta(siteConfig, lang);
   const isDutch = lang === "nl";
 
   const breadcrumbItems = [
@@ -85,22 +97,21 @@ export default async function ServicesOverviewPage({ params }: PageProps) {
           <BreadcrumbNav
             items={breadcrumbItems.map(({ name, href }) => ({ name, href }))}
           />
-          
+
           <div className="mt-6 max-w-3xl">
             <h1 className="mb-4 text-4xl font-bold text-zinc-900">
-              {isDutch 
-                ? `Fietsdiensten van ${siteConfig.googleBusinessProfileName}` 
-                : `Bike Services by ${siteConfig.googleBusinessProfileName}`}
+              {isDutch
+                ? `Fietsdiensten van ${businessName}`
+                : `Bike services from ${businessName}`}
             </h1>
             <p className="text-lg text-zinc-700">
               {isDutch
-                ? `${siteConfig.siteName} biedt praktische fietshulp voor studenten, expats, forenzen en locals in ${siteConfig.city}. Bel of kom langs voor reparatie, een studentenfiets, tweedehands fiets of accessoires voor dagelijks gebruik.`
-                : `${siteConfig.siteName} offers practical bike help for students, expats, commuters, and locals in ${siteConfig.city}. Call or visit for repair, a student bike, second-hand bike, or everyday accessories.`}
+                ? `${siteConfig.siteName} biedt praktische fietshulp voor studenten, expats, forenzen en locals in ${siteConfig.city}: reparatie, studentenfietsen, tweedehands fietsen en accessoires.`
+                : `${siteConfig.siteName} offers practical bike help for students, expats, commuters, and locals in ${siteConfig.city}: repair, student bikes, second-hand bikes, and everyday accessories.`}
             </p>
           </div>
         </section>
 
-        {/* Services Grid */}
         <div className="grid gap-6 md:grid-cols-2">
           {services.map((service) => (
             <Link
@@ -110,7 +121,7 @@ export default async function ServicesOverviewPage({ params }: PageProps) {
             >
               <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-zinc-100">
                 <Image
-                  src={service.imageUrl || "/images/bikes-groningen-hero.jpg"}
+                  src={service.imageUrl || siteConfig.heroImagePath}
                   alt={service.title[lang]}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -133,30 +144,33 @@ export default async function ServicesOverviewPage({ params }: PageProps) {
           ))}
         </div>
 
-        {/* Bottom CTA for Contact */}
         <section className="rounded-2xl border border-zinc-200 bg-zinc-50 p-8 text-center shadow-sm">
-            <h2 className="mb-4 text-2xl font-bold text-zinc-900">
+          <h2 className="mb-4 text-2xl font-bold text-zinc-900">
             {isDutch ? "Hulp nodig?" : "Need help?"}
           </h2>
           <p className="mx-auto mb-6 max-w-xl text-zinc-700">
-            {isDutch
-              ? "Bel de winkel of open de route naar De Twee Wielen voor directe hulp met reparatie, verkoop en accessoires."
-              : "Call the shop or open directions to De Twee Wielen for direct help with repairs, bike sales, and accessories."}
+            {renter
+              ? isDutch
+                ? `Bel de winkel of open de route naar ${businessName} voor directe hulp met reparatie, verkoop en accessoires.`
+                : `Call the shop or open directions to ${businessName} for direct help with repairs, bike sales, and accessories.`
+              : isDutch
+                ? `Vertel welke fietshulp je zoekt in ${siteConfig.city}, dan kan je aanvraag met de juiste context worden opgepakt.`
+                : `Tell us what bike help you need in ${siteConfig.city}, so your request can be handled with the right context.`}
           </p>
           <div className="flex flex-col justify-center gap-3 sm:flex-row">
             <a
-              href={`tel:${siteConfig.phoneNumber}`}
+              href={primaryCta.href}
               className="inline-block rounded-full bg-black px-8 py-3 font-medium text-white transition-colors hover:bg-zinc-800"
             >
-              {isDutch ? "Bel de winkel" : "Call the shop"}
+              {primaryCta.label}
             </a>
             <a
-              href={siteConfig.googleBusinessUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={secondaryCta.href}
+              target={secondaryCta.target}
+              rel={secondaryCta.rel}
               className="inline-block rounded-full border border-zinc-300 px-8 py-3 font-medium text-zinc-900 transition-colors hover:bg-white"
             >
-              {isDutch ? "Route op Google Maps" : "Directions on Google Maps"}
+              {secondaryCta.label}
             </a>
           </div>
         </section>

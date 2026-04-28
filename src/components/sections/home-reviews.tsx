@@ -1,4 +1,5 @@
 import type { AppLanguage } from "@/lib/config/i18n";
+import { getRenter } from "@/lib/config/site-config-utils";
 import type { SiteConfig } from "@/types/site";
 
 type HomeReviewsProps = {
@@ -32,6 +33,12 @@ function getInitials(name: string) {
 }
 
 export function HomeReviews({ siteConfig, lang }: HomeReviewsProps) {
+  const renter = getRenter(siteConfig);
+
+  if (!renter || renter.reviews.length === 0) {
+    return null;
+  }
+
   return (
     <section className="py-8">
       <div className="mb-8">
@@ -46,7 +53,7 @@ export function HomeReviews({ siteConfig, lang }: HomeReviewsProps) {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {siteConfig.reviews.map((review) => (
+        {renter.reviews.map((review) => (
           <article
             key={`${review.reviewerName}-${review.source}`}
             className="flex flex-col justify-between rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"

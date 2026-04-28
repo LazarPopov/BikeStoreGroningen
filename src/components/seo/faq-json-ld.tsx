@@ -1,11 +1,15 @@
 import type { AppLanguage } from "@/lib/config/i18n";
-import { homeFaqs } from "@/data/home-faqs";
+import { getHomeFaqs } from "@/data/home-faqs";
+import type { SiteConfig } from "@/types/site";
 
 type FaqJsonLdProps = {
+  siteConfig: SiteConfig;
   lang: AppLanguage;
 };
 
-export function FaqJsonLd({ lang }: FaqJsonLdProps) {
+export function FaqJsonLd({ siteConfig, lang }: FaqJsonLdProps) {
+  const homeFaqs = getHomeFaqs(siteConfig);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

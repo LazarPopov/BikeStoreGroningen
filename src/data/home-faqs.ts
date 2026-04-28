@@ -1,59 +1,103 @@
 import type { AppLanguage } from "@/lib/config/i18n";
+import {
+  getDisplayBusinessName,
+  isRentedSite,
+} from "@/lib/config/site-config-utils";
+import type { SiteConfig } from "@/types/site";
 
 export type HomeFaqItem = {
   question: Record<AppLanguage, string>;
   answer: Record<AppLanguage, string>;
 };
 
-export const homeFaqs: HomeFaqItem[] = [
-  {
-    question: {
-      en: "Do you have second-hand bikes in stock right now?",
-      nl: "Hebben jullie momenteel tweedehands fietsen op voorraad?",
+export function getHomeFaqs(siteConfig: SiteConfig): HomeFaqItem[] {
+  const businessName = getDisplayBusinessName(siteConfig);
+
+  if (!isRentedSite(siteConfig)) {
+    return [
+      {
+        question: {
+          en: `How does ${siteConfig.siteName} help in ${siteConfig.city}?`,
+          nl: `Hoe helpt ${siteConfig.siteName} in ${siteConfig.city}?`,
+        },
+        answer: {
+          en: `Send a request with your repair issue, bike type, budget, or daily route in ${siteConfig.city}. We use that information to route your inquiry to practical bike help.`,
+          nl: `Verstuur een aanvraag met je reparatievraag, fietstype, budget of dagelijkse route in ${siteConfig.city}. Met die informatie kunnen we je aanvraag koppelen aan praktische fietshulp.`,
+        },
+      },
+      {
+        question: {
+          en: "Can students and expats use the request form?",
+          nl: "Kunnen studenten en expats het formulier gebruiken?",
+        },
+        answer: {
+          en: `Yes. The form is built for students, expats, commuters, and locals who need bike repair, a used bike, student bike help, locks, lights, or cycling advice in ${siteConfig.city}.`,
+          nl: `Ja. Het formulier is bedoeld voor studenten, expats, forenzen en locals die fietsreparatie, een tweedehands fiets, studentenfietshulp, sloten, verlichting of fietsadvies in ${siteConfig.city} zoeken.`,
+        },
+      },
+      {
+        question: {
+          en: "What should I include in my request?",
+          nl: "Wat moet ik in mijn aanvraag zetten?",
+        },
+        answer: {
+          en: "Share the problem, preferred bike type, budget, frame size if known, and whether you need repair advice or help finding a bike.",
+          nl: "Beschrijf het probleem, gewenste fietstype, budget, framemaat als je die weet, en of je reparatieadvies of hulp bij het vinden van een fiets zoekt.",
+        },
+      },
+      {
+        question: {
+          en: "Can I call or visit a shop directly?",
+          nl: "Kan ik direct bellen of langskomen bij een winkel?",
+        },
+        answer: {
+          en: `Start with the request form so your bike question can be handled with the right context for ${siteConfig.city}.`,
+          nl: `Begin met het aanvraagformulier, zodat je fietsvraag met de juiste context voor ${siteConfig.city} kan worden behandeld.`,
+        },
+      },
+    ];
+  }
+
+  return [
+    {
+      question: {
+        en: "Do you have second-hand bikes in stock right now?",
+        nl: "Hebben jullie momenteel tweedehands fietsen op voorraad?",
+      },
+      answer: {
+        en: `${businessName} usually has refurbished second-hand bikes available. Call or visit the shop in ${siteConfig.city} for current options.`,
+        nl: `${businessName} heeft meestal gereviseerde tweedehands fietsen beschikbaar. Bel of bezoek de winkel in ${siteConfig.city} voor de actuele opties.`,
+      },
     },
-    answer: {
-      en: "Yes! We always have a wide range of refurbished second-hand bikes. Every bike is fully checked and serviced by our mechanics before being sold.",
-      nl: "Zeker! We hebben altijd een ruim assortiment aan gereviseerde tweedehands fietsen. Elke fiets wordt volledig nagekeken door onze monteurs voordat deze de winkel verlaat.",
+    {
+      question: {
+        en: "Do you help students and expats?",
+        nl: "Helpen jullie studenten en expats?",
+      },
+      answer: {
+        en: `Yes. ${businessName} helps students, expats, commuters, and locals in ${siteConfig.city} with practical used bikes, repair advice, locks, and lights.`,
+        nl: `Ja. ${businessName} helpt studenten, expats, forenzen en locals in ${siteConfig.city} met praktische tweedehands fietsen, reparatieadvies, sloten en verlichting.`,
+      },
     },
-  },
-  {
-    question: {
-      en: "Do you offer special bike deals for students and expats?",
-      nl: "Bieden jullie speciale fietsendeals voor studenten en expats?",
+    {
+      question: {
+        en: "Can I bring my bike in for a quick repair?",
+        nl: "Kan ik mijn fiets langsbrengen voor een snelle reparatie?",
+      },
+      answer: {
+        en: "Yes. The shop handles common repairs such as flat tires, brakes, chains, lights, locks, wheels, and everyday maintenance.",
+        nl: "Ja. De winkel helpt met veelvoorkomende reparaties zoals lekke banden, remmen, kettingen, verlichting, sloten, wielen en dagelijks onderhoud.",
+      },
     },
-    answer: {
-      en: "Absolutely. We specialize in affordable, reliable bikes perfect for student life and expats in Groningen. We can help you find a sturdy bike that fits your budget.",
-      nl: "Absoluut. Wij zijn gespecialiseerd in betaalbare, betrouwbare fietsen die perfect zijn voor het studentenleven en expats in Groningen. We helpen je graag aan een stevige fiets die binnen je budget past.",
+    {
+      question: {
+        en: "Can you help me find a specific bike or frame size?",
+        nl: "Kunnen jullie helpen met een specifiek type fiets of framemaat?",
+      },
+      answer: {
+        en: "Yes. Share the bike type, size, budget, and use case so the shop can advise on a practical option for daily city cycling.",
+        nl: "Ja. Geef het fietstype, de maat, het budget en je gebruik door, zodat de winkel kan adviseren over een praktische optie voor dagelijks stadsgebruik.",
+      },
     },
-  },  
-  {
-    question: {
-      en: "Can I bring my bike in for a quick repair?",
-      nl: "Kan ik mijn fiets langsbrengen voor een snelle reparatie?",
-    },
-    answer: {
-      en: "Yes, we handle all types of repairs, from flat tires to full maintenance. Usually, if you bring your bike in the morning, we can have it ready for you the same day.",
-      nl: "Ja, we doen alle soorten reparaties, van een lekke band tot een volledige onderhoudsbeurt. Meestal geldt: 's ochtends brengen, 's middags weer op pad.",
-    },
-  },
-  {
-    question: {
-      en: "Do I get a warranty on a second-hand bike?",
-      nl: "Krijg ik garantie op een tweedehands fiets?",
-    },
-    answer: {
-      en: "Quality and trust are important to us. All our refurbished second-hand bikes come with a standard warranty so you can cycle through Groningen with peace of mind.",
-      nl: "Kwaliteit en vertrouwen staan bij ons voorop. Al onze gereviseerde tweedehands fietsen worden geleverd met een standaard garantie, zodat je met een gerust hart door Groningen kunt fietsen.",
-    },
-  },
-  {
-    question: {
-      en: "Can you help me find a specific type of bike or frame size?",
-      nl: "Kunnen jullie mij helpen aan een specifiek type fiets of framemaat?",
-    },
-    answer: {
-      en: "Yes! If you are looking for a specific brand, size, or style (like an omafiets or a racing bike), just let us know. We receive new stock daily and can match you with the perfect fit.",
-      nl: "Ja! Als je op zoek bent naar een specifiek merk, maat of stijl (zoals een omafiets of een racefiets), laat het ons weten. We krijgen dagelijks nieuwe voorraad binnen en helpen je graag aan de perfecte match.",
-    },
-  },
-];
+  ];
+}

@@ -1,12 +1,16 @@
 import Image from "next/image";
 import type { AppLanguage } from "@/lib/config/i18n";
-import { homeFaqs } from "@/data/home-faqs";
+import { getHomeFaqs } from "@/data/home-faqs";
+import type { SiteConfig } from "@/types/site";
 
 type HomeFaqProps = {
+  siteConfig: SiteConfig;
   lang: AppLanguage;
 };
 
-export function HomeFaq({ lang }: HomeFaqProps) {
+export function HomeFaq({ siteConfig, lang }: HomeFaqProps) {
+  const homeFaqs = getHomeFaqs(siteConfig);
+
   return (
     <section className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm md:p-12">
       <div className="grid gap-12 lg:grid-cols-2 lg:items-start">

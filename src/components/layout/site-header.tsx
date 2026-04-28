@@ -4,6 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MapPin, Phone, Globe } from "lucide-react";
 import type { AppLanguage } from "@/lib/config/i18n";
+import {
+  getPrimaryCta,
+  getRenter,
+  getRequestHelpHref,
+} from "@/lib/config/site-config-utils";
 import type { SiteConfig } from "@/types/site";
 import { cn } from "@/lib/utils";
 
@@ -38,9 +43,13 @@ export function SiteHeader({ siteConfig, lang }: SiteHeaderProps) {
 
   const otherLang = lang === "en" ? "nl" : "en";
   const otherLangLabel = lang === "en" ? "NL" : "EN";
+  const renter = getRenter(siteConfig);
+  const primaryCta = getPrimaryCta(siteConfig, lang);
 
-  const googleMapsUrl = siteConfig.googleBusinessUrl;
-  const locationText = `${siteConfig.address}, ${siteConfig.city}`;
+  const googleMapsUrl = renter?.googleBusinessUrl;
+  const locationText = renter
+    ? `${renter.address}, ${siteConfig.city}`
+    : siteConfig.city;
 
   const isServicesActive = pathname?.includes(`/${lang}/services`);
   const isNeighborhoodsActive = pathname?.includes(`/${lang}/buurten`);
@@ -50,24 +59,33 @@ export function SiteHeader({ siteConfig, lang }: SiteHeaderProps) {
       {/* Top Bar: Contact & Lang */}
       <div className="flex items-center justify-between gap-3 px-4 text-[11px] font-medium uppercase tracking-wider text-zinc-500 md:text-xs">
         <div className="flex items-center gap-4">
-          <a
-            href={googleMapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 transition-colors hover:text-zinc-900"
-          >
-            <MapPin size={13} className="text-zinc-400" />
-            <span className="hidden sm:inline">{locationText}</span>
-            <span className="sm:hidden">{siteConfig.city}</span>
-          </a>
+          {renter && googleMapsUrl ? (
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 transition-colors hover:text-zinc-900"
+            >
+              <MapPin size={13} className="text-zinc-400" />
+              <span className="hidden sm:inline">{locationText}</span>
+              <span className="sm:hidden">{siteConfig.city}</span>
+            </a>
+          ) : (
+            <span className="flex items-center gap-1.5">
+              <MapPin size={13} className="text-zinc-400" />
+              <span>{siteConfig.city}</span>
+            </span>
+          )}
 
-          <a
-            href={`tel:${siteConfig.phoneNumber}`}
-            className="flex items-center gap-1.5 transition-colors hover:text-zinc-900"
-          >
-            <Phone size={13} className="text-zinc-400" />
-            <span>{siteConfig.phoneNumber}</span>
-          </a>
+          {renter ? (
+            <a
+              href={`tel:${renter.phoneNumber}`}
+              className="flex items-center gap-1.5 transition-colors hover:text-zinc-900"
+            >
+              <Phone size={13} className="text-zinc-400" />
+              <span>{renter.phoneNumber}</span>
+            </a>
+          ) : null}
         </div>
 
         <Link
@@ -87,7 +105,9 @@ export function SiteHeader({ siteConfig, lang }: SiteHeaderProps) {
               {siteConfig.siteName}
             </Link>
             <p className="hidden text-[10px] font-bold uppercase tracking-widest text-zinc-400 lg:block">
-              {lang === "nl" ? "De fietsspecialist van Groningen" : "Groningen's Bicycle Specialists"}
+              {lang === "nl"
+                ? `Fietshulp in ${siteConfig.city}`
+                : `Bike help in ${siteConfig.city}`}
             </p>
           </div>
 
@@ -135,19 +155,21 @@ export function SiteHeader({ siteConfig, lang }: SiteHeaderProps) {
             </Link>
 
             <div className="ml-auto flex items-center gap-2 md:ml-0">
+              {renter && googleMapsUrl ? (
+                <a
+                  href={googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden rounded-xl border border-zinc-200 px-4 py-2 text-xs transition-all hover:bg-zinc-50 md:block"
+                >
+                  {labels.location}
+                </a>
+              ) : null}
               <a
-                href={googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden rounded-xl border border-zinc-200 px-4 py-2 text-xs transition-all hover:bg-zinc-50 md:block"
-              >
-                {labels.location}
-              </a>
-              <a
-                href={`tel:${siteConfig.phoneNumber}`}
+                href={renter ? primaryCta.href : getRequestHelpHref(lang)}
                 className="rounded-xl bg-zinc-900 px-5 py-2 text-xs text-white shadow-lg transition-all hover:bg-black hover:shadow-xl active:scale-95"
               >
-                {labels.call}
+                {renter ? labels.call : primaryCta.label}
               </a>
             </div>
           </nav>

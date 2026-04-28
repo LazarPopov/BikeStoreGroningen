@@ -54,7 +54,13 @@ function applyConsent(consent: ConsentValue) {
 }
 
 // Pass gaId as a prop instead of using process.env
-export function SiteGoogleAnalytics({ gaId }: { gaId?: string }) {
+export function SiteGoogleAnalytics({
+  gaId,
+  siteName,
+}: {
+  gaId?: string;
+  siteName: string;
+}) {
   const consent = useSyncExternalStore<ConsentSnapshot>(
     subscribeToConsentChange,
     getConsentSnapshot,
@@ -103,7 +109,7 @@ export function SiteGoogleAnalytics({ gaId }: { gaId?: string }) {
             <div>
               <h2 className="text-lg font-semibold text-zinc-900">Cookies & Analytics</h2>
               <p className="mt-2 text-sm text-zinc-700">
-                Wij gebruiken analytische cookies om bezoeken en klikken te begrijpen voor <strong>Bike Store Groningen</strong>.
+                Wij gebruiken analytische cookies om bezoeken en klikken te begrijpen voor <strong>{siteName}</strong>.
               </p>
             </div>
             <div className="flex gap-3">

@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getSiteConfig } from "@/lib/config/get-site-config";
+import { getActiveSiteConfig } from "@/lib/config/get-site-config";
 import { isSupportedLanguage } from "@/lib/config/i18n";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import {
+  getContactEmail,
+  getDisplayBusinessName,
+} from "@/lib/config/site-config-utils";
 
 type PageProps = {
   params: Promise<{ lang: string }>;
@@ -18,7 +22,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
+  const siteConfig = getActiveSiteConfig();
 
   return {
     title:
@@ -46,7 +50,9 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
     notFound();
   }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
+  const siteConfig = getActiveSiteConfig();
+  const businessName = getDisplayBusinessName(siteConfig);
+  const contactEmail = getContactEmail(siteConfig);
 
   return (
     <main className="min-h-screen bg-white px-6 py-10">
@@ -65,8 +71,8 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
           <div className="space-y-4 text-zinc-700">
             <p>
               {lang === "nl"
-                ? `${siteConfig.siteName} kan persoonsgegevens verzamelen wanneer een bezoeker contact opneemt met ${siteConfig.googleBusinessProfileName}.`
-                : `${siteConfig.siteName} may collect personal data when a visitor gets in touch with ${siteConfig.googleBusinessProfileName}.`}
+                ? `${siteConfig.siteName} kan persoonsgegevens verzamelen wanneer een bezoeker contact opneemt met ${businessName}.`
+                : `${siteConfig.siteName} may collect personal data when a visitor gets in touch with ${businessName}.`}
             </p>
 
             <p>
@@ -89,8 +95,8 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
 
             <p>
               {lang === "nl"
-                ? "Voor verzoeken rondom privacy of gegevensverwijdering kan contact worden opgenomen via het vermelde e mailadres op deze website."
-                : "For privacy related requests or deletion requests, visitors can contact the email address listed on this website."}
+                ? `Voor verzoeken rondom privacy of gegevensverwijdering kan contact worden opgenomen via ${contactEmail}.`
+                : `For privacy related requests or deletion requests, visitors can contact ${contactEmail}.`}
             </p>
           </div>
         </section>

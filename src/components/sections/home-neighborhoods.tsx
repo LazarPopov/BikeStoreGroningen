@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { AppLanguage } from "@/lib/config/i18n";
 import type { SiteConfig } from "@/types/site";
 import {
-  getLandmarkPagesByCity,
-  getResidentialNeighborhoodPagesByCity,
+  getLandmarkPagesForSite,
+  getResidentialNeighborhoodPagesForSite,
 } from "@/data/neighborhood-pages";
 
 type HomeNeighborhoodsProps = {
@@ -15,9 +15,9 @@ export function HomeNeighborhoods({
   siteConfig,
   lang,
 }: HomeNeighborhoodsProps) {
-  const landmarkPages = getLandmarkPagesByCity(siteConfig.city);
-  const neighborhoodPages = getResidentialNeighborhoodPagesByCity(
-    siteConfig.city
+  const landmarkPages = getLandmarkPagesForSite(siteConfig);
+  const neighborhoodPages = getResidentialNeighborhoodPagesForSite(
+    siteConfig
   ).slice(0, 6);
 
   return (

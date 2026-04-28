@@ -1,4 +1,10 @@
 import type { AppLanguage } from "@/lib/config/i18n";
+import {
+  getDisplayBusinessName,
+  getPrimaryCta,
+  getRenter,
+  getSecondaryCta,
+} from "@/lib/config/site-config-utils";
 import type { SiteConfig } from "@/types/site";
 
 type HomeLocationProps = {
@@ -7,6 +13,11 @@ type HomeLocationProps = {
 };
 
 export function HomeLocation({ siteConfig, lang }: HomeLocationProps) {
+  const renter = getRenter(siteConfig);
+  const businessName = getDisplayBusinessName(siteConfig);
+  const primaryCta = getPrimaryCta(siteConfig, lang);
+  const secondaryCta = getSecondaryCta(siteConfig, lang);
+
   return (
     <section className="grid gap-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm lg:grid-cols-[1fr_1.2fr]">
       <div>
@@ -22,54 +33,76 @@ export function HomeLocation({ siteConfig, lang }: HomeLocationProps) {
 
         <p className="mb-4 text-zinc-700">
           {lang === "nl"
-            ? `${siteConfig.googleBusinessProfileName} helpt fietsers in ${siteConfig.city} met reparatie, tweedehands fietsen, nieuwe fietsen en accessoires. Bel de winkel of open de route op Google Maps.`
-            : `${siteConfig.googleBusinessProfileName} helps cyclists in ${siteConfig.city} with repairs, second-hand bikes, new bikes, and accessories. Call the shop or open directions on Google Maps.`}
+            ? `${businessName} helpt fietsers in ${siteConfig.city} met reparatie, tweedehands fietsen, nieuwe fietsen en accessoires.`
+            : `${businessName} helps cyclists in ${siteConfig.city} with repairs, second-hand bikes, new bikes, and accessories.`}
         </p>
 
         <div className="mb-4 space-y-2 text-zinc-700">
-          <p>
-            <strong>{lang === "nl" ? "Adres:" : "Address:"}</strong>{" "}
-            {siteConfig.address}, {siteConfig.postalCode}, {siteConfig.city}
-          </p>
+          {renter ? (
+            <>
+              <p>
+                <strong>{lang === "nl" ? "Adres:" : "Address:"}</strong>{" "}
+                {renter.address}, {renter.postalCode}, {siteConfig.city}
+              </p>
 
-          <p>
-            <strong>{lang === "nl" ? "Google profiel:" : "Google profile:"}</strong>{" "}
-            {siteConfig.googleBusinessProfileName}
-          </p>
+              <p>
+                <strong>{lang === "nl" ? "Google profiel:" : "Google profile:"}</strong>{" "}
+                {renter.googleBusinessProfileName}
+              </p>
 
-          <p>
-            <strong>{lang === "nl" ? "Reviews:" : "Reviews:"}</strong>{" "}
-            {siteConfig.googleReviewRating}/5 ({siteConfig.googleReviewCount})
-          </p>
+              <p>
+                <strong>{lang === "nl" ? "Reviews:" : "Reviews:"}</strong>{" "}
+                {renter.googleReviewRating}/5 ({renter.googleReviewCount})
+              </p>
+            </>
+          ) : (
+            <p>
+              <strong>{lang === "nl" ? "Stad:" : "City:"}</strong>{" "}
+              {siteConfig.city}
+            </p>
+          )}
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row">
           <a
-            href={`tel:${siteConfig.phoneNumber}`}
+            href={primaryCta.href}
             className="inline-block rounded-xl bg-black px-5 py-3 text-center text-white"
           >
-            {lang === "nl" ? "Bel de winkel" : "Call the shop"}
+            {primaryCta.label}
           </a>
           <a
-            href={siteConfig.googleBusinessUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={secondaryCta.href}
+            target={secondaryCta.target}
+            rel={secondaryCta.rel}
             className="inline-block rounded-xl border border-zinc-300 px-5 py-3 text-center font-medium text-zinc-900"
           >
-            {lang === "nl" ? "Route op Google Maps" : "Directions on Google Maps"}
+            {secondaryCta.label}
           </a>
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50">
-        <iframe
-          src={siteConfig.mapEmbedUrl}
-          title={lang === "nl" ? "Kaart van Groningen" : "Map of Groningen"}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          className="h-[320px] w-full border-0"
-        />
-      </div>
+      {renter ? (
+        <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50">
+          <iframe
+            src={renter.mapEmbedUrl}
+            title={lang === "nl" ? `Kaart van ${siteConfig.city}` : `Map of ${siteConfig.city}`}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="h-[320px] w-full border-0"
+          />
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6">
+          <h3 className="mb-3 text-xl font-semibold text-zinc-900">
+            {lang === "nl" ? `Vraag fietshulp aan in ${siteConfig.city}` : `Request bike help in ${siteConfig.city}`}
+          </h3>
+          <p className="text-zinc-700">
+            {lang === "nl"
+              ? `Vertel ons welke reparatie, fiets of accessoires je zoekt, zodat je aanvraag bij de juiste fietshulp voor ${siteConfig.city} terechtkomt.`
+              : `Tell us which repair, bike, or accessories you need so your request can be matched with bike help in ${siteConfig.city}.`}
+          </p>
+        </div>
+      )}
     </section>
   );
 }

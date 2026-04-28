@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Bike, GraduationCap, MapPin } from "lucide-react";
 import type { AppLanguage } from "@/lib/config/i18n";
+import { getDisplayBusinessName } from "@/lib/config/site-config-utils";
 import type { SiteConfig } from "@/types/site";
 
 type HomeStudentExpatsProps = {
@@ -13,11 +14,16 @@ export function HomeStudentExpats({
   lang,
 }: HomeStudentExpatsProps) {
   const isDutch = lang === "nl";
+  const businessName = getDisplayBusinessName(siteConfig);
+  const primaryAreaSlug = siteConfig.localAreas[0]?.slug ?? "centrum";
+  const secondaryAreaSlug = siteConfig.localAreas[1]?.slug ?? primaryAreaSlug;
 
   const links = [
     {
       href: `/${lang}/services/student-bikes`,
-      label: isDutch ? "Studentenfietsen Groningen" : "Student bikes Groningen",
+      label: isDutch
+        ? `Studentenfietsen ${siteConfig.city}`
+        : `Student bikes ${siteConfig.city}`,
     },
     {
       href: `/${lang}/services/second-hand-bikes`,
@@ -27,17 +33,21 @@ export function HomeStudentExpats({
     },
     {
       href: `/${lang}/services/bike-repair`,
-      label: isDutch ? "Fietsenmaker Groningen" : "Bike repair Groningen",
-    },
-    {
-      href: `/${lang}/buurten/zernike-campus`,
-      label: isDutch ? "Fietsenmaker nabij Zernike" : "Bike repair near Zernike",
-    },
-    {
-      href: `/${lang}/buurten/groningen-station`,
       label: isDutch
-        ? "Fietsenwinkel nabij station"
-        : "Bike shop near Groningen Station",
+        ? `Fietsenmaker ${siteConfig.city}`
+        : `Bike repair ${siteConfig.city}`,
+    },
+    {
+      href: `/${lang}/buurten/${secondaryAreaSlug}`,
+      label: isDutch
+        ? `Fietshulp in ${siteConfig.city}`
+        : `Bike help in ${siteConfig.city}`,
+    },
+    {
+      href: `/${lang}/buurten/${primaryAreaSlug}`,
+      label: isDutch
+        ? "Fietshulp per buurt"
+        : "Bike help by area",
     },
   ];
 
@@ -50,13 +60,13 @@ export function HomeStudentExpats({
           </p>
           <h2 className="text-3xl font-bold tracking-tight text-zinc-900">
             {isDutch
-              ? "Net in Groningen? Begin met een fiets die gewoon werkt."
-              : "New in Groningen? Start with a bike that simply works."}
+              ? `Net in ${siteConfig.city}? Begin met een fiets die gewoon werkt.`
+              : `New in ${siteConfig.city}? Start with a bike that simply works.`}
           </h2>
           <p className="mt-4 text-lg leading-8 text-zinc-700">
             {isDutch
-              ? `${siteConfig.googleBusinessProfileName} helpt studenten, internationale studenten en expats met betrouwbare tweedehands fietsen, snelle reparaties, verlichting en sloten voor dagelijkse ritten naar Zernike, Hanze, RUG, station en centrum.`
-              : `${siteConfig.googleBusinessProfileName} helps students, international students, and expats with reliable used bikes, fast repairs, lights, and locks for daily rides to Zernike, Hanze, RUG, the station, and the city center.`}
+              ? `${businessName} helpt studenten, internationale studenten en expats met betrouwbare tweedehands fietsen, reparaties, verlichting en sloten voor dagelijkse ritten in ${siteConfig.city}.`
+              : `${businessName} helps students, international students, and expats with reliable used bikes, repairs, lights, and locks for daily rides in ${siteConfig.city}.`}
           </p>
         </div>
 
@@ -68,7 +78,7 @@ export function HomeStudentExpats({
                 {isDutch ? "Campusritten" : "Campus rides"}
               </h3>
               <p className="mt-1 text-sm text-zinc-600">
-                {isDutch ? "Zernike, Hanze en RUG." : "Zernike, Hanze, and RUG."}
+                {isDutch ? "Studie, werk en dagelijks reizen." : "Study, work, and daily travel."}
               </p>
             </div>
           </div>

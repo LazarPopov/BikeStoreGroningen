@@ -1,6 +1,7 @@
 // src/data/neighborhood-pages.ts
 
 import type { NeighborhoodPage } from "@/types/neighborhood-page";
+import type { SiteConfig } from "@/types/site";
 
 export const neighborhoodPages: NeighborhoodPage[] = [
   {
@@ -469,10 +470,18 @@ export function getNeighborhoodPagesByCity(city: string) {
   return neighborhoodPages.filter((page) => page.city === city);
 }
 
+export function getNeighborhoodPagesForSite(siteConfig: SiteConfig) {
+  return siteConfig.localAreas;
+}
+
 export function getLandmarkPagesByCity(city: string) {
   return neighborhoodPages.filter(
     (page) => page.city === city && page.pageType === "landmark"
   );
+}
+
+export function getLandmarkPagesForSite(siteConfig: SiteConfig) {
+  return siteConfig.localAreas.filter((page) => page.pageType === "landmark");
 }
 
 export function getResidentialNeighborhoodPagesByCity(city: string) {
@@ -481,8 +490,76 @@ export function getResidentialNeighborhoodPagesByCity(city: string) {
   );
 }
 
+export function getResidentialNeighborhoodPagesForSite(siteConfig: SiteConfig) {
+  return siteConfig.localAreas.filter((page) => page.pageType !== "landmark");
+}
+
 export function getNeighborhoodPageBySlug(slug: string, city: string) {
   return neighborhoodPages.find(
     (page) => page.slug === slug && page.city === city
   );
+}
+
+export function getNeighborhoodPageBySlugForSite(
+  slug: string,
+  siteConfig: SiteConfig
+) {
+  return siteConfig.localAreas.find((page) => page.slug === slug);
+}
+
+type GenericLocalAreaInput = {
+  slug: string;
+  name: string;
+  pageType?: "neighborhood" | "landmark";
+};
+
+export function createGenericLocalAreaPages(
+  city: string,
+  areas: GenericLocalAreaInput[]
+): NeighborhoodPage[] {
+  return areas.map((area) => {
+    const isLandmark = area.pageType === "landmark";
+    const areaTypeEn = isLandmark ? "area" : "neighborhood";
+    const areaTypeNl = isLandmark ? "plek" : "buurt";
+
+    return {
+      slug: area.slug,
+      city,
+      neighborhoodName: area.name,
+      pageType: area.pageType,
+      imagePath: "/images/bike-repair.jpg",
+      title: {
+        en: `Bike Repair near ${area.name} ${city}`,
+        nl: `Fietsenmaker nabij ${area.name} ${city}`,
+      },
+      shortTitle: {
+        en: area.name,
+        nl: area.name,
+      },
+      metaTitle: {
+        en: `Bike Repair near ${area.name} | ${city}`,
+        nl: `Fietsenmaker nabij ${area.name} | ${city}`,
+      },
+      metaDescription: {
+        en: `Need bike repair, a used bike, or student bike help near ${area.name} in ${city}? Send a request through BikeStore${city}.nl.`,
+        nl: `Fietsreparatie, een tweedehands fiets of studentenfiets nodig nabij ${area.name} in ${city}? Verstuur je aanvraag via BikeStore${city}.nl.`,
+      },
+      intro: {
+        en: `${area.name} is an important ${areaTypeEn} for daily cyclists in ${city}. BikeStore${city}.nl helps students, expats, commuters, and locals request practical bike help.`,
+        nl: `${area.name} is een belangrijke ${areaTypeNl} voor dagelijkse fietsers in ${city}. BikeStore${city}.nl helpt studenten, expats, forenzen en locals met praktische fietshulp.`,
+      },
+      paragraphs: {
+        en: [
+          `Cyclists around ${area.name} often need simple, practical help: a flat tire, weak brakes, broken lights, a stronger lock, or advice before buying a used bike.`,
+          `If you are not sure which repair or bike option fits, describe your situation and the daily route you use most in ${city}.`,
+          `Send a request with your bike problem, preferred bike type, or cycling needs so the inquiry can be matched with bike help in ${city}.`,
+        ],
+        nl: [
+          `Fietsers rond ${area.name} hebben vaak praktische hulp nodig: een lekke band, zwakke remmen, kapotte verlichting, een sterker slot of advies voor een tweedehands fiets.`,
+          `Weet je niet zeker welke reparatie of fietsoptie past? Beschrijf je situatie en de route die je het meest gebruikt in ${city}.`,
+          `Verstuur een aanvraag met je fietsprobleem, gewenste fietstype of fietswens zodat de aanvraag kan worden gekoppeld aan fietshulp in ${city}.`,
+        ],
+      },
+    };
+  });
 }

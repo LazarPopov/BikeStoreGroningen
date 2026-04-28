@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { isSupportedLanguage, SUPPORTED_LANGUAGES } from "@/lib/config/i18n";
-import { getSiteConfig } from "@/lib/config/get-site-config";
+import { getActiveSiteConfig } from "@/lib/config/get-site-config";
 import { LocalBusinessJsonLd } from "@/components/seo/local-business-json-ld";
 
 export function generateStaticParams() {
@@ -21,7 +21,7 @@ export default async function LangLayout({
     notFound();
   }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
+  const siteConfig = getActiveSiteConfig();
 
   return (
     <>

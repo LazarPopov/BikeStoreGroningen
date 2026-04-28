@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getSiteConfig } from "@/lib/config/get-site-config";
+import { getActiveSiteConfig } from "@/lib/config/get-site-config";
 import { isSupportedLanguage } from "@/lib/config/i18n";
 import { SiteHeader } from "@/components/layout/site-header";
 import { HomeHero } from "@/components/sections/home-hero";
@@ -27,7 +27,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
+  const siteConfig = getActiveSiteConfig();
   const seo = siteConfig.seoDefaults[lang];
 
   return {
@@ -63,12 +63,12 @@ export default async function LangHomePage({ params }: PageProps) {
     notFound();
   }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
+  const siteConfig = getActiveSiteConfig();
 
   return (
     <main className="min-h-screen bg-white px-6 py-10">
       <div className="mx-auto max-w-6xl space-y-8">
-        <FaqJsonLd lang={lang} />
+        <FaqJsonLd siteConfig={siteConfig} lang={lang} />
         <SiteHeader siteConfig={siteConfig} lang={lang} />
         <HomeHero siteConfig={siteConfig} lang={lang} />
         <HomeServices siteConfig={siteConfig} lang={lang} />
@@ -76,7 +76,7 @@ export default async function LangHomePage({ params }: PageProps) {
         <HomeReviews siteConfig={siteConfig} lang={lang} />
         <HomeLocation siteConfig={siteConfig} lang={lang} />
         <HomeNeighborhoods siteConfig={siteConfig} lang={lang} />
-        <HomeFaq lang={lang} />
+        <HomeFaq siteConfig={siteConfig} lang={lang} />
         <SiteFooter siteConfig={siteConfig} lang={lang} />
         <StickyMobileContactBar siteConfig={siteConfig} lang={lang} />
       </div>

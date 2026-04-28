@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SiteFooter } from "@/components/layout/site-footer";
 import { RelatedLinks } from "@/components/common/related-links";
-import { getSiteConfig } from "@/lib/config/get-site-config";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
 import {
-  getNeighborhoodPageBySlug,
-  getNeighborhoodPagesByCity,
+  getNeighborhoodPageBySlugForSite,
+  getNeighborhoodPagesForSite,
 } from "@/data/neighborhood-pages";
+import { getActiveSiteConfig } from "@/lib/config/get-site-config";
 import { isSupportedLanguage, SUPPORTED_LANGUAGES } from "@/lib/config/i18n";
+import {
+  getDisplayBusinessName,
+  getPrimaryCta,
+  getRenter,
+  getSecondaryCta,
+} from "@/lib/config/site-config-utils";
 
 type PageProps = {
   params: Promise<{ lang: string; slug: string }>;
@@ -17,8 +23,8 @@ type PageProps = {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  const siteConfig = getSiteConfig("bikes-groningen");
-  const pages = getNeighborhoodPagesByCity(siteConfig.city);
+  const siteConfig = getActiveSiteConfig();
+  const pages = getNeighborhoodPagesForSite(siteConfig);
 
   return SUPPORTED_LANGUAGES.flatMap((lang) =>
     pages.map((page) => ({
@@ -37,8 +43,8 @@ export async function generateMetadata({
     return {};
   }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
-  const neighborhoodPage = getNeighborhoodPageBySlug(slug, siteConfig.city);
+  const siteConfig = getActiveSiteConfig();
+  const neighborhoodPage = getNeighborhoodPageBySlugForSite(slug, siteConfig);
 
   if (!neighborhoodPage) {
     return {};
@@ -93,8 +99,8 @@ export default async function NeighborhoodPage({ params }: PageProps) {
     notFound();
   }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
-  const neighborhoodPage = getNeighborhoodPageBySlug(slug, siteConfig.city);
+  const siteConfig = getActiveSiteConfig();
+  const neighborhoodPage = getNeighborhoodPageBySlugForSite(slug, siteConfig);
 
   if (!neighborhoodPage) {
     notFound();
@@ -103,6 +109,10 @@ export default async function NeighborhoodPage({ params }: PageProps) {
   const canonicalUrl = `https://${siteConfig.domain}/${lang}/buurten/${neighborhoodPage.slug}`;
   const isDutch = lang === "nl";
   const isLandmark = neighborhoodPage.pageType === "landmark";
+  const renter = getRenter(siteConfig);
+  const businessName = getDisplayBusinessName(siteConfig);
+  const primaryCta = getPrimaryCta(siteConfig, lang);
+  const secondaryCta = getSecondaryCta(siteConfig, lang);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -124,15 +134,21 @@ export default async function NeighborhoodPage({ params }: PageProps) {
 
   const relatedServiceLinks = [
     {
-      label: isDutch ? "Fietsreparatie Groningen" : "Bike repair in Groningen",
+      label: isDutch
+        ? `Fietsreparatie ${siteConfig.city}`
+        : `Bike repair in ${siteConfig.city}`,
       href: `/${lang}/services/bike-repair`,
     },
     {
-      label: isDutch ? "Studentenfietsen Groningen" : "Student bikes in Groningen",
+      label: isDutch
+        ? `Studentenfietsen ${siteConfig.city}`
+        : `Student bikes in ${siteConfig.city}`,
       href: `/${lang}/services/student-bikes`,
     },
     {
-      label: isDutch ? "Tweedehands fietsen Groningen" : "Second-hand bikes in Groningen",
+      label: isDutch
+        ? `Tweedehands fietsen ${siteConfig.city}`
+        : `Second-hand bikes in ${siteConfig.city}`,
       href: `/${lang}/services/second-hand-bikes`,
     },
     {
@@ -179,31 +195,41 @@ export default async function NeighborhoodPage({ params }: PageProps) {
 
           <div className="mt-10 rounded-2xl bg-zinc-100 p-6">
             <h2 className="mb-3 text-2xl font-semibold">
-              {isDutch ? "Bel of open de route" : "Call or get directions"}
+              {renter
+                ? isDutch
+                  ? "Bel of open de route"
+                  : "Call or get directions"
+                : isDutch
+                  ? "Vraag fietshulp aan"
+                  : "Request bike help"}
             </h2>
             <p className="mb-4 text-zinc-700">
-              {isLandmark
-                ? isDutch
-                  ? `${siteConfig.googleBusinessProfileName} helpt fietsers rond ${neighborhoodPage.neighborhoodName} vanuit de winkel aan ${siteConfig.address}.`
-                  : `${siteConfig.googleBusinessProfileName} helps cyclists around ${neighborhoodPage.neighborhoodName} from the shop on ${siteConfig.address}.`
+              {renter
+                ? isLandmark
+                  ? isDutch
+                    ? `${businessName} helpt fietsers rond ${neighborhoodPage.neighborhoodName} vanuit de winkel aan ${renter.address}.`
+                    : `${businessName} helps cyclists around ${neighborhoodPage.neighborhoodName} from the shop on ${renter.address}.`
+                  : isDutch
+                    ? `${businessName} helpt fietsers uit ${neighborhoodPage.neighborhoodName} bij de winkel aan ${renter.address}.`
+                    : `${businessName} helps cyclists from ${neighborhoodPage.neighborhoodName} at the shop on ${renter.address}.`
                 : isDutch
-                  ? `${siteConfig.googleBusinessProfileName} helpt fietsers uit ${neighborhoodPage.neighborhoodName} bij de winkel aan ${siteConfig.address}.`
-                  : `${siteConfig.googleBusinessProfileName} helps cyclists from ${neighborhoodPage.neighborhoodName} at the shop on ${siteConfig.address}.`}
+                  ? `Beschrijf je fietsvraag rond ${neighborhoodPage.neighborhoodName}, dan kan je aanvraag worden opgepakt met lokale context voor ${siteConfig.city}.`
+                  : `Describe your bike question around ${neighborhoodPage.neighborhoodName}, so your request can be handled with local context for ${siteConfig.city}.`}
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
-                href={`tel:${siteConfig.phoneNumber}`}
+                href={primaryCta.href}
                 className="inline-block rounded-xl bg-black px-5 py-3 text-center text-white"
               >
-                {lang === "nl" ? "Bel de winkel" : "Call the shop"}
+                {primaryCta.label}
               </a>
               <a
-                href={siteConfig.googleBusinessUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={secondaryCta.href}
+                target={secondaryCta.target}
+                rel={secondaryCta.rel}
                 className="inline-block rounded-xl border border-zinc-300 bg-white px-5 py-3 text-center font-medium text-zinc-900"
               >
-                {lang === "nl" ? "Route op Google Maps" : "Directions on Google Maps"}
+                {secondaryCta.label}
               </a>
             </div>
           </div>

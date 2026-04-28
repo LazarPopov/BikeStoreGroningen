@@ -10,16 +10,16 @@ export function HomeTrust({ siteConfig, lang }: HomeTrustProps) {
   const items =
     lang === "nl"
       ? [
-          "Lokaal gericht op Groningen",
+          `Lokaal gericht op ${siteConfig.city}`,
           "Voor studenten, expats en dagelijkse fietsers",
           "Geschikt voor nieuwe en tweedehands fietsen",
-          "Snelle contactmogelijkheden via telefoon en e-mail",
+          "Praktische contactmogelijkheden",
         ]
       : [
-          "Locally focused on Groningen",
+          `Locally focused on ${siteConfig.city}`,
           "Built for students, expats, and daily riders",
-          "Suitable for new and used bike leads",
-          "Fast contact options by phone and email",
+          "Suitable for new and used bike questions",
+          "Practical contact options",
         ];
 
   return (

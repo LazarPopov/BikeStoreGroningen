@@ -2,10 +2,19 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getSiteConfig } from "@/lib/config/get-site-config";
-import { isSupportedLanguage } from "@/lib/config/i18n";
-import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
+import { getNeighborhoodPagesForSite } from "@/data/neighborhood-pages";
+import { getServicePagesForSite } from "@/data/service-pages";
+import { getActiveSiteConfig } from "@/lib/config/get-site-config";
+import { isSupportedLanguage } from "@/lib/config/i18n";
+import {
+  getContactEmail,
+  getDisplayBusinessName,
+  getPrimaryCta,
+  getRenter,
+  getSecondaryCta,
+} from "@/lib/config/site-config-utils";
 
 type PageProps = {
   params: Promise<{ lang: string }>;
@@ -24,18 +33,15 @@ export async function generateMetadata({
     return {};
   }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
+  const siteConfig = getActiveSiteConfig();
+  const businessName = getDisplayBusinessName(siteConfig);
+  const isDutch = lang === "nl";
 
   return {
-    // FIXED: Removed the manual siteName to prevent double branding!
-    title:
-      lang === "nl"
-        ? `Over ${siteConfig.googleBusinessProfileName}`
-        : `About ${siteConfig.googleBusinessProfileName}`,
-    description:
-      lang === "nl"
-        ? `${siteConfig.googleBusinessProfileName} in ${siteConfig.city}. Lees meer over tweedehands fietsen, reparatie, nieuwe fietsen, accessoires, studentenfietsen en goedkope fietsen in ${siteConfig.city}.`
-        : `${siteConfig.googleBusinessProfileName} in ${siteConfig.city}. Learn more about second hand bikes, repair, new bikes, accessories, student bikes, and cheap bikes in ${siteConfig.city}.`,
+    title: isDutch ? `Over ${businessName}` : `About ${businessName}`,
+    description: isDutch
+      ? `${businessName} helpt studenten, expats en dagelijkse fietsers in ${siteConfig.city} met reparatie, tweedehands fietsen, studentenfietsen en accessoires.`
+      : `${businessName} helps students, expats, and daily riders in ${siteConfig.city} with repair, second-hand bikes, student bikes, and accessories.`,
     alternates: {
       canonical: `https://${siteConfig.domain}/${lang}/about`,
       languages: {
@@ -44,17 +50,15 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title:
-        lang === "nl"
-          ? `Over ${siteConfig.googleBusinessProfileName} in ${siteConfig.city}`
-          : `About ${siteConfig.googleBusinessProfileName} in ${siteConfig.city}`,
-      description:
-        lang === "nl"
-          ? `${siteConfig.googleBusinessProfileName} helpt studenten, expats en dagelijkse fietsers in ${siteConfig.city} met tweedehands fietsen, reparaties, nieuwe fietsen en accessoires.`
-          : `${siteConfig.googleBusinessProfileName} helps students, expats, and daily riders in ${siteConfig.city} with second hand bikes, repairs, new bikes, and accessories.`,
+      title: isDutch
+        ? `Over ${businessName} in ${siteConfig.city}`
+        : `About ${businessName} in ${siteConfig.city}`,
+      description: isDutch
+        ? `${businessName} helpt fietsers in ${siteConfig.city} met praktische reparatie- en fietskoopvragen.`
+        : `${businessName} helps cyclists in ${siteConfig.city} with practical repair and bike-buying questions.`,
       url: `https://${siteConfig.domain}/${lang}/about`,
       siteName: siteConfig.siteName,
-      locale: lang === "nl" ? "nl_NL" : "en_US",
+      locale: isDutch ? "nl_NL" : "en_US",
       type: "website",
     },
   };
@@ -67,65 +71,15 @@ export default async function AboutPage({ params }: PageProps) {
     notFound();
   }
 
-  const siteConfig = getSiteConfig("bikes-groningen");
+  const siteConfig = getActiveSiteConfig();
+  const businessName = getDisplayBusinessName(siteConfig);
+  const renter = getRenter(siteConfig);
+  const contactEmail = getContactEmail(siteConfig);
+  const services = getServicePagesForSite(siteConfig);
+  const localPages = getNeighborhoodPagesForSite(siteConfig).slice(0, 6);
+  const primaryCta = getPrimaryCta(siteConfig, lang);
+  const secondaryCta = getSecondaryCta(siteConfig, lang);
   const isDutch = lang === "nl";
-
-  const serviceLinks = [
-    {
-      href: `/${lang}/services/second-hand-bikes`,
-      title: isDutch
-        ? `Tweedehands fietsen in ${siteConfig.city}`
-        : `Second hand bikes in ${siteConfig.city}`,
-      description: isDutch
-        ? "Volledig refurbished, studentvriendelijke fietsen vanaf €120."
-        : "Fully refurbished, student friendly bikes starting from €120.",
-    },
-    {
-      href: `/${lang}/services/bike-repair`,
-      title: isDutch
-        ? `Fietsreparatie in ${siteConfig.city}`
-        : `Bike repair in ${siteConfig.city}`,
-      description: isDutch
-        ? "Snelle reparaties, vaak klaar binnen 24 uur. Kleine fixes vanaf €15."
-        : "Fast repairs, often ready within 24 hours. Small fixes from €15.",
-    },
-    {
-      href: `/${lang}/services/new-bikes`,
-      title: isDutch
-        ? `Nieuwe fietsen in ${siteConfig.city}`
-        : `New bikes in ${siteConfig.city}`,
-      description: isDutch
-        ? "Kwaliteitsfietsen voor de stad vanaf €450."
-        : "Quality city bikes starting from €450.",
-    },
-    {
-      href: `/${lang}/services/bike-accessories`,
-      title: isDutch
-        ? `Fietsaccessoires in ${siteConfig.city}`
-        : `Bike accessories in ${siteConfig.city}`,
-      description: isDutch
-        ? "ART-goedgekeurde sloten, verlichting en directe afhaalopties."
-        : "ART approved locks, lights, and immediate pickup options.",
-    },
-    {
-      href: `/${lang}/services/student-bikes`,
-      title: isDutch
-        ? `Studentenfietsen in ${siteConfig.city}`
-        : `Student bikes in ${siteConfig.city}`,
-      description: isDutch
-        ? "Praktische Groningen-proof fietsen voor dagelijks gebruik."
-        : "Practical Groningen proof bikes for daily use.",
-    },
-    {
-      href: `/${lang}/services/cheap-bikes`,
-      title: isDutch
-        ? `Goedkope fietsen in ${siteConfig.city}`
-        : `Cheap bikes in ${siteConfig.city}`,
-      description: isDutch
-        ? "Budgetvriendelijke opties zonder in te leveren op basisveiligheid."
-        : "Budget friendly options without compromising basic safety.",
-    },
-  ];
 
   return (
     <main className="min-h-screen bg-white px-6 py-10">
@@ -135,8 +89,12 @@ export default async function AboutPage({ params }: PageProps) {
         <section className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
           <div className="relative h-[260px] w-full md:h-[360px]">
             <Image
-              src="/images/bikes-groningen-hero.jpg"
-              alt="bike-store-groningen"
+              src={siteConfig.heroImagePath}
+              alt={
+                isDutch
+                  ? `Fietshulp in ${siteConfig.city}`
+                  : `Bike help in ${siteConfig.city}`
+              }
               fill
               preload
               className="object-cover"
@@ -145,73 +103,15 @@ export default async function AboutPage({ params }: PageProps) {
 
           <div className="p-8">
             <p className="mb-3 text-sm uppercase tracking-wide text-zinc-500">
-              {isDutch ? "Over ons" : "About Us"}
+              {isDutch ? "Over ons" : "About us"}
             </p>
-
             <h1 className="mb-4 text-4xl font-bold text-zinc-900">
-              {isDutch
-                ? `Over ${siteConfig.googleBusinessProfileName}`
-                : `About ${siteConfig.googleBusinessProfileName}`}
+              {isDutch ? `Over ${businessName}` : `About ${businessName}`}
             </h1>
-
-            <p className="max-w-4xl text-lg text-zinc-700">
-              {isDutch ? (
-                <>
-                  {siteConfig.googleBusinessProfileName} is de lokale
-                  fietsenwinkel voor mensen die in {siteConfig.city} een
-                  betrouwbare fiets of snelle reparatie zoeken. We helpen
-                  studenten, expats en dagelijkse fietsers met{" "}
-                  <Link
-                    href={`/${lang}/services/second-hand-bikes`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    tweedehands fietsen in {siteConfig.city}
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/services/bike-repair`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    fietsreparatie in {siteConfig.city}
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/services/new-bikes`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    nieuwe fietsen in {siteConfig.city}
-                  </Link>{" "}
-                  en lokale fietshulp.
-                </>
-              ) : (
-                <>
-                  {siteConfig.googleBusinessProfileName} is the local bike shop
-                  for people looking for a reliable bike or fast repair in{" "}
-                  {siteConfig.city}. We help students, expats, and daily riders
-                  with{" "}
-                  <Link
-                    href={`/${lang}/services/second-hand-bikes`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    second hand bikes in {siteConfig.city}
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/services/bike-repair`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    bike repair in {siteConfig.city}
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/services/new-bikes`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    new bikes in {siteConfig.city}
-                  </Link>
-                  , and local bike support.
-                </>
-              )}
+            <p className="max-w-4xl text-lg leading-8 text-zinc-700">
+              {isDutch
+                ? `${businessName} richt zich op praktische fietshulp in ${siteConfig.city}: reparatievragen, tweedehands fietsen, studentenfietsen, sloten, verlichting en advies voor dagelijks fietsen.`
+                : `${businessName} focuses on practical bike help in ${siteConfig.city}: repair questions, second-hand bikes, student bikes, locks, lights, and advice for everyday cycling.`}
             </p>
           </div>
         </section>
@@ -220,158 +120,106 @@ export default async function AboutPage({ params }: PageProps) {
           <div className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm lg:col-span-2">
             <h2 className="mb-4 text-2xl font-semibold text-zinc-900">
               {isDutch
-                ? `Jouw betrouwbare partner voor fietsen in ${siteConfig.city}`
-                : `Your reliable partner for cycling in ${siteConfig.city}`}
+                ? `Voor studenten, expats en locals in ${siteConfig.city}`
+                : `For students, expats, and locals in ${siteConfig.city}`}
             </h2>
-
             <div className="space-y-4 text-zinc-700">
               <p>
                 {isDutch
-                  ? `${siteConfig.googleBusinessProfileName} is er voor eerstejaarsstudenten, internationale studenten, expats en locals die snel een goede fiets of betrouwbare reparatie nodig hebben. In een fietsstad als ${siteConfig.city} is een werkende fiets geen luxe maar een basisbehoefte.`
-                  : `${siteConfig.googleBusinessProfileName} is here for first year students, international students, expats, and locals who need a good bike or a reliable repair quickly. In a cycling city like ${siteConfig.city}, a working bike is not a luxury but a basic need.`}
+                  ? `Een werkende fiets is in ${siteConfig.city} essentieel voor studie, werk, boodschappen, stationritten en dagelijkse afspraken. Daarom is de site gericht op duidelijke fietshulp en lokale informatie die past bij dagelijks gebruik.`
+                  : `A working bike is essential in ${siteConfig.city} for study, work, groceries, station trips, and everyday plans. That is why this site is focused on clear bike help and local information for everyday use.`}
               </p>
-
               <p>
-                {isDutch ? (
-                  <>
-                    Zoek je een betaalbare optie voor dagelijks gebruik? Bekijk
-                    dan onze pagina&apos;s voor{" "}
-                    <Link
-                      href={`/${lang}/services/student-bikes`}
-                      className="font-medium text-zinc-900 underline underline-offset-4"
-                    >
-                      studentenfietsen in {siteConfig.city}
-                    </Link>{" "}
-                    en{" "}
-                    <Link
-                      href={`/${lang}/services/cheap-bikes`}
-                      className="font-medium text-zinc-900 underline underline-offset-4"
-                    >
-                      goedkope fietsen in {siteConfig.city}
-                    </Link>
-                    . Deze zijn extra relevant voor studenten die tussen de
-                    binnenstad, het station en Zernike fietsen.
-                  </>
-                ) : (
-                  <>
-                    Looking for an affordable option for daily use? Explore our{" "}
-                    <Link
-                      href={`/${lang}/services/student-bikes`}
-                      className="font-medium text-zinc-900 underline underline-offset-4"
-                    >
-                      student bikes in {siteConfig.city}
-                    </Link>{" "}
-                    and{" "}
-                    <Link
-                      href={`/${lang}/services/cheap-bikes`}
-                      className="font-medium text-zinc-900 underline underline-offset-4"
-                    >
-                      cheap bikes in {siteConfig.city}
-                    </Link>{" "}
-                    pages. These are especially relevant for students cycling
-                    between the city center, the station, and Zernike.
-                  </>
-                )}
-              </p>
-
-              <p>
-                {isDutch ? (
-                  <>
-                    Bezoekers die hun fiets direct willen verbeteren of
-                    beveiligen kunnen ook terecht op onze pagina voor{" "}
-                    <Link
-                      href={`/${lang}/services/bike-accessories`}
-                      className="font-medium text-zinc-900 underline underline-offset-4"
-                    >
-                      fietsaccessoires in {siteConfig.city}
-                    </Link>
-                    . Daar sluiten sloten, lampen en andere stadsbenodigdheden
-                    logisch aan op de hoofdvraag naar fietsen en reparatie.
-                  </>
-                ) : (
-                  <>
-                    Visitors who want to upgrade or secure their bike can also
-                    explore our{" "}
-                    <Link
-                      href={`/${lang}/services/bike-accessories`}
-                      className="font-medium text-zinc-900 underline underline-offset-4"
-                    >
-                      bike accessories in {siteConfig.city}
-                    </Link>{" "}
-                    page. Locks, lights, and other city essentials connect
-                    naturally to the main demand for bikes and repair.
-                  </>
-                )}
+                {isDutch
+                  ? `Nieuw in de stad? Je kunt hulp zoeken voor een betrouwbare tweedehands fiets, een studentenfiets, fietsreparatie of accessoires die passen bij druk dagelijks gebruik.`
+                  : `New in town? You can look for help with a reliable used bike, a student bike, bike repair, or accessories that fit busy daily use.`}
               </p>
             </div>
           </div>
 
           <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-8 shadow-sm">
             <h2 className="mb-4 text-2xl font-semibold text-zinc-900">
-              {isDutch ? "Contact en locatie" : "Contact and location"}
+              {renter
+                ? isDutch
+                  ? "Contact en locatie"
+                  : "Contact and location"
+                : isDutch
+                  ? "Aanvraag"
+                  : "Request"}
             </h2>
 
             <div className="space-y-3 text-zinc-700">
-              <div className="grid gap-3 pb-3 sm:grid-cols-2">
+              <div className="grid gap-3 pb-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                 <a
-                  href={`tel:${siteConfig.phoneNumber}`}
+                  href={primaryCta.href}
                   className="rounded-xl bg-zinc-900 px-4 py-3 text-center text-sm font-semibold text-white"
                 >
-                  {isDutch ? "Bel de winkel" : "Call the shop"}
+                  {primaryCta.label}
                 </a>
                 <a
-                  href={siteConfig.googleBusinessUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                  href={secondaryCta.href}
+                  target={secondaryCta.target}
+                  rel={secondaryCta.rel}
                   className="rounded-xl border border-zinc-300 px-4 py-3 text-center text-sm font-semibold text-zinc-900"
                 >
-                  {isDutch ? "Route" : "Directions"}
+                  {secondaryCta.label}
                 </a>
               </div>
+
               <p>
-                <strong>{isDutch ? "Partner:" : "Partner:"}</strong>{" "}
-                {siteConfig.googleBusinessProfileName}
+                <strong>{renter ? "Partner:" : isDutch ? "Website:" : "Site:"}</strong>{" "}
+                {businessName}
               </p>
-              <p>
-                <strong>{isDutch ? "Contactpersoon:" : "Contact person:"}</strong>{" "}
-                {siteConfig.contactPersonName}
-              </p>
-              <p>
-                <strong>{isDutch ? "Adres:" : "Address:"}</strong>{" "}
-                {siteConfig.address}, {siteConfig.postalCode},{" "}
-                {siteConfig.city}, {siteConfig.country}
-              </p>
-              <p>
-                <strong>{isDutch ? "Telefoon:" : "Phone:"}</strong>{" "}
-                <a
-                  href={`tel:${siteConfig.phoneNumber}`}
-                  className="text-zinc-900 underline underline-offset-4"
-                >
-                  {siteConfig.phoneNumber}
-                </a>
-              </p>
+
+              {renter ? (
+                <>
+                  <p>
+                    <strong>{isDutch ? "Adres:" : "Address:"}</strong>{" "}
+                    {renter.address}, {renter.postalCode}, {siteConfig.city},{" "}
+                    {siteConfig.country}
+                  </p>
+                  <p>
+                    <strong>{isDutch ? "Telefoon:" : "Phone:"}</strong>{" "}
+                    <a
+                      href={`tel:${renter.phoneNumber}`}
+                      className="text-zinc-900 underline underline-offset-4"
+                    >
+                      {renter.phoneNumber}
+                    </a>
+                  </p>
+                </>
+              ) : (
+                <p>
+                  <strong>{isDutch ? "Plaats:" : "City:"}</strong>{" "}
+                  {siteConfig.city}, {siteConfig.country}
+                </p>
+              )}
+
               <p>
                 <strong>{isDutch ? "E-mail:" : "Email:"}</strong>{" "}
                 <a
-                  href={`mailto:${siteConfig.email}?subject=${encodeURIComponent(
-                    "Bike Store Groningen"
+                  href={`mailto:${contactEmail}?subject=${encodeURIComponent(
+                    siteConfig.siteName
                   )}`}
                   className="text-zinc-900 underline underline-offset-4"
                 >
-                  {siteConfig.email}
+                  {contactEmail}
                 </a>
               </p>
-              <p>
-                <strong>Google:</strong>{" "}
-                <a
-                  href={siteConfig.googleBusinessUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-zinc-900 underline underline-offset-4"
-                >
-                  {isDutch ? "Bekijk bedrijfsprofiel" : "View business profile"}
-                </a>
-              </p>
+
+              {renter ? (
+                <p>
+                  <strong>Google:</strong>{" "}
+                  <a
+                    href={renter.googleBusinessUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-zinc-900 underline underline-offset-4"
+                  >
+                    {isDutch ? "Bekijk bedrijfsprofiel" : "View business profile"}
+                  </a>
+                </p>
+              ) : null}
             </div>
           </div>
         </section>
@@ -379,31 +227,26 @@ export default async function AboutPage({ params }: PageProps) {
         <section className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
           <div className="mb-6">
             <p className="text-sm uppercase tracking-wide text-zinc-500">
-              {isDutch ? "Onze services" : "Our services"}
+              {isDutch ? "Services" : "Services"}
             </p>
             <h2 className="text-2xl font-semibold text-zinc-900">
               {isDutch
                 ? `Alles voor fietsers in ${siteConfig.city}`
                 : `Everything for cyclists in ${siteConfig.city}`}
             </h2>
-              <p className="mt-3 max-w-3xl text-zinc-700">
-                {isDutch
-                ? `Vind snel de juiste hulp voor tweedehands fietsen, reparaties, nieuwe fietsen, accessoires, studentenfietsen en goedkope fietsen in ${siteConfig.city}.`
-                : `Find the right help for second hand bikes, repair, new bikes, accessories, student bikes, and cheap bikes in ${siteConfig.city}.`}
-            </p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {serviceLinks.map((service) => (
+            {services.map((service) => (
               <Link
-                key={service.href}
-                href={service.href}
+                key={service.slug}
+                href={`/${lang}/services/${service.slug}`}
                 className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6 transition hover:border-zinc-300 hover:bg-white"
               >
                 <h3 className="mb-2 text-lg font-semibold text-zinc-900">
-                  {service.title}
+                  {service.title[lang]}
                 </h3>
-                <p className="text-zinc-700">{service.description}</p>
+                <p className="text-zinc-700">{service.excerpt[lang]}</p>
               </Link>
             ))}
           </div>
@@ -412,282 +255,136 @@ export default async function AboutPage({ params }: PageProps) {
         <section className="grid gap-6 lg:grid-cols-2">
           <div className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
             <h2 className="mb-4 text-2xl font-semibold text-zinc-900">
-              {isDutch ? "Waarom mensen hier komen" : "Why people come here"}
+              {isDutch ? "Waarom dit werkt" : "Why this works"}
             </h2>
-
             <ul className="space-y-3 text-zinc-700">
               <li>
                 {isDutch
-                  ? "Tweedehands fietsen en nieuwe fietsen voor verschillende budgetten en gebruikssituaties."
-                  : "Second hand bikes and new bikes for different budgets and use cases."}
+                  ? `Gerichte servicepagina's voor reparatie, studentenfietsen, tweedehands fietsen en accessoires in ${siteConfig.city}.`
+                  : `Focused service pages for repair, student bikes, second-hand bikes, and accessories in ${siteConfig.city}.`}
               </li>
               <li>
                 {isDutch
-                  ? "Snelle lokale reparaties voor dagelijkse fietsproblemen in Groningen."
-                  : "Fast local repair for everyday cycling problems in Groningen."}
+                  ? "Sterke student- en expatpositionering voor mensen die snel praktische hulp zoeken."
+                  : "Strong student and expat positioning for people who need practical help quickly."}
               </li>
               <li>
                 {isDutch
-                  ? "Studentenfietsen en goedkope fietsen voor praktische ritten naar Zernike of het centrum."
-                  : "Student bikes and cheap bikes for practical rides to Zernike or the city center."}
-              </li>
-              <li>
-                {isDutch
-                  ? "Accessoires zoals sloten en verlichting voor veilig stadsgebruik."
-                  : "Accessories like locks and lights for safer city use."}
+                  ? "Lokale pagina's voor buurten en plekken waar fietszoekintentie logisch is."
+                  : "Local pages for neighborhoods and places where bike search intent is natural."}
               </li>
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
-            <h2 className="mb-4 text-2xl font-semibold text-zinc-900">
-              {isDutch ? "Openingstijden" : "Opening hours"}
-            </h2>
+          {renter ? (
+            <div className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
+              <h2 className="mb-4 text-2xl font-semibold text-zinc-900">
+                {isDutch ? "Openingstijden" : "Opening hours"}
+              </h2>
 
-            <div className="space-y-3">
-              {siteConfig.openingHours.map((item) => (
-                <div
-                  key={item.day}
-                  className="flex items-center justify-between border-b border-zinc-100 pb-2 text-zinc-700 last:border-b-0"
+              <div className="space-y-3">
+                {renter.openingHours.map((item) => (
+                  <div
+                    key={item.day}
+                    className="flex items-center justify-between border-b border-zinc-100 pb-2 text-zinc-700 last:border-b-0"
+                  >
+                    <span className="font-medium text-zinc-900">{item.day}</span>
+                    <span>
+                      {isClosed(item.open) || isClosed(item.close)
+                        ? isDutch
+                          ? "Gesloten"
+                          : "Closed"
+                        : `${item.open} - ${item.close}`}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
+              <h2 className="mb-4 text-2xl font-semibold text-zinc-900">
+                {isDutch ? "Aanvragen via de site" : "Requests through the site"}
+              </h2>
+              <p className="text-zinc-700">
+                {isDutch
+                  ? `Gebruik de contactpagina om je fietsprobleem, gewenste fietstype, budget en dagelijkse route door te geven.`
+                  : `Use the contact page to share your bike problem, preferred bike type, budget, and daily route.`}
+              </p>
+            </div>
+          )}
+        </section>
+
+        {renter && renter.reviews.length > 0 ? (
+          <section className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
+            <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-sm uppercase tracking-wide text-zinc-500">
+                  {isDutch ? "Vertrouwen" : "Trust"}
+                </p>
+                <h2 className="text-2xl font-semibold text-zinc-900">
+                  {isDutch ? "Wat klanten zeggen" : "What customers say"}
+                </h2>
+              </div>
+
+              <p className="text-zinc-700">
+                <strong>{renter.googleReviewRating.toFixed(1)}</strong> / 5{" "}
+                {renter.googleReviewCount} Google reviews
+              </p>
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-3">
+              {renter.reviews.map((review) => (
+                <article
+                  key={`${review.reviewerName}-${review.rating}`}
+                  className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6"
                 >
-                  <span className="font-medium text-zinc-900">{item.day}</span>
-                  <span>
-                    {isClosed(item.open) || isClosed(item.close)
-                      ? isDutch
-                        ? "Gesloten"
-                        : "Closed"
-                      : `${item.open} - ${item.close}`}
-                  </span>
-                </div>
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <h3 className="font-semibold text-zinc-900">
+                      {review.reviewerName}
+                    </h3>
+                    <span className="text-sm text-zinc-600">
+                      {review.rating}/5
+                    </span>
+                  </div>
+                  <p className="mb-3 text-zinc-700">{review.reviewText}</p>
+                  <p className="text-sm text-zinc-500">{review.source}</p>
+                </article>
               ))}
             </div>
-          </div>
-        </section>
-
-        <section className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
-          <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-wide text-zinc-500">
-                {isDutch ? "Vertrouwen" : "Trust"}
-              </p>
-              <h2 className="text-2xl font-semibold text-zinc-900">
-                {isDutch ? "Wat klanten zeggen" : "What customers say"}
-              </h2>
-            </div>
-
-            <p className="text-zinc-700">
-              <strong>{siteConfig.googleReviewRating.toFixed(1)}</strong> / 5
-              {" · "}
-              {siteConfig.googleReviewCount} Google reviews
-            </p>
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-3">
-            {siteConfig.reviews.map((review) => (
-              <article
-                key={`${review.reviewerName}-${review.rating}`}
-                className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6"
-              >
-                <div className="mb-3 flex items-center justify-between gap-3">
-                  <h3 className="font-semibold text-zinc-900">
-                    {review.reviewerName}
-                  </h3>
-                  <span className="text-sm text-zinc-600">
-                    {review.rating}/5
-                  </span>
-                </div>
-                <p className="mb-3 text-zinc-700">{review.reviewText}</p>
-                <p className="text-sm text-zinc-500">{review.source}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+          </section>
+        ) : null}
 
         <section className="rounded-2xl border border-zinc-200 bg-zinc-50 p-8 shadow-sm">
           <h2 className="mb-4 text-2xl font-semibold text-zinc-900">
-            {isDutch ? "Lokaal in Groningen" : "Local in Groningen"}
+            {isDutch
+              ? `Lokaal in ${siteConfig.city}`
+              : `Local in ${siteConfig.city}`}
           </h2>
 
           <div className="space-y-4 text-zinc-700">
             <p>
-              {isDutch
-                ? `${siteConfig.googleBusinessProfileName} is gevestigd aan ${siteConfig.address}, ${siteConfig.postalCode} in ${siteConfig.city}. Deze locatie maakt het een praktische keuze voor mensen die in of rond ${siteConfig.neighborhoods.join(", ")} wonen, studeren of dagelijks fietsen.`
-                : `${siteConfig.googleBusinessProfileName} is located at ${siteConfig.address}, ${siteConfig.postalCode} in ${siteConfig.city}. This makes it a practical option for people living, studying, or cycling daily in and around ${siteConfig.neighborhoods.join(", ")}.`}
+              {renter
+                ? isDutch
+                  ? `${businessName} is gevestigd aan ${renter.address}, ${renter.postalCode} in ${siteConfig.city}. Dat maakt de winkel praktisch voor fietsers uit ${siteConfig.neighborhoods.join(", ")}.`
+                  : `${businessName} is located at ${renter.address}, ${renter.postalCode} in ${siteConfig.city}. That makes the shop practical for cyclists from ${siteConfig.neighborhoods.join(", ")}.`
+                : isDutch
+                  ? `${siteConfig.siteName} richt lokale fietshulp op buurten en drukke plekken in ${siteConfig.city}, zodat je aanvraag meteen de juiste context heeft.`
+                  : `${siteConfig.siteName} focuses local bike help around neighborhoods and busy places in ${siteConfig.city}, so your request starts with the right context.`}
             </p>
 
-            <p>
-              {isDutch ? (
-                <>
-                  De winkel helpt met praktische fietsvragen in Groningen. Lees
-                  meer over{" "}
+            {localPages.length > 0 ? (
+              <div className="flex flex-wrap gap-3 pt-2">
+                {localPages.map((page) => (
                   <Link
-                    href={`/${lang}/services/second-hand-bikes`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
+                    key={page.slug}
+                    href={`/${lang}/buurten/${page.slug}`}
+                    className="rounded-full border border-zinc-300 bg-white px-5 py-3 text-sm font-medium text-zinc-900"
                   >
-                    tweedehands fietsen
+                    {page.shortTitle[lang]}
                   </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/services/bike-repair`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    reparatie
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/services/new-bikes`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    nieuwe fietsen
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/services/student-bikes`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    studentenfietsen
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/services/cheap-bikes`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    goedkope fietsen
-                  </Link>{" "}
-                  en{" "}
-                  <Link
-                    href={`/${lang}/services/bike-accessories`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    accessoires
-                  </Link>
-                  .
-                </>
-              ) : (
-                <>
-                  The shop helps with practical bike questions in Groningen.
-                  You can also read more about{" "}
-                  <Link
-                    href={`/${lang}/services/second-hand-bikes`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    second hand bikes
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/services/bike-repair`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    repair
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/services/new-bikes`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    new bikes
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/services/student-bikes`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    student bikes
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/services/cheap-bikes`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    cheap bikes
-                  </Link>
-                  , and{" "}
-                  <Link
-                    href={`/${lang}/services/bike-accessories`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    accessories
-                  </Link>
-                  .
-                </>
-              )}
-            </p>
-
-            <p>
-              {isDutch ? (
-                <>
-                  Zoek je hulp rond een specifieke plek in Groningen? Bekijk
-                  ook fietshulp rond{" "}
-                  <Link
-                    href={`/${lang}/buurten/zernike-campus`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    fietsenmaker nabij Zernike Campus
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/buurten/groningen-station`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    fietsenwinkel nabij Station Groningen
-                  </Link>{" "}
-                  en{" "}
-                  <Link
-                    href={`/${lang}/buurten/grote-markt`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    fietsreparatie nabij Grote Markt
-                  </Link>
-                  .
-                </>
-              ) : (
-                <>
-                  Need help near a specific Groningen spot? We also have pages
-                  for{" "}
-                  <Link
-                    href={`/${lang}/buurten/zernike-campus`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    bike repair near Zernike Campus
-                  </Link>
-                  ,{" "}
-                  <Link
-                    href={`/${lang}/buurten/groningen-station`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    bike shop near Groningen Station
-                  </Link>
-                  , and{" "}
-                  <Link
-                    href={`/${lang}/buurten/grote-markt`}
-                    className="font-medium text-zinc-900 underline underline-offset-4"
-                  >
-                    bike repair near Grote Markt
-                  </Link>
-                  .
-                </>
-              )}
-            </p>
-
-            <div className="flex flex-wrap gap-3 pt-2">
-              <a
-                href={siteConfig.googleBusinessUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full bg-zinc-900 px-5 py-3 text-sm font-medium text-white"
-              >
-                {isDutch ? "Bekijk op Google Maps" : "View on Google Maps"}
-              </a>
-
-              <a
-                href={siteConfig.mapEmbedUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full border border-zinc-300 px-5 py-3 text-sm font-medium text-zinc-900"
-              >
-                {isDutch ? "Open kaart" : "Open map"}
-              </a>
-            </div>
+                ))}
+              </div>
+            ) : null}
           </div>
         </section>
 

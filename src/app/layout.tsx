@@ -7,8 +7,9 @@ import "./globals.css";
 import { SiteGoogleAnalytics } from "@/components/analytics/site-google-analytics";
 import { Analytics } from "@vercel/analytics/next";
 
-// Site Configuration
-import { bikesGroningenConfig } from "@/data/sites/bikes-groningen";
+import { getActiveSiteConfig } from "@/lib/config/get-site-config";
+
+const siteConfig = getActiveSiteConfig();
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,23 +23,23 @@ const geistMono = Geist_Mono({
 
 /**
  * Site metadata
- * Dynamically generated from the bikesGroningenConfig
+ * Dynamically generated from the active site config.
  */
 export const metadata: Metadata = {
   title: {
-    default: bikesGroningenConfig.seoDefaults.nl.metaTitle,
-    template: `%s | ${bikesGroningenConfig.siteName}`,
+    default: siteConfig.seoDefaults.nl.metaTitle,
+    template: `%s | ${siteConfig.siteName}`,
   },
-  description: bikesGroningenConfig.seoDefaults.nl.metaDescription,
-  metadataBase: new URL(`https://${bikesGroningenConfig.domain}`),
+  description: siteConfig.seoDefaults.nl.metaDescription,
+  metadataBase: new URL(`https://${siteConfig.domain}`),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: bikesGroningenConfig.seoDefaults.nl.ogTitle,
-    description: bikesGroningenConfig.seoDefaults.nl.ogDescription,
-    url: `https://${bikesGroningenConfig.domain}`,
-    siteName: bikesGroningenConfig.siteName,
+    title: siteConfig.seoDefaults.nl.ogTitle,
+    description: siteConfig.seoDefaults.nl.ogDescription,
+    url: `https://${siteConfig.domain}`,
+    siteName: siteConfig.siteName,
     locale: "nl_NL",
     type: "website",
   },
@@ -63,48 +64,55 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        {/* Google Tag Manager - Header Script */}
-        <Script
-          id="gtm-script"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','${bikesGroningenConfig.gtmId}');
-            `,
-          }}
-        />
+        {siteConfig.gtmId ? (
+          <Script
+            id="gtm-script"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','${siteConfig.gtmId}');
+              `,
+            }}
+          />
+        ) : null}
       </head>
       <body className="min-h-full flex flex-col">
-        {/* Google Tag Manager (noscript) - Required for fallback */}
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${bikesGroningenConfig.gtmId}`}
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
+        {siteConfig.gtmId ? (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${siteConfig.gtmId}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
+        ) : null}
 
         {children}
 
         {/* Analytics Components 
             SiteGoogleAnalytics handles GA4 + Cookie Consent Banner
         */}
-        <SiteGoogleAnalytics gaId={bikesGroningenConfig.gaId} />
+        <SiteGoogleAnalytics
+          gaId={siteConfig.gaId}
+          siteName={siteConfig.siteName}
+        />
         
         {/* Vercel Speed Insights/Analytics */}
         <Analytics />
         
         {/* Ahrefs Site Audit Analytics */}
-        <Script
-          src="https://analytics.ahrefs.com/analytics.js"
-          data-key={bikesGroningenConfig.ahrefsKey}
-          strategy="afterInteractive"
-        />
+        {siteConfig.ahrefsKey ? (
+          <Script
+            src="https://analytics.ahrefs.com/analytics.js"
+            data-key={siteConfig.ahrefsKey}
+            strategy="afterInteractive"
+          />
+        ) : null}
       </body>
     </html>
   );
