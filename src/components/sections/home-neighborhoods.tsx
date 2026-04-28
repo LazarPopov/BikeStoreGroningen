@@ -26,7 +26,7 @@ export function HomeNeighborhoods({
       aria-labelledby="home-neighborhoods-heading"
     >
       <p className="mb-3 text-sm uppercase tracking-wide text-zinc-500">
-        {lang === "nl" ? "Lokale pagina's" : "Local pages"}
+        {lang === "nl" ? "Buurten en plekken" : "Areas we serve"}
       </p>
 
       <h2
@@ -41,7 +41,7 @@ export function HomeNeighborhoods({
       <div className="space-y-8">
         <div>
           <h3 className="mb-4 text-lg font-semibold text-zinc-900">
-            {lang === "nl" ? "Sterke zoeklocaties" : "High-intent locations"}
+            {lang === "nl" ? "Campussen en drukke plekken" : "Campuses and busy spots"}
           </h3>
 
           <div className="grid gap-4 md:grid-cols-3">
@@ -51,7 +51,7 @@ export function HomeNeighborhoods({
                 className="flex h-full flex-col rounded-xl border border-zinc-200 bg-zinc-50 p-5"
               >
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                  {lang === "nl" ? "Campus of plek" : "Campus or landmark"}
+                  {lang === "nl" ? "Campus of plek" : "Campus or city spot"}
                 </p>
                 <h4 className="mb-2 text-lg font-semibold text-zinc-900">
                   {page.shortTitle[lang]}
@@ -66,11 +66,11 @@ export function HomeNeighborhoods({
                   className="text-sm font-medium text-zinc-900 underline underline-offset-4"
                   aria-label={
                     lang === "nl"
-                      ? `Bekijk de lokale pagina voor ${page.neighborhoodName}`
-                      : `View the local page for ${page.neighborhoodName}`
+                      ? `Bekijk fietshulp rond ${page.neighborhoodName}`
+                      : `View bike help around ${page.neighborhoodName}`
                   }
                 >
-                  {lang === "nl" ? "Bekijk lokale pagina" : "View local page"}
+                  {lang === "nl" ? "Bekijk fietshulp" : "View bike help"}
                 </Link>
               </article>
             ))}

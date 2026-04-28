@@ -76,7 +76,7 @@ export const bikesGroningenConfig: SiteConfig = {
     nl: "Hoi, ik ben geinteresseerd in fietsopties in Groningen.",
   },
 
-  // --- SEO ---
+  // --- Default metadata ---
   seoDefaults: {
     en: {
       metaTitle: "Bike Repair Groningen | De Twee Wielen Bike Shop",

@@ -249,8 +249,8 @@ export default async function ServicePage({ params }: PageProps) {
         <RelatedLinks
           title={
             lang === "nl"
-              ? "Lokale pagina's in Groningen"
-              : "Local pages in Groningen"
+              ? "Fietshulp per buurt en plek"
+              : "Bike help by area"
           }
           items={relatedNeighborhoodLinks}
         />

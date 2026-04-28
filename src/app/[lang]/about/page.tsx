@@ -386,10 +386,10 @@ export default async function AboutPage({ params }: PageProps) {
                 ? `Alles voor fietsers in ${siteConfig.city}`
                 : `Everything for cyclists in ${siteConfig.city}`}
             </h2>
-            <p className="mt-3 max-w-3xl text-zinc-700">
-              {isDutch
-                ? `Deze interne links helpen bezoekers en zoekmachines beter begrijpen dat ${siteConfig.siteName} relevant is voor tweedehands fietsen, reparaties, nieuwe fietsen, accessoires, studentenfietsen en goedkope fietsen in ${siteConfig.city}.`
-                : `These internal links help both visitors and search engines understand that ${siteConfig.siteName} is relevant for second hand bikes, repair, new bikes, accessories, student bikes, and cheap bikes in ${siteConfig.city}.`}
+              <p className="mt-3 max-w-3xl text-zinc-700">
+                {isDutch
+                ? `Vind snel de juiste hulp voor tweedehands fietsen, reparaties, nieuwe fietsen, accessoires, studentenfietsen en goedkope fietsen in ${siteConfig.city}.`
+                : `Find the right help for second hand bikes, repair, new bikes, accessories, student bikes, and cheap bikes in ${siteConfig.city}.`}
             </p>
           </div>
 
@@ -518,10 +518,7 @@ export default async function AboutPage({ params }: PageProps) {
             <p>
               {isDutch ? (
                 <>
-                  Op de site gebruiken we de titel{" "}
-                  <q>{siteConfig.heroTitle.nl}</q> en de ondertitel{" "}
-                  <q>{siteConfig.heroSubtitle.nl}</q> om direct
-                  duidelijk te maken wat bezoekers kunnen verwachten. Lees ook
+                  De winkel helpt met praktische fietsvragen in Groningen. Lees
                   meer over{" "}
                   <Link
                     href={`/${lang}/services/second-hand-bikes`}
@@ -568,11 +565,8 @@ export default async function AboutPage({ params }: PageProps) {
                 </>
               ) : (
                 <>
-                  On the site we use the title{" "}
-                  <q>{siteConfig.heroTitle.en}</q> and the subtitle{" "}
-                  <q>{siteConfig.heroSubtitle.en}</q> to make it immediately
-                  clear what visitors can expect. You can also read
-                  more about{" "}
+                  The shop helps with practical bike questions in Groningen.
+                  You can also read more about{" "}
                   <Link
                     href={`/${lang}/services/second-hand-bikes`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
@@ -622,8 +616,8 @@ export default async function AboutPage({ params }: PageProps) {
             <p>
               {isDutch ? (
                 <>
-                  Voor lokale zoekvragen bouwen we ook duidelijke pagina&apos;s
-                  rond{" "}
+                  Zoek je hulp rond een specifieke plek in Groningen? Bekijk
+                  ook fietshulp rond{" "}
                   <Link
                     href={`/${lang}/buurten/zernike-campus`}
                     className="font-medium text-zinc-900 underline underline-offset-4"
@@ -648,7 +642,8 @@ export default async function AboutPage({ params }: PageProps) {
                 </>
               ) : (
                 <>
-                  For local searches, we also keep clear pages around{" "}
+                  Need help near a specific Groningen spot? We also have pages
+                  for{" "}
                   <Link
                     href={`/${lang}/buurten/zernike-campus`}
                     className="font-medium text-zinc-900 underline underline-offset-4"

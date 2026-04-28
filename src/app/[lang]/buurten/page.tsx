@@ -102,7 +102,7 @@ export default async function NeighborhoodsOverviewPage({ params }: PageProps) {
           <div className="mt-6 grid gap-8 lg:grid-cols-[1.4fr_0.8fr] lg:items-end">
             <div>
               <p className="mb-3 text-sm uppercase tracking-wide text-zinc-500">
-                {siteConfig.city} | {isDutch ? "Buurten en plekken" : "Areas and landmarks"}
+                {siteConfig.city} | {isDutch ? "Buurten en plekken" : "Areas we serve"}
               </p>
               <h1 className="mb-4 max-w-3xl text-4xl font-bold text-zinc-900">
                 {isDutch
@@ -138,7 +138,7 @@ export default async function NeighborhoodsOverviewPage({ params }: PageProps) {
               {isDutch ? "Campus, station en centrum" : "Campus, station, and center"}
             </p>
             <h2 className="mt-2 text-2xl font-bold text-zinc-900">
-              {isDutch ? "Landmark-pagina's met hoge zoekintentie" : "High-intent landmark pages"}
+              {isDutch ? "Campussen, station en centrum" : "Campus, station, and city center"}
             </h2>
           </div>
 
@@ -149,7 +149,7 @@ export default async function NeighborhoodsOverviewPage({ params }: PageProps) {
                 className="flex h-full flex-col rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300 hover:shadow-md"
               >
                 <p className="mb-3 text-sm uppercase tracking-wide text-zinc-500">
-                  {isDutch ? "Lokale zoekpagina" : "Local search page"}
+                  {isDutch ? "Fietshulp in de buurt" : "Nearby bike help"}
                 </p>
                 <h3 className="mb-3 text-2xl font-bold text-zinc-900">
                   {neighborhood.shortTitle[lang]}
@@ -161,7 +161,7 @@ export default async function NeighborhoodsOverviewPage({ params }: PageProps) {
                   href={`/${lang}/buurten/${neighborhood.slug}`}
                   className="inline-flex items-center gap-2 font-medium text-zinc-900 underline underline-offset-4"
                 >
-                  {isDutch ? "Bekijk lokale pagina" : "View local page"}
+                  {isDutch ? "Bekijk fietshulp" : "View bike help"}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </article>

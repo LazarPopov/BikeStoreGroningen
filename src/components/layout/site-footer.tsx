@@ -45,7 +45,7 @@ export function SiteFooter({ siteConfig, lang }: SiteFooterProps) {
           </div>
         </div>
 
-        {/* Column 3: Services (SEO Powerhouse) */}
+        {/* Column 3: Services */}
         <div>
           <h3 className="mb-4 text-lg font-semibold text-zinc-900">
             {isDutch ? "Onze Diensten" : "Our Services"}
@@ -101,7 +101,7 @@ export function SiteFooter({ siteConfig, lang }: SiteFooterProps) {
                 language: lang,
               }}
             >
-              {isDutch ? "Buurten en plekken" : "Areas and landmarks"}
+              {isDutch ? "Buurten en plekken" : "Areas we serve"}
             </TrackedLink>
 
             <TrackedLink

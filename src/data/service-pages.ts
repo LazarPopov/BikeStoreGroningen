@@ -239,8 +239,8 @@ export const servicePages: ServicePage[] = [
     },
     paragraphs: {
       en: [
-        "If you search for a cheap bike in Groningen, you usually want something functional: a solid frame, responsive brakes, working lights, and a lock setup that fits daily city use.",
-        "This page is especially useful for international students and expats who have just arrived and need a bike before they fully understand the local cycling routine.",
+        "When you need a cheap bike in Groningen, you usually want something functional: a solid frame, responsive brakes, working lights, and a lock setup that fits daily city use.",
+        "International students and expats who have just arrived often need a bike before they fully understand the local cycling routine.",
         "Cheap should still be practical. Visit the shop for advice on whether a budget bike, student bike, or more durable second-hand model makes the most sense for your route.",
       ],
       nl: [

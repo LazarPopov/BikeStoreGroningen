@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 /**
- * SEO Metadata
+ * Site metadata
  * Dynamically generated from the bikesGroningenConfig
  */
 export const metadata: Metadata = {

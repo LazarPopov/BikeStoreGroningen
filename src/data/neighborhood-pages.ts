@@ -223,7 +223,7 @@ export const neighborhoodPages: NeighborhoodPage[] = [
       en: [
         "Zernike Campus brings together RUG, Hanze, labs, lecture halls, and student housing routes, so a working bike is essential for getting through the day.",
         "If your tire, brakes, lights, chain, or lock fail around campus, call the shop or open Google Maps before you ride across town. The route to Paterswoldseweg is straightforward from the campus side of Groningen.",
-        "This page is for students, expats, and daily commuters who need bike repair near Zernike, a reliable student bike, or stronger accessories for regular rides between campus, the station, and the city center.",
+        "Students, expats, and daily commuters around Zernike can call or visit for bike repair, a reliable student bike, or stronger accessories for regular rides between campus, the station, and the city center.",
       ],
       nl: [
         "Zernike Campus brengt RUG, Hanze, labs, collegezalen en studentenroutes samen, dus een werkende fiets is essentieel voor je dag.",
@@ -300,7 +300,7 @@ export const neighborhoodPages: NeighborhoodPage[] = [
     paragraphs: {
       en: [
         "Grote Markt and the surrounding streets are busy cycling areas where worn brakes, flat tires, loose lights, and weak locks quickly become a problem.",
-        "This page is distinct from the general Centrum page because it focuses on city-center riders moving through the main squares, shopping streets, nightlife streets, and university buildings.",
+        "Around the main squares, shopping streets, nightlife streets, and university buildings, city-center riders often need fast practical help rather than a full bike search.",
         "Call the shop or open Google Maps if you need help before your next ride across Groningen. The shop can help with repair, replacement parts, student bikes, and accessories for everyday city use.",
       ],
       nl: [
@@ -415,7 +415,7 @@ export const neighborhoodPages: NeighborhoodPage[] = [
       en: [
         "Beijum riders often cover longer city routes, so small bike problems can become irritating quickly: dragging brakes, worn tires, weak lights, or an unreliable lock.",
         "De Twee Wielen supports Beijum cyclists with practical repairs, second-hand city bikes, student bikes, and accessories that make regular commuting safer.",
-        "This page is written for Beijum specifically because the cycling use case is different from inner-city pages: longer routes, daily commuting, and a need for durable basics.",
+        "For Beijum riders, the daily cycling pattern is often about longer routes, regular commuting, and durable basics that keep the bike dependable.",
       ],
       nl: [
         "Fietsers uit Beijum maken vaak langere stadsritten, waardoor kleine problemen snel irritant worden: aanlopende remmen, versleten banden, zwakke verlichting of een onbetrouwbaar slot.",
@@ -453,7 +453,7 @@ export const neighborhoodPages: NeighborhoodPage[] = [
       en: [
         "For Oosterparkwijk residents, the bike is often the easiest way to reach work, study, healthcare, shops, and the city center.",
         "De Twee Wielen helps with repairs that matter for everyday riders: tires, brakes, chains, lights, locks, saddles, and practical advice on reliable used bikes.",
-        "This page avoids generic Groningen copy by focusing on the eastern city routes and the daily cycling needs around Oosterparkwijk and UMCG.",
+        "For Oosterparkwijk riders, eastern city routes and daily trips around UMCG make reliable brakes, lights, tires, and locks especially useful.",
       ],
       nl: [
         "Voor bewoners van Oosterparkwijk is de fiets vaak de makkelijkste manier naar werk, studie, zorg, winkels en het centrum.",

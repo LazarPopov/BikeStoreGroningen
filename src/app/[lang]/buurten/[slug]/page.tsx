@@ -156,8 +156,8 @@ export default async function NeighborhoodPage({ params }: PageProps) {
             {siteConfig.city} |{" "}
             {isLandmark
               ? isDutch
-                ? "Lokale zoekplek"
-                : "Local landmark"
+                ? "Bekende plek"
+                : "Known city spot"
               : isDutch
                 ? "Buurt"
                 : "Neighborhood"}

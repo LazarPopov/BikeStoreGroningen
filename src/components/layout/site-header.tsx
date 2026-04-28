@@ -42,7 +42,6 @@ export function SiteHeader({ siteConfig, lang }: SiteHeaderProps) {
   const googleMapsUrl = siteConfig.googleBusinessUrl;
   const locationText = `${siteConfig.address}, ${siteConfig.city}`;
 
-  // SEO: Check if we are on any service-related page to highlight the nav
   const isServicesActive = pathname?.includes(`/${lang}/services`);
   const isNeighborhoodsActive = pathname?.includes(`/${lang}/buurten`);
 
@@ -100,7 +99,6 @@ export function SiteHeader({ siteConfig, lang }: SiteHeaderProps) {
               {labels.home}
             </Link>
             
-            {/* SEO Money Link: Services Overview */}
             <Link 
               href={`/${lang}/services`} 
               className={cn(
