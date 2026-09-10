@@ -53,7 +53,7 @@ export async function generateMetadata({
   const canonicalUrl = `https://${siteConfig.domain}/${lang}/buurten/${neighborhoodPage.slug}`;
 
   return {
-    title: neighborhoodPage.metaTitle[lang],
+    title: { absolute: neighborhoodPage.metaTitle[lang] },
     description: neighborhoodPage.metaDescription[lang],
     alternates: {
       canonical: canonicalUrl,

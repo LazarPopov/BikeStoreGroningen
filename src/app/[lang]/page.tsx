@@ -31,7 +31,7 @@ export async function generateMetadata({
   const seo = siteConfig.seoDefaults[lang];
 
   return {
-    title: seo.metaTitle,
+    title: { absolute: seo.metaTitle },
     description: seo.metaDescription,
     openGraph: {
       title: seo.ogTitle,

@@ -57,7 +57,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: servicePage.metaTitle[lang],
+    title: { absolute: servicePage.metaTitle[lang] },
     description: servicePage.metaDescription[lang],
     alternates: {
       canonical: `https://${siteConfig.domain}/${lang}/services/${servicePage.slug}`,
