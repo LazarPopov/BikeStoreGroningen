@@ -78,21 +78,22 @@ export function LocalBusinessJsonLd({
           name: lang === "nl" ? "Fietsreparatie" : "Bike repair",
         },
       },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Product",
+    ],
+    // These are inventory categories, not individual products with a price.
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: lang === "nl" ? "Fietsen" : "Bikes",
+      itemListElement: [
+        {
+          "@type": "OfferCatalog",
           name: lang === "nl" ? "Tweedehands fietsen" : "Second-hand bikes",
         },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Product",
+        {
+          "@type": "OfferCatalog",
           name: lang === "nl" ? "Nieuwe fietsen" : "New bikes",
         },
-      },
-    ],
+      ],
+    },
     openingHoursSpecification,
   };
 

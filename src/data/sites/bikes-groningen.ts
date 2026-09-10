@@ -9,7 +9,7 @@ export const bikesGroningenConfig: SiteConfig = {
   siteKey: "bikes-groningen",
   rentalMode: "rented",
   siteName: "BikeStoreGroningen.nl",
-  domain: "bikesgroningen.nl",
+  domain: "www.bikestoregroningen.nl",
   city: "Groningen",
   country: "Netherlands",
   leadEmail: "detweewielen@hotmail.com",

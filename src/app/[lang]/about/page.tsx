@@ -38,7 +38,7 @@ export async function generateMetadata({
   const isDutch = lang === "nl";
 
   return {
-    title: isDutch ? `Over ${businessName}` : `About ${businessName}`,
+    title: { absolute: isDutch ? `Over ${businessName}` : `About ${businessName}` },
     description: isDutch
       ? `${businessName} helpt studenten, expats en dagelijkse fietsers in ${siteConfig.city} met reparatie, tweedehands fietsen, studentenfietsen en accessoires.`
       : `${businessName} helps students, expats, and daily riders in ${siteConfig.city} with repair, second-hand bikes, student bikes, and accessories.`,

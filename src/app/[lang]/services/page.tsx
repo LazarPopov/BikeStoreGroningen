@@ -45,7 +45,7 @@ export async function generateMetadata({
     : `Explore bike repair, second-hand bikes, student bikes, and accessories from ${businessName} in ${siteConfig.city}.`;
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: {
       canonical: `https://${siteConfig.domain}/${lang}/services`,

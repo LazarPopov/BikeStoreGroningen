@@ -25,10 +25,10 @@ export async function generateMetadata({
   const siteConfig = getActiveSiteConfig();
 
   return {
-    title:
+    title: { absolute:
       lang === "nl"
         ? `Privacybeleid | ${siteConfig.siteName}`
-        : `Privacy Policy | ${siteConfig.siteName}`,
+        : `Privacy Policy | ${siteConfig.siteName}` },
     description:
       lang === "nl"
         ? `Privacybeleid van ${siteConfig.siteName}.`

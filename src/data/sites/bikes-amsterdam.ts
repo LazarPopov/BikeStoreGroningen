@@ -7,7 +7,7 @@ export const bikesAmsterdamConfig: SiteConfig = {
   siteKey: "bikes-amsterdam",
   rentalMode: "lead-capture",
   siteName: "BikeStoreAmsterdam.nl",
-  domain: "bikestoreamsterdam.nl",
+  domain: "www.bikestoreamsterdam.nl",
   city,
   country: "Netherlands",
   leadEmail: "leads@bikestoreamsterdam.nl",
